@@ -372,6 +372,11 @@ namespace ThothCbz
                 FillExecutionLogs();
                 ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
                 ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
+
+                ThothNotifyablePropertiesEntity.Default.AdjustFilesActive = false;
+                ThothNotifyablePropertiesEntity.Default.SplitPagesActive = false;
+                ThothNotifyablePropertiesEntity.Default.UnifyPagesActive = false;
+                ThothNotifyablePropertiesEntity.Default.GenerateCbzActive = false;
             });
         }
         #endregion
