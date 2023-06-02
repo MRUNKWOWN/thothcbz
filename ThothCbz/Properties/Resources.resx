@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="thothBckColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thothBckColor.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ThothCbz1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ThothCbz1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAdjustmentsActive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAdjustmentsActive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAdjustmentsInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAdjustmentsInactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAdjustmentsPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAdjustmentsPressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAdjustmentsHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnadjustmentshover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCbzActive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncbzactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCbzHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncbzhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCbzInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncbzinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCbzPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncbzpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRenameActive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrenameactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRenameHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrenamehover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRenameInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrenameinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRenamePressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrenamepressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitActive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplitactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplithover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplitinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplitpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyActive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifyactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifyhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifyinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifypressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FormThotCbzText" xml:space="preserve">
+    <value>THOTH CBZ GENERATOR</value>
+  </data>
+  <data name="PbxBtnAdjustFilesTooltipText" xml:space="preserve">
+    <value>Adjust the files (setting the resolution, converting to jpg and upscale).</value>
+  </data>
+  <data name="PbxBtnGenerateCbzTooltipText" xml:space="preserve">
+    <value>Generate the CBZ files (grouping and renaming files, besides the file generation).</value>
+  </data>
+  <data name="PbxBtnSplitPagesTooltipText" xml:space="preserve">
+    <value>Separate the pages into two.</value>
+  </data>
+  <data name="PbxBtnUnifyPagesTooltipText" xml:space="preserve">
+    <value>Unify double pages.</value>
+  </data>
+  <data name="BtnFolderDisabled512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfolderdisabled512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnFolderHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfolderhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnFolderInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfolderinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnFolderPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfolderpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settings_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\settings-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="analysing_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\analysing-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="analytics_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\analytics-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnFileDisable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfiledisable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnFileEnable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnfileenable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSeriesDisable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnseriesdisable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSeriesEnable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnseriesenable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitStatisticsDisable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplitstatisticsdisable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSplitStatisticsEnable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnsplitstatisticsenable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnTransformationDisable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btntransformationdisable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnTransformationEnable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btntransformationenable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyStatisticsDisable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifystatisticsdisable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnifyStatisticsEnable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunifystatisticsenable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnVolumesDisable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnvolumesdisable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnVolumesEnable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnvolumesenable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FormAnalysisText" xml:space="preserve">
+    <value>ANALYSING....</value>
+  </data>
+  <data name="PbxBtnFolderTooltipText" xml:space="preserve">
+    <value>Select the base directory for execution.</value>
+  </data>
+  <data name="PbxConversionStatisticsTooltipText" xml:space="preserve">
+    <value>Files found to be converted.</value>
+  </data>
+  <data name="PbxFilesStatisticsTooltipText" xml:space="preserve">
+    <value>Files found to be processed.</value>
+  </data>
+  <data name="PbxSeriesStatisticsTooltipText" xml:space="preserve">
+    <value>Series found to be processed.</value>
+  </data>
+  <data name="PbxSplitStatisticsTooltipText" xml:space="preserve">
+    <value>Files found to be splitted.</value>
+  </data>
+  <data name="PbxUnifyStatisticsTooltipText" xml:space="preserve">
+    <value>Files found to be unified.</value>
+  </data>
+  <data name="PbxVolumesStatisticsTooltipText" xml:space="preserve">
+    <value>Volumes found to be processed.</value>
+  </data>
+  <data name="ChapterNameText" xml:space="preserve">
+    <value>chapter</value>
+  </data>
+  <data name="SeriesNameText" xml:space="preserve">
+    <value>series</value>
+  </data>
+  <data name="txtDirectoryDefaultText" xml:space="preserve">
+    <value>Select the directory with the series(s) to initialize the process.</value>
+  </data>
+  <data name="VolumeNameText" xml:space="preserve">
+    <value>volume</value>
+  </data>
+  <data name="adjusts_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\adjusts-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnHelpHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnhelphover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnHelpInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnhelpinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnHelpPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnhelppressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnPlayHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnplayhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnPlayInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnplayinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnPlayPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnplaypressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRefreshHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrefreshhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRefreshInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrefreshinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnRefreshPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnrefreshpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnWarningsHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnwarningshover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnWarningsInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnwarningsinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnWarningsPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnwarningspressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LblPagesReadOrderLeftRightText" xml:space="preserve">
+    <value>LEFT-TO-RIGHT</value>
+  </data>
+  <data name="LblPagesReadOrderRightLeftText" xml:space="preserve">
+    <value>RIGHT-TO-LEFT</value>
+  </data>
+  <data name="PbxBtnHelpTooltipText" xml:space="preserve">
+    <value>Application Information and tips.</value>
+  </data>
+  <data name="PbxBtnPlayTooltipText" xml:space="preserve">
+    <value>Execute!</value>
+  </data>
+  <data name="PbxBtnRefreshTooltipText" xml:space="preserve">
+    <value>Refresh the analysis.</value>
+  </data>
+  <data name="PbxBtnWarningTooltipText" xml:space="preserve">
+    <value>Issues preventing the adjusts and/or the generation.</value>
+  </data>
+  <data name="BtnCancelHover512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncancelhover512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCancelInactive512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncancelinactive512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCancelPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btncancelpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnknownStatisticsDisable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunknownstatisticsdisable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnUnknownStatisticsEnable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\btnunknownstatisticsenable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LblAnalysingMultiplesDescriptionText" xml:space="preserve">
+    <value>Please wait! We are analysing a total of {0} files.</value>
+  </data>
+  <data name="LblAnalysingOneDescriptionText" xml:space="preserve">
+    <value>Please wait! We are analysing a total of {0} file.</value>
+  </data>
+  <data name="LblCancelRequestCommandText" xml:space="preserve">
+    <value>A request to cancel the execution has been queued...</value>
+  </data>
+  <data name="PbxBtnCancelTooltipText" xml:space="preserve">
+    <value>Cancel current generation.</value>
+  </data>
+  <data name="PbxUnknwonStatisticsTooltipText" xml:space="preserve">
+    <value>Files found that have an unknwon extension.</value>
+  </data>
+  <data name="CbxAddIconText" xml:space="preserve">
+    <value>Add custom icon per volume file</value>
+  </data>
+  <data name="CbxUpscaleImagesText" xml:space="preserve">
+    <value>Upscale all images for the minimal height of (in pixels):</value>
+  </data>
+  <data name="CbxUseSelectedDirectoryText" xml:space="preserve">
+    <value>The selected directory is part of the final file structure!</value>
+  </data>
+  <data name="CorruptedAppConfigurationFileText" xml:space="preserve">
+    <value>The AppConfiguration.json file is corrupted.</value>
+  </data>
+  <data name="execution_logs_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\execution-logs-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FormWarningsText" xml:space="preserve">
+    <value>Warnings</value>
+  </data>
+  <data name="LblExecutionLogChaptersText" xml:space="preserve">
+    <value>_COLOR_\tab \tab \u9632  _STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+  </data>
+  <data name="LblExecutionLogSeriesText" xml:space="preserve">
+    <value>_COLOR__STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+  </data>
+  <data name="LblExecutionLogStatusAnalyzedText" xml:space="preserve">
+    <value>[  ANALYZED ]</value>
+  </data>
+  <data name="LblExecutionLogStatusDoneText" xml:space="preserve">
+    <value>[      DONE      ]</value>
+  </data>
+  <data name="LblExecutionLogStatusErrorText" xml:space="preserve">
+    <value>[      ERROR     ]</value>
+  </data>
+  <data name="LblExecutionLogStatusQueueText" xml:space="preserve">
+    <value>[    QUEUED    ]</value>
+  </data>
+  <data name="LblExecutionLogStatusRunningText" xml:space="preserve">
+    <value>[   RUNNING  ]</value>
+  </data>
+  <data name="LblExecutionLogStatusWarningText" xml:space="preserve">
+    <value>[ ATTENTION ]</value>
+  </data>
+  <data name="LblExecutionLogVolumesText" xml:space="preserve">
+    <value>_COLOR_\tab \bullet  _STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+  </data>
+  <data name="LblReadingOrderText" xml:space="preserve">
+    <value>The order of reading for all the series found are:</value>
+  </data>
+  <data name="LblSplitableDirectoryText" xml:space="preserve">
+    <value>All pages that needs to be splitted are located in the following directory:</value>
+  </data>
+  <data name="LblUnifyableDirectoryText" xml:space="preserve">
+    <value>All pages that need to be unified are located in the following directory:</value>
+  </data>
+  <data name="LblVersionText" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="RtbWarningsForAdjustments001Text" xml:space="preserve">
+    <value>Adjustments cannot be made because there are files that are not automatically adjustable by the tool.</value>
+  </data>
+  <data name="RtbWarningsForAdjustments002Text" xml:space="preserve">
+    <value>Adjustable extensions are ".jpg", ".jpeg", ".img", ".gif", ".png", ".webp".</value>
+  </data>
+  <data name="RtbWarningsForAdjustments003Text" xml:space="preserve">
+    <value>You can check which Series/Volumes/Chapters have files with unwell extensions by searching the list displayed in the "Execution Logs" area. These items have a tag [ERROR] before the name and in a different color.</value>
+  </data>
+  <data name="RtbWarningsForCbz001Text" xml:space="preserve">
+    <value>You cannot generate CBZ files because there are files in formats other than the expected format (.jpg).</value>
+  </data>
+  <data name="RtbWarningsForCbz002Text" xml:space="preserve">
+    <value>To be able to generate CBZ files, please enable the button to make adjustments to the files. </value>
+  </data>
+  <data name="RtbWarningsForCbz003Text" xml:space="preserve">
+    <value>You can check which Series/Volumes/Chapters have files that need to be adjusted by searching the list displayed in the "Execution Logs" area. These items have a tag [ ATTENTION ] before the name and in a different color.</value>
+  </data>
+  <data name="RtbWarningsHeaderMultiplesText" xml:space="preserve">
+    <value>Please check the alerts below for the necessary actions to proceed with the execution of the adjustments and/or the generation of CBZ files.</value>
+  </data>
+  <data name="RtbWarningsHeaderOneText" xml:space="preserve">
+    <value>Please check in the alert below the action required to proceed with the execution of the settings and/or the generation of CBZ files.</value>
+  </data>
+  <data name="series_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\series-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settings_left_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\settings-left-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="splitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\splitter.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="volumes_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\volumes-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="warnings_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\warnings-titles.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RtbWarningsForSplit001Text" xml:space="preserve">
+    <value>You cannot split files because there are files in formats other than the expected one (.jpg).</value>
+  </data>
+  <data name="RtbWarningsForSplit002Text" xml:space="preserve">
+    <value>To be able to generate splited files, please enable the button to make adjustments to the files. </value>
+  </data>
+  <data name="RtbWarningsForUnify001Text" xml:space="preserve">
+    <value>You cannot unify files because there are files in formats other than the expected one (.jpg).</value>
+  </data>
+  <data name="RtbWarningsForUnify002Text" xml:space="preserve">
+    <value>To be able to generate unified files, please enable the button to make adjustments to the files. </value>
+  </data>
+  <data name="CbxBlankSpaceText" xml:space="preserve">
+    <value>Add blank space between unified pages if the pages have diferente widths.</value>
+  </data>
+  <data name="RtbWarningsForUnify003Text" xml:space="preserve">
+    <value>You cannot unify files because the files amount isn't even.</value>
+  </data>
+  <data name="RtbWarningsForUnify004Text" xml:space="preserve">
+    <value>To be able to generate unified files, please validate and keep only even amount of files in the unifyable folders. </value>
+  </data>
+  <data name="RtbWarningsForUnify005Text" xml:space="preserve">
+    <value>You can check which Series/Volumes/Chapters have even files by searching the list displayed in the "Execution Logs" area. These items have a tag [ERROR] before the name and in a different color.</value>
+  </data>
+  <data name="CbxEnableBrightnessContrastText" xml:space="preserve">
+    <value>Enable image beautifier (edit {0})</value>
+  </data>
+</root>
