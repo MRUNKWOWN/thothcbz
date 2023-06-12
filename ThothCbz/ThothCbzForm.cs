@@ -215,7 +215,6 @@ namespace ThothCbz
 
                 if (!string.IsNullOrWhiteSpace(filesToGrayscalePath) && File.Exists(filesToGrayscalePath))
                 {
-
                     filesToGrayscale = File.ReadAllLines(filesToGrayscalePath).ToList();
                 }
 

@@ -83,22 +83,26 @@ namespace ThothCbz
                                                                             .Select(s => new { s.Key, Items = s.Select(m => m).ToList() })
                                                                             .ToDictionary(d => d.Key, d => d.Items);
 
-                ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AsParallel().ForAll(s => {
-
-                    var filePath = s.Value.FilesToGrayScaleFilePath();
-
-                    if (string.IsNullOrWhiteSpace(filePath) || File.Exists(filePath))
+                if (!ThothNotifyablePropertiesEntity.Default.KeepUserChoicesBetweenFileAnalyses)
+                {
+                    ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AsParallel().ForAll(s =>
                     {
-                        return;
-                    }
 
-                    var stb = new StringBuilder();
+                        var filePath = s.Value.FilesToGrayScaleFilePath();
 
-                    File.WriteAllLines(
-                            filePath,
-                            s.Value.Select(s => s.FilePath).OrderBy(o => o)
-                        );
-                });
+                        if (string.IsNullOrWhiteSpace(filePath) || File.Exists(filePath))
+                        {
+                            return;
+                        }
+
+                        var stb = new StringBuilder();
+
+                        File.WriteAllLines(
+                                filePath,
+                                s.Value.Select(s => s.FilePath).OrderBy(o => o)
+                            );
+                    });
+                }
             });
         }
 
