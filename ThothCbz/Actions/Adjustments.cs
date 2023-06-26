@@ -12,21 +12,24 @@ namespace ThothCbz.Actions
     {
         internal static void ExecuteAdjustments(
                 List<FileEntity> filesToAdjust,
-                List<string> filesToGrayscale
+                List<string> filesToGrayscale,
+                System.Drawing.Size? defaultSize = null
             )
         {
             System.Threading.Tasks.Parallel.ForEach(filesToAdjust.OrderBy(o => o.FilePath), file =>
             {
                 ModifyAndSave(
                         file,
-                        filesToGrayscale
+                        filesToGrayscale,
+                        defaultSize
                     );
             });
         }
 
         private static void ModifyAndSave(
                 FileEntity fileEntity,
-                List<string> filesToGrayscale
+                List<string> filesToGrayscale,
+                System.Drawing.Size? defaultSize = null
             )
         {
             var uniqueIdentifier = Guid.NewGuid().ToString("N");
@@ -39,7 +42,8 @@ namespace ThothCbz.Actions
 
             using var img = fileEntity.GetImage(
                     backgroundColor: color,
-                    filesToGrayscale: filesToGrayscale
+                    filesToGrayscale: filesToGrayscale,
+                    defaultSize: defaultSize
                 );
 
             if (Settings.Default.EnableBrightnessAndContrastAdjustments)

@@ -44,7 +44,7 @@ namespace ThothCbz
                 }
 
                 filesFounded
-                    .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_BLANK_FILE_NAME))
+                    .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_BLANK_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME))
                     .ToList()
                     .ForEach(f =>
                     {
@@ -113,7 +113,10 @@ namespace ThothCbz
             {
                 ex.InformAndSaveLog();
 
-                backgroundWorkerAnalizer_RunWorkerCompleted(this, null);
+                Invoke(delegate
+                {
+                    backgroundWorkerAnalizer_RunWorkerCompleted(this, null);
+                });
             }
         }
 

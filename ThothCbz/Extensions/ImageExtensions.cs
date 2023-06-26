@@ -15,7 +15,8 @@ namespace ThothCbz.Extensions
         internal static Bitmap Resize(
                 this System.Drawing.Image img,
                 float resizeFactor,
-                Color backgroundColor
+                Color backgroundColor,
+                System.Drawing.Size? defaultSize = null
             )
         {
             var newWidth = (int)(img.Width * resizeFactor);
@@ -29,7 +30,8 @@ namespace ThothCbz.Extensions
                     newHeight,
                     newHorizontalResolution,
                     newVerticalResolution,
-                    backgroundColor
+                    backgroundColor,
+                    defaultSize
                 );
         }
 
@@ -39,10 +41,23 @@ namespace ThothCbz.Extensions
                 int height,
                 float horizontalResolution,
                 float verticalResolution,
-                Color backgroundColor
+                Color backgroundColor,
+                System.Drawing.Size? defaultSize = null
             )
         {
-            using var newImg = new Bitmap(width, height, PixelFormat.Format32bppRgb);
+            var targetHeight = height;
+
+            if (defaultSize.HasValue)
+            {
+                var factor = defaultSize.Value.Width > defaultSize.Value.Height
+                                ? width > height ? 1 : 0.5
+                                : width > height ? 2 : 1;
+                
+                targetHeight = (int)((defaultSize.Value.Height * width) / (defaultSize.Value.Width * factor));
+                targetHeight = targetHeight > height ? height : targetHeight;
+            }
+
+            using var newImg = new Bitmap(width, targetHeight, PixelFormat.Format32bppRgb);
 
             newImg.SetResolution(horizontalResolution, verticalResolution);
 
@@ -50,7 +65,9 @@ namespace ThothCbz.Extensions
 
             graphics.DrawImage(
                                 img,
-                                new Rectangle(0, 0, newImg.Width, newImg.Height)
+                                0,0,
+                                new Rectangle(0, 0, newImg.Width, newImg.Height),
+                                GraphicsUnit.Pixel
                             );
 
             return (Bitmap) newImg.Clone();

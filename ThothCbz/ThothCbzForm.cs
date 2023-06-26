@@ -227,6 +227,7 @@ namespace ThothCbz
                                                     .ToList();
 
                     var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), GlobalConstants.DEFAULT_BLANK_FILE_NAME).FirstOrDefault();
+                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME).FirstOrDefault();
 
                     if (ThothNotifyablePropertiesEntity.Default.AdjustFilesActive)
                     {
@@ -235,7 +236,8 @@ namespace ThothCbz
                             VolumeGenerations(
                                                 volume,
                                                 filesToGrayscale,
-                                                customBlankFilePath
+                                                customBlankFilePath,
+                                                defaultFileToSize
                                             );
                         }
                     }
@@ -246,12 +248,18 @@ namespace ThothCbz
                                                         VolumeGenerations(
                                                             volume,
                                                             filesToGrayscale,
-                                                            customBlankFilePath
+                                                            customBlankFilePath,
+                                                            defaultFileToSize
                                                         );
                                                     });
                     }
 
-                    if (!string.IsNullOrWhiteSpace(customBlankFilePath) && ThothNotifyablePropertiesEntity.Default.GenerateCbzActive)
+                    if (!string.IsNullOrWhiteSpace(defaultFileToSize) && File.Exists(defaultFileToSize))
+                    {
+                        File.Delete(defaultFileToSize);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(customBlankFilePath) && ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && File.Exists(customBlankFilePath))
                     {
                         File.Delete(customBlankFilePath);
                     }
@@ -270,17 +278,21 @@ namespace ThothCbz
             {
                 ex.InformAndSaveLog();
 
-                ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
-                ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
+                Invoke(delegate
+                {
+                    ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
+                    ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
 
-                FillExecutionLogs();
+                    FillExecutionLogs();
+                });
             }
         }
 
         private void VolumeGenerations(
                 List<FileEntity> volume,
                 List<string> filesToGrayscale,
-                string? customBlankFilePath
+                string? customBlankFilePath,
+                string? defaultFileToSize
             )
         {
             if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
@@ -298,6 +310,11 @@ namespace ThothCbz
 
             if (volume.Count > 1)
             {
+                string volumePath = volume.FirstOrDefault()!.SeriePath!.Replace('|', '\\') +
+                                        (!string.IsNullOrWhiteSpace(volume.FirstOrDefault()!.Volume) ? $"\\{volume.FirstOrDefault()!.Volume}" : string.Empty);
+
+                var volumeDefaultFileToSize = Directory.GetFiles(volumePath, GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME).FirstOrDefault();
+
                 foreach (var chapter in volume.OrderBy(o => o.Chapter)
                                                 .GroupBy(g => g.Chapter)
                                                 .Select(s => s.Select(m => m).ToList())
@@ -305,10 +322,43 @@ namespace ThothCbz
                 {
                     if (ThothNotifyablePropertiesEntity.Default.AdjustFilesActive)
                     {
+                        System.Drawing.Size? defaultSize = null;
+
+                        var chapterDefaultFileToSize = Directory.GetFiles(
+                                                            $"{volumePath}\\{chapter.FirstOrDefault()!.Chapter}"
+                                                            , GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME
+                                                        ).FirstOrDefault();
+
+                        if (!string.IsNullOrWhiteSpace(chapterDefaultFileToSize) || 
+                            !string.IsNullOrWhiteSpace(volumeDefaultFileToSize) || 
+                            !string.IsNullOrWhiteSpace(defaultFileToSize))
+                        {
+                            using var img = System.Drawing.Image.FromFile(
+                                    !string.IsNullOrWhiteSpace(chapterDefaultFileToSize)
+                                        ? chapterDefaultFileToSize
+                                        : !string.IsNullOrWhiteSpace(volumeDefaultFileToSize)
+                                            ? volumeDefaultFileToSize
+                                            : defaultFileToSize!
+                                );
+
+                            defaultSize = img.Size;
+
+                            img.Dispose();
+
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+                        }
+
                         Adjustments.ExecuteAdjustments(
                                 filesToAdjust: chapter.Where(w => !w.FileWasAdjusted).ToList(),
-                                filesToGrayscale: filesToGrayscale
+                                filesToGrayscale: filesToGrayscale,
+                                defaultSize: defaultSize
                             );
+
+                        if (!string.IsNullOrWhiteSpace(chapterDefaultFileToSize) && File.Exists(chapterDefaultFileToSize))
+                        {
+                            File.Delete(chapterDefaultFileToSize);
+                        }
                     }
 
                     if (ThothNotifyablePropertiesEntity.Default.SplitPagesActive)
@@ -324,6 +374,11 @@ namespace ThothCbz
                                 filesToAdjust: chapter.Where(w => w.IsUnify && !w.FileWasUnified).ToList()
                             );
                     }
+                }
+
+                if (!string.IsNullOrWhiteSpace(volumeDefaultFileToSize) && File.Exists(volumeDefaultFileToSize))
+                {
+                    File.Delete(volumeDefaultFileToSize);
                 }
 
                 if (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive)

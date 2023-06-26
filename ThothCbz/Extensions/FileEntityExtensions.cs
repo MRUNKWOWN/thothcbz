@@ -111,7 +111,8 @@ namespace ThothCbz.Extensions
         internal static System.Drawing.Image GetImage(
                 this FileEntity entity,
                 System.Drawing.Color backgroundColor,
-                List<string> filesToGrayscale
+                List<string> filesToGrayscale,
+                System.Drawing.Size? defaultSize = null
             )
         {
             var filePath = entity.FilePath;
@@ -132,7 +133,8 @@ namespace ThothCbz.Extensions
                                     height: img.Height,
                                     horizontalResolution: img.HorizontalResolution,
                                     verticalResolution: img.VerticalResolution,
-                                    backgroundColor: backgroundColor
+                                    backgroundColor: backgroundColor,
+                                    defaultSize: defaultSize
                                 );
 
             img.Dispose();
