@@ -1036,6 +1036,15 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The executions was aborted, some unkwon issue caused that. If you want more information, verify the log &quot;{0}&quot;.
+        /// </summary>
+        internal static string ProcessWithErrorTxt {
+            get {
+                return ResourceManager.GetString("ProcessWithErrorTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjustments cannot be made because there are files that are not automatically adjustable by the tool..
         /// </summary>
         internal static string RtbWarningsForAdjustments001Text {

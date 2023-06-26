@@ -502,4 +502,7 @@
   <data name="CbxEnableBrightnessContrastText" xml:space="preserve">
     <value>Enable image beautifier (edit {0})</value>
   </data>
+  <data name="ProcessWithErrorTxt" xml:space="preserve">
+    <value>The executions was aborted, some unkwon issue caused that. If you want more information, verify the log "{0}"</value>
+  </data>
 </root>

@@ -424,6 +424,9 @@
   <data name="PbxVolumesStatisticsTooltipText" xml:space="preserve">
     <value>Volumes encontrados para serem processados.</value>
   </data>
+  <data name="ProcessWithErrorTxt" xml:space="preserve">
+    <value>A execução foi abortada, alguns problema desconhecido ocasionou essa situação. Se você quiser mais informação, acesse o log "{0}"</value>
+  </data>
   <data name="RtbWarningsForAdjustments001Text" xml:space="preserve">
     <value>Não é possível realizar os ajustes pois existem arquivos que não são ajustáveis de forma automática pela ferramenta.</value>
   </data>

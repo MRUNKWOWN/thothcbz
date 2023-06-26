@@ -34,76 +34,87 @@ namespace ThothCbz
 
         public void AnalyseDirectories()
         {
-            var filesFounded = Directory.GetFiles(_directory, "*.*", SearchOption.AllDirectories).ToList();
-
-            if (filesFounded?.Any() != true)
+            try
             {
-                return;
+                var filesFounded = Directory.GetFiles(_directory, "*.*", SearchOption.AllDirectories).ToList();
+
+                if (filesFounded?.Any() != true)
+                {
+                    return;
+                }
+
+                filesFounded
+                    .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_BLANK_FILE_NAME))
+                    .ToList()
+                    .ForEach(f =>
+                    {
+                        filesFounded.Remove(f);
+                    });
+
+                var filesBag = new ConcurrentBag<FileEntity>();
+
+                Invoke(delegate
+                {
+                    txtAnalysis.Text = string.Format(filesFounded.Count > 1
+                                                       ? Resources.LblAnalysingMultiplesDescriptionText
+                                                       : Resources.LblAnalysingOneDescriptionText
+                                                    , filesFounded.Count.ToString("N0"));
+                    progressBarAnalysis.Maximum = filesFounded.Count;
+                });
+
+                Parallel.ForEach(filesFounded, file =>
+                    {
+                        filesBag.Add(new FileEntity(
+                                filePath: file,
+                                selectedFolderPath: _directory,
+                                useSelectedFolderAsLevel: Settings.Default.UseSelectedFolderAsPartOfTheFileStructure,
+                                splitFolderDefaultName: Settings.Default.DefaultSplitFolderName,
+                                unifyFolderDefaultName: Settings.Default.DefaultUnifyFolderName
+                            ));
+
+                        Invoke(delegate
+                        {
+                            progressBarAnalysis.Value = filesBag.Count;
+                        });
+                    });
+
+                Invoke(delegate
+                {
+                    ThothNotifyablePropertiesEntity.Default.SeriesDictionary = filesBag
+                                                                                .Where(w => !string.IsNullOrWhiteSpace(w?.Serie))
+                                                                                .GroupBy(g => g.Serie)
+                                                                                .Select(s => new { s.Key, Items = s.Select(m => m).ToList() })
+                                                                                .ToDictionary(d => d.Key, d => d.Items);
+
+                    if (!ThothNotifyablePropertiesEntity.Default.KeepUserChoicesBetweenFileAnalyses)
+                    {
+                        ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AsParallel().ForAll(s =>
+                        {
+
+                            var filePath = s.Value.FilesToGrayScaleFilePath();
+
+                            if (string.IsNullOrWhiteSpace(filePath) || File.Exists(filePath))
+                            {
+                                return;
+                            }
+
+                            var stb = new StringBuilder();
+
+                            File.WriteAllLines(
+                                    filePath,
+                                    s.Value.Select(s => s.FilePath).OrderBy(o => o)
+                                );
+                        });
+                    }
+                });
             }
 
-            filesFounded
-                .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_BLANK_FILE_NAME))
-                .ToList()
-                .ForEach(f => {
-                    filesFounded.Remove(f);
-                });
-
-            var filesBag = new ConcurrentBag<FileEntity>();
-
-            Invoke(delegate
+            catch (Exception ex)
             {
-                txtAnalysis.Text = string.Format(filesFounded.Count > 1
-                                                   ? Resources.LblAnalysingMultiplesDescriptionText
-                                                   : Resources.LblAnalysingOneDescriptionText
-                                                , filesFounded.Count.ToString("N0"));
-                progressBarAnalysis.Maximum = filesFounded.Count;
-            });
+                ex.InformAndSaveLog();
 
-            Parallel.ForEach(filesFounded, file =>
-                {
-                    filesBag.Add(new FileEntity(
-                            filePath: file,
-                            selectedFolderPath: _directory,
-                            useSelectedFolderAsLevel: Settings.Default.UseSelectedFolderAsPartOfTheFileStructure,
-                            splitFolderDefaultName: Settings.Default.DefaultSplitFolderName,
-                            unifyFolderDefaultName: Settings.Default.DefaultUnifyFolderName
-                        ));
-
-                    Invoke(delegate
-                    {
-                        progressBarAnalysis.Value = filesBag.Count;
-                    });
-                });
-
-            Invoke(delegate
-            {
-                ThothNotifyablePropertiesEntity.Default.SeriesDictionary = filesBag
-                                                                            .Where(w => !string.IsNullOrWhiteSpace(w?.Serie))
-                                                                            .GroupBy(g => g.Serie)
-                                                                            .Select(s => new { s.Key, Items = s.Select(m => m).ToList() })
-                                                                            .ToDictionary(d => d.Key, d => d.Items);
-
-                if (!ThothNotifyablePropertiesEntity.Default.KeepUserChoicesBetweenFileAnalyses)
-                {
-                    ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AsParallel().ForAll(s =>
-                    {
-
-                        var filePath = s.Value.FilesToGrayScaleFilePath();
-
-                        if (string.IsNullOrWhiteSpace(filePath) || File.Exists(filePath))
-                        {
-                            return;
-                        }
-
-                        var stb = new StringBuilder();
-
-                        File.WriteAllLines(
-                                filePath,
-                                s.Value.Select(s => s.FilePath).OrderBy(o => o)
-                            );
-                    });
-                }
-            });
+                backgroundWorkerAnalizer_RunWorkerCompleted(this, null);
+            }
         }
 
         private void AnalyticsForm_Shown(object sender, EventArgs e)
@@ -116,7 +127,7 @@ namespace ThothCbz
             AnalyseDirectories();
         }
 
-        private void backgroundWorkerAnalizer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void backgroundWorkerAnalizer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs? e)
         {
             Close();
         }
