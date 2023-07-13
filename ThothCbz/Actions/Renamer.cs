@@ -131,11 +131,14 @@ namespace ThothCbz.Actions
                     var directoryPath = (fileEntity.IsUnify || fileEntity.IsSplit)
                                             ? Directory.GetParent(Directory.GetParent(fileEntity.FilePath)!.FullName)!.FullName
                                             : Directory.GetParent(fileEntity.FilePath)!.FullName;
-
-                    Directory.Delete(
-                                directoryPath,
-                                true
-                            );
+                    try
+                    {
+                        Directory.Delete(
+                                    directoryPath,
+                                    true
+                                );
+                    }
+                    catch { }
                 }
             }
         }

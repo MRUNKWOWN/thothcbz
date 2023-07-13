@@ -58,7 +58,11 @@ namespace ThothCbz.Actions
                 {
                     if (Directory.Exists(directoryToCompress))
                     {
-                        Directory.Delete(directoryToCompress, true);
+                        try
+                        {
+                            Directory.Delete(directoryToCompress, true);
+                        }
+                        catch { }
                     }
 
                     wasDeleted = true;
@@ -107,12 +111,32 @@ namespace ThothCbz.Actions
                 }
             }
 
-            ZipFile.CreateFromDirectory(
-                        directoryToCompress, 
-                        $@"{directoryToSaveNewFile}\{fileName}.cbz", 
-                        CompressionLevel.NoCompression, 
-                        false
-                    );
+            var dirs = Directory.GetDirectories(directoryToCompress);
+
+            if (!dirs.Any())
+            {
+                ZipFile.CreateFromDirectory(
+                            directoryToCompress,
+                            $@"{directoryToSaveNewFile}\{fileName}.cbz",
+                            CompressionLevel.NoCompression,
+                            false
+                        );
+
+                return;
+            }
+
+            var dirTemp = $@"{directoryToCompress}-{Guid.NewGuid().ToString("N")}";
+
+            Directory.CreateDirectory(dirTemp);
+
+            var files = Directory.GetFiles(directoryToCompress, "*.*", SearchOption.AllDirectories).ToList();
+
+            foreach ( var file in files )
+            {
+                File.Move( file, dirTemp );
+            }
+
+            Directory.Delete(dirTemp, true);
         }
     }
 }
