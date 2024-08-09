@@ -149,7 +149,7 @@ namespace ThothCbz.Actions
                 int defaultCharactersAmountForFilesName
             )
         {
-            int pageNumber = 0;
+            int pageNumber = -1;
 
             var filePath = fileEntityList
                                 .Where(w => !w.IsUnify && !w.IsSplit)
