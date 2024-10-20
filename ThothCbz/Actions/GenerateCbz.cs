@@ -35,8 +35,8 @@ namespace ThothCbz.Actions
             if(hasVolume)
             {
                 volumeName = int.TryParse(fileEntity.Volume, out var volume)
-                                ? $@"-{volume.ToString().PadLeft(GlobalConstants.DEFAULT_CHARACTERS_AMOUNT_FOR_FOLDERS, GlobalConstants.DEFAULT_CHARACTER_FOR_PADDING_FOR_FOLDER)}" 
-                                : $@"-{fileEntity.Volume}";
+                                ? $@" - {volume.ToString().PadLeft(GlobalConstants.DEFAULT_CHARACTERS_AMOUNT_FOR_FOLDERS, GlobalConstants.DEFAULT_CHARACTER_FOR_PADDING_FOR_FOLDER)}" 
+                                : $@" - {fileEntity.Volume}";
             }
 
             ModifyAndSave(

@@ -733,6 +733,7 @@ namespace ThothCbz
             lblSplitAnalytics.DataBindings.Add(nameof(lblSplitAnalytics.Enabled), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.ExistSplittableFiles), false, DataSourceUpdateMode.Never);
 
             txtDirectory.DataBindings.Add(nameof(txtDirectory.Text), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.DirectoryPathToAnalyze), false, DataSourceUpdateMode.Never);
+            txtDirectory.DataBindings.Add(nameof(txtDirectory.Font), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.DirectoryPathFont), false, DataSourceUpdateMode.Never);
 
             pnlSplitter03.DataBindings.Add(nameof(pnlSplitter03.Visible), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.AnalysisExecuted), false, DataSourceUpdateMode.Never);
 
