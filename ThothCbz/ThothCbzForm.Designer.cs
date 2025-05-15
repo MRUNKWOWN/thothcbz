@@ -123,9 +123,9 @@
             // 
             pbxLogo.Image = Properties.Resources.ThothCbz1;
             pbxLogo.Location = new System.Drawing.Point(0, -1);
-            pbxLogo.Margin = new Padding(3, 4, 3, 4);
+            pbxLogo.Margin = new Padding(2, 3, 2, 3);
             pbxLogo.Name = "pbxLogo";
-            pbxLogo.Size = new System.Drawing.Size(200, 200);
+            pbxLogo.Size = new System.Drawing.Size(160, 160);
             pbxLogo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxLogo.TabIndex = 0;
             pbxLogo.TabStop = false;
@@ -136,12 +136,12 @@
             pbxBtnAdjustFiles.Enabled = false;
             pbxBtnAdjustFiles.Image = Properties.Resources.BtnAdjustmentsInactive512x512;
             pbxBtnAdjustFiles.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxBtnAdjustFiles.Location = new System.Drawing.Point(55, 205);
-            pbxBtnAdjustFiles.Margin = new Padding(3, 4, 3, 4);
-            pbxBtnAdjustFiles.MaximumSize = new System.Drawing.Size(90, 90);
-            pbxBtnAdjustFiles.MinimumSize = new System.Drawing.Size(90, 90);
+            pbxBtnAdjustFiles.Location = new System.Drawing.Point(44, 164);
+            pbxBtnAdjustFiles.Margin = new Padding(2, 3, 2, 3);
+            pbxBtnAdjustFiles.MaximumSize = new System.Drawing.Size(72, 72);
+            pbxBtnAdjustFiles.MinimumSize = new System.Drawing.Size(72, 72);
             pbxBtnAdjustFiles.Name = "pbxBtnAdjustFiles";
-            pbxBtnAdjustFiles.Size = new System.Drawing.Size(90, 90);
+            pbxBtnAdjustFiles.Size = new System.Drawing.Size(72, 72);
             pbxBtnAdjustFiles.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnAdjustFiles.TabIndex = 6;
             pbxBtnAdjustFiles.TabStop = false;
@@ -151,10 +151,10 @@
             pbxBtnUnifyPages.Cursor = Cursors.Hand;
             pbxBtnUnifyPages.Enabled = false;
             pbxBtnUnifyPages.Image = Properties.Resources.BtnUnifyInactive512x512;
-            pbxBtnUnifyPages.Location = new System.Drawing.Point(55, 300);
-            pbxBtnUnifyPages.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnUnifyPages.Location = new System.Drawing.Point(44, 240);
+            pbxBtnUnifyPages.Margin = new Padding(2, 3, 2, 3);
             pbxBtnUnifyPages.Name = "pbxBtnUnifyPages";
-            pbxBtnUnifyPages.Size = new System.Drawing.Size(90, 90);
+            pbxBtnUnifyPages.Size = new System.Drawing.Size(72, 72);
             pbxBtnUnifyPages.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnUnifyPages.TabIndex = 8;
             pbxBtnUnifyPages.TabStop = false;
@@ -164,12 +164,12 @@
             pbxBtnSplitPages.Cursor = Cursors.Hand;
             pbxBtnSplitPages.Enabled = false;
             pbxBtnSplitPages.Image = Properties.Resources.BtnSplitInactive512x512;
-            pbxBtnSplitPages.Location = new System.Drawing.Point(55, 395);
-            pbxBtnSplitPages.Margin = new Padding(3, 4, 3, 4);
-            pbxBtnSplitPages.MaximumSize = new System.Drawing.Size(90, 90);
-            pbxBtnSplitPages.MinimumSize = new System.Drawing.Size(90, 90);
+            pbxBtnSplitPages.Location = new System.Drawing.Point(44, 316);
+            pbxBtnSplitPages.Margin = new Padding(2, 3, 2, 3);
+            pbxBtnSplitPages.MaximumSize = new System.Drawing.Size(72, 72);
+            pbxBtnSplitPages.MinimumSize = new System.Drawing.Size(72, 72);
             pbxBtnSplitPages.Name = "pbxBtnSplitPages";
-            pbxBtnSplitPages.Size = new System.Drawing.Size(90, 90);
+            pbxBtnSplitPages.Size = new System.Drawing.Size(72, 72);
             pbxBtnSplitPages.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnSplitPages.TabIndex = 9;
             pbxBtnSplitPages.TabStop = false;
@@ -197,10 +197,10 @@
             pnlBottom.Controls.Add(pbxAnalyticsTitle);
             pnlBottom.Controls.Add(pbxBtnExecute);
             pnlBottom.Dock = DockStyle.Bottom;
-            pnlBottom.Location = new System.Drawing.Point(0, 833);
-            pnlBottom.Margin = new Padding(3, 4, 3, 4);
+            pnlBottom.Location = new System.Drawing.Point(0, 673);
+            pnlBottom.Margin = new Padding(2, 3, 2, 3);
             pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new System.Drawing.Size(1902, 200);
+            pnlBottom.Size = new System.Drawing.Size(1523, 160);
             pnlBottom.TabIndex = 10;
             pnlBottom.Resize += pnlBottom_Resize;
             // 
@@ -209,9 +209,10 @@
             lblVersion.BackColor = System.Drawing.Color.Transparent;
             lblVersion.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             lblVersion.ForeColor = SystemColors.Window;
-            lblVersion.Location = new System.Drawing.Point(1680, 176);
+            lblVersion.Location = new System.Drawing.Point(1344, 141);
+            lblVersion.Margin = new Padding(2, 0, 2, 0);
             lblVersion.Name = "lblVersion";
-            lblVersion.Size = new System.Drawing.Size(215, 24);
+            lblVersion.Size = new System.Drawing.Size(172, 19);
             lblVersion.TabIndex = 33;
             lblVersion.Text = "Version 1.0.0.0";
             lblVersion.TextAlign = ContentAlignment.TopRight;
@@ -221,9 +222,10 @@
             lblUnknwonAnalytics.Enabled = false;
             lblUnknwonAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblUnknwonAnalytics.ForeColor = System.Drawing.Color.White;
-            lblUnknwonAnalytics.Location = new System.Drawing.Point(940, 65);
+            lblUnknwonAnalytics.Location = new System.Drawing.Point(752, 52);
+            lblUnknwonAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblUnknwonAnalytics.Name = "lblUnknwonAnalytics";
-            lblUnknwonAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblUnknwonAnalytics.Size = new System.Drawing.Size(160, 24);
             lblUnknwonAnalytics.TabIndex = 30;
             lblUnknwonAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -232,12 +234,12 @@
             pbxUnknownStatistics.Enabled = false;
             pbxUnknownStatistics.Image = Properties.Resources.BtnUnknownStatisticsDisable;
             pbxUnknownStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxUnknownStatistics.Location = new System.Drawing.Point(875, 60);
-            pbxUnknownStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxUnknownStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxUnknownStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxUnknownStatistics.Location = new System.Drawing.Point(700, 48);
+            pbxUnknownStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxUnknownStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxUnknownStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxUnknownStatistics.Name = "pbxUnknownStatistics";
-            pbxUnknownStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxUnknownStatistics.Size = new System.Drawing.Size(40, 40);
             pbxUnknownStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxUnknownStatistics.TabIndex = 29;
             pbxUnknownStatistics.TabStop = false;
@@ -247,10 +249,10 @@
             pbxBtnCancel.Cursor = Cursors.Hand;
             pbxBtnCancel.Enabled = false;
             pbxBtnCancel.Image = Properties.Resources.BtnCancelInactive512x512;
-            pbxBtnCancel.Location = new System.Drawing.Point(1510, 55);
-            pbxBtnCancel.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnCancel.Location = new System.Drawing.Point(1208, 44);
+            pbxBtnCancel.Margin = new Padding(2, 3, 2, 3);
             pbxBtnCancel.Name = "pbxBtnCancel";
-            pbxBtnCancel.Size = new System.Drawing.Size(90, 90);
+            pbxBtnCancel.Size = new System.Drawing.Size(72, 72);
             pbxBtnCancel.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnCancel.TabIndex = 15;
             pbxBtnCancel.TabStop = false;
@@ -260,10 +262,10 @@
             pbxBtnRefresh.Cursor = Cursors.Hand;
             pbxBtnRefresh.Enabled = false;
             pbxBtnRefresh.Image = Properties.Resources.BtnRefreshInactive512x512;
-            pbxBtnRefresh.Location = new System.Drawing.Point(1620, 55);
-            pbxBtnRefresh.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnRefresh.Location = new System.Drawing.Point(1296, 44);
+            pbxBtnRefresh.Margin = new Padding(2, 3, 2, 3);
             pbxBtnRefresh.Name = "pbxBtnRefresh";
-            pbxBtnRefresh.Size = new System.Drawing.Size(90, 90);
+            pbxBtnRefresh.Size = new System.Drawing.Size(72, 72);
             pbxBtnRefresh.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnRefresh.TabIndex = 28;
             pbxBtnRefresh.TabStop = false;
@@ -273,9 +275,10 @@
             lblSplitAnalytics.Enabled = false;
             lblSplitAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblSplitAnalytics.ForeColor = System.Drawing.Color.White;
-            lblSplitAnalytics.Location = new System.Drawing.Point(655, 136);
+            lblSplitAnalytics.Location = new System.Drawing.Point(524, 109);
+            lblSplitAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblSplitAnalytics.Name = "lblSplitAnalytics";
-            lblSplitAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblSplitAnalytics.Size = new System.Drawing.Size(160, 24);
             lblSplitAnalytics.TabIndex = 27;
             lblSplitAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -284,12 +287,12 @@
             pbxSplitStatistics.Enabled = false;
             pbxSplitStatistics.Image = Properties.Resources.BtnSplitStatisticsDisable;
             pbxSplitStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxSplitStatistics.Location = new System.Drawing.Point(590, 130);
-            pbxSplitStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxSplitStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxSplitStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxSplitStatistics.Location = new System.Drawing.Point(472, 104);
+            pbxSplitStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxSplitStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxSplitStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxSplitStatistics.Name = "pbxSplitStatistics";
-            pbxSplitStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxSplitStatistics.Size = new System.Drawing.Size(40, 40);
             pbxSplitStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxSplitStatistics.TabIndex = 26;
             pbxSplitStatistics.TabStop = false;
@@ -299,9 +302,10 @@
             lblUnifyAnalytics.Enabled = false;
             lblUnifyAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblUnifyAnalytics.ForeColor = System.Drawing.Color.White;
-            lblUnifyAnalytics.Location = new System.Drawing.Point(370, 136);
+            lblUnifyAnalytics.Location = new System.Drawing.Point(296, 109);
+            lblUnifyAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblUnifyAnalytics.Name = "lblUnifyAnalytics";
-            lblUnifyAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblUnifyAnalytics.Size = new System.Drawing.Size(160, 24);
             lblUnifyAnalytics.TabIndex = 25;
             lblUnifyAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -310,12 +314,12 @@
             pbxUnifyStatistics.Enabled = false;
             pbxUnifyStatistics.Image = Properties.Resources.BtnUnifyStatisticsDisable;
             pbxUnifyStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxUnifyStatistics.Location = new System.Drawing.Point(305, 130);
-            pbxUnifyStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxUnifyStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxUnifyStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxUnifyStatistics.Location = new System.Drawing.Point(244, 104);
+            pbxUnifyStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxUnifyStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxUnifyStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxUnifyStatistics.Name = "pbxUnifyStatistics";
-            pbxUnifyStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxUnifyStatistics.Size = new System.Drawing.Size(40, 40);
             pbxUnifyStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxUnifyStatistics.TabIndex = 24;
             pbxUnifyStatistics.TabStop = false;
@@ -325,9 +329,10 @@
             lblConversionAnalytics.Enabled = false;
             lblConversionAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblConversionAnalytics.ForeColor = System.Drawing.Color.White;
-            lblConversionAnalytics.Location = new System.Drawing.Point(85, 136);
+            lblConversionAnalytics.Location = new System.Drawing.Point(68, 109);
+            lblConversionAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblConversionAnalytics.Name = "lblConversionAnalytics";
-            lblConversionAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblConversionAnalytics.Size = new System.Drawing.Size(160, 24);
             lblConversionAnalytics.TabIndex = 23;
             lblConversionAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -336,12 +341,12 @@
             pbxConversionStatistics.Enabled = false;
             pbxConversionStatistics.Image = Properties.Resources.BtnTransformationDisable512x512;
             pbxConversionStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxConversionStatistics.Location = new System.Drawing.Point(20, 130);
-            pbxConversionStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxConversionStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxConversionStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxConversionStatistics.Location = new System.Drawing.Point(16, 104);
+            pbxConversionStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxConversionStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxConversionStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxConversionStatistics.Name = "pbxConversionStatistics";
-            pbxConversionStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxConversionStatistics.Size = new System.Drawing.Size(40, 40);
             pbxConversionStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxConversionStatistics.TabIndex = 22;
             pbxConversionStatistics.TabStop = false;
@@ -351,9 +356,10 @@
             lblSeriesAnalytics.Enabled = false;
             lblSeriesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblSeriesAnalytics.ForeColor = System.Drawing.Color.White;
-            lblSeriesAnalytics.Location = new System.Drawing.Point(655, 65);
+            lblSeriesAnalytics.Location = new System.Drawing.Point(524, 52);
+            lblSeriesAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblSeriesAnalytics.Name = "lblSeriesAnalytics";
-            lblSeriesAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblSeriesAnalytics.Size = new System.Drawing.Size(160, 24);
             lblSeriesAnalytics.TabIndex = 21;
             lblSeriesAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -362,12 +368,12 @@
             pbxSeriesStatistics.Enabled = false;
             pbxSeriesStatistics.Image = Properties.Resources.BtnSeriesDisable512x512;
             pbxSeriesStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxSeriesStatistics.Location = new System.Drawing.Point(590, 60);
-            pbxSeriesStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxSeriesStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxSeriesStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxSeriesStatistics.Location = new System.Drawing.Point(472, 48);
+            pbxSeriesStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxSeriesStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxSeriesStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxSeriesStatistics.Name = "pbxSeriesStatistics";
-            pbxSeriesStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxSeriesStatistics.Size = new System.Drawing.Size(40, 40);
             pbxSeriesStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxSeriesStatistics.TabIndex = 20;
             pbxSeriesStatistics.TabStop = false;
@@ -377,9 +383,10 @@
             lblVolumesAnalytics.Enabled = false;
             lblVolumesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblVolumesAnalytics.ForeColor = System.Drawing.Color.White;
-            lblVolumesAnalytics.Location = new System.Drawing.Point(370, 65);
+            lblVolumesAnalytics.Location = new System.Drawing.Point(296, 52);
+            lblVolumesAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblVolumesAnalytics.Name = "lblVolumesAnalytics";
-            lblVolumesAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblVolumesAnalytics.Size = new System.Drawing.Size(160, 24);
             lblVolumesAnalytics.TabIndex = 19;
             lblVolumesAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -388,12 +395,12 @@
             pbxVolumesStatistics.Enabled = false;
             pbxVolumesStatistics.Image = Properties.Resources.BtnVolumesDisable512x512;
             pbxVolumesStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxVolumesStatistics.Location = new System.Drawing.Point(305, 60);
-            pbxVolumesStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxVolumesStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxVolumesStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxVolumesStatistics.Location = new System.Drawing.Point(244, 48);
+            pbxVolumesStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxVolumesStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxVolumesStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxVolumesStatistics.Name = "pbxVolumesStatistics";
-            pbxVolumesStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxVolumesStatistics.Size = new System.Drawing.Size(40, 40);
             pbxVolumesStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxVolumesStatistics.TabIndex = 18;
             pbxVolumesStatistics.TabStop = false;
@@ -403,9 +410,10 @@
             lblFilesAnalytics.Enabled = false;
             lblFilesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblFilesAnalytics.ForeColor = System.Drawing.Color.White;
-            lblFilesAnalytics.Location = new System.Drawing.Point(85, 65);
+            lblFilesAnalytics.Location = new System.Drawing.Point(68, 52);
+            lblFilesAnalytics.Margin = new Padding(2, 0, 2, 0);
             lblFilesAnalytics.Name = "lblFilesAnalytics";
-            lblFilesAnalytics.Size = new System.Drawing.Size(200, 30);
+            lblFilesAnalytics.Size = new System.Drawing.Size(160, 24);
             lblFilesAnalytics.TabIndex = 17;
             lblFilesAnalytics.Text = "99.999.999 / 99.999.999";
             // 
@@ -414,12 +422,12 @@
             pbxFilesStatistics.Enabled = false;
             pbxFilesStatistics.Image = Properties.Resources.BtnFileDisable512x512;
             pbxFilesStatistics.InitialImage = Properties.Resources.BtnAdjustmentsInactive512x512;
-            pbxFilesStatistics.Location = new System.Drawing.Point(20, 60);
-            pbxFilesStatistics.Margin = new Padding(3, 4, 3, 4);
-            pbxFilesStatistics.MaximumSize = new System.Drawing.Size(50, 50);
-            pbxFilesStatistics.MinimumSize = new System.Drawing.Size(50, 50);
+            pbxFilesStatistics.Location = new System.Drawing.Point(16, 48);
+            pbxFilesStatistics.Margin = new Padding(2, 3, 2, 3);
+            pbxFilesStatistics.MaximumSize = new System.Drawing.Size(40, 40);
+            pbxFilesStatistics.MinimumSize = new System.Drawing.Size(40, 40);
             pbxFilesStatistics.Name = "pbxFilesStatistics";
-            pbxFilesStatistics.Size = new System.Drawing.Size(50, 50);
+            pbxFilesStatistics.Size = new System.Drawing.Size(40, 40);
             pbxFilesStatistics.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxFilesStatistics.TabIndex = 13;
             pbxFilesStatistics.TabStop = false;
@@ -427,10 +435,10 @@
             // pbxAnalyticsTitle
             // 
             pbxAnalyticsTitle.Image = Properties.Resources.analytics_titles;
-            pbxAnalyticsTitle.Location = new System.Drawing.Point(11, 0);
-            pbxAnalyticsTitle.Margin = new Padding(3, 4, 3, 4);
+            pbxAnalyticsTitle.Location = new System.Drawing.Point(9, 0);
+            pbxAnalyticsTitle.Margin = new Padding(2, 3, 2, 3);
             pbxAnalyticsTitle.Name = "pbxAnalyticsTitle";
-            pbxAnalyticsTitle.Size = new System.Drawing.Size(357, 47);
+            pbxAnalyticsTitle.Size = new System.Drawing.Size(286, 38);
             pbxAnalyticsTitle.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxAnalyticsTitle.TabIndex = 16;
             pbxAnalyticsTitle.TabStop = false;
@@ -440,10 +448,10 @@
             pbxBtnExecute.Cursor = Cursors.Hand;
             pbxBtnExecute.Enabled = false;
             pbxBtnExecute.Image = Properties.Resources.BtnPlayInactive512x512;
-            pbxBtnExecute.Location = new System.Drawing.Point(1730, 20);
-            pbxBtnExecute.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnExecute.Location = new System.Drawing.Point(1384, 16);
+            pbxBtnExecute.Margin = new Padding(2, 3, 2, 3);
             pbxBtnExecute.Name = "pbxBtnExecute";
-            pbxBtnExecute.Size = new System.Drawing.Size(150, 150);
+            pbxBtnExecute.Size = new System.Drawing.Size(120, 120);
             pbxBtnExecute.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnExecute.TabIndex = 12;
             pbxBtnExecute.TabStop = false;
@@ -453,10 +461,10 @@
             pbxBtnGenerateCbz.Cursor = Cursors.Hand;
             pbxBtnGenerateCbz.Enabled = false;
             pbxBtnGenerateCbz.Image = Properties.Resources.BtnCbzInactive512x512;
-            pbxBtnGenerateCbz.Location = new System.Drawing.Point(55, 490);
-            pbxBtnGenerateCbz.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnGenerateCbz.Location = new System.Drawing.Point(44, 392);
+            pbxBtnGenerateCbz.Margin = new Padding(2, 3, 2, 3);
             pbxBtnGenerateCbz.Name = "pbxBtnGenerateCbz";
-            pbxBtnGenerateCbz.Size = new System.Drawing.Size(90, 90);
+            pbxBtnGenerateCbz.Size = new System.Drawing.Size(72, 72);
             pbxBtnGenerateCbz.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnGenerateCbz.TabIndex = 11;
             pbxBtnGenerateCbz.TabStop = false;
@@ -467,10 +475,10 @@
             pnlSettings.Controls.Add(pnlHeaderSettings);
             pnlSettings.Controls.Add(pnlSettingsControlsGroup);
             pnlSettings.Dock = DockStyle.Right;
-            pnlSettings.Location = new System.Drawing.Point(1388, 0);
-            pnlSettings.Margin = new Padding(3, 4, 3, 4);
+            pnlSettings.Location = new System.Drawing.Point(1112, 0);
+            pnlSettings.Margin = new Padding(2, 3, 2, 3);
             pnlSettings.Name = "pnlSettings";
-            pnlSettings.Size = new System.Drawing.Size(514, 833);
+            pnlSettings.Size = new System.Drawing.Size(411, 673);
             pnlSettings.TabIndex = 12;
             // 
             // pnlHeaderSettings
@@ -481,18 +489,18 @@
             pnlHeaderSettings.Controls.Add(txtDirectory);
             pnlHeaderSettings.Dock = DockStyle.Top;
             pnlHeaderSettings.Location = new System.Drawing.Point(0, 0);
-            pnlHeaderSettings.Margin = new Padding(3, 4, 3, 4);
+            pnlHeaderSettings.Margin = new Padding(2, 3, 2, 3);
             pnlHeaderSettings.Name = "pnlHeaderSettings";
-            pnlHeaderSettings.Size = new System.Drawing.Size(514, 180);
+            pnlHeaderSettings.Size = new System.Drawing.Size(411, 144);
             pnlHeaderSettings.TabIndex = 21;
             // 
             // pbxSettingsTitle
             // 
             pbxSettingsTitle.Image = Properties.Resources.settings_titles;
-            pbxSettingsTitle.Location = new System.Drawing.Point(149, 16);
-            pbxSettingsTitle.Margin = new Padding(3, 4, 3, 4);
+            pbxSettingsTitle.Location = new System.Drawing.Point(119, 13);
+            pbxSettingsTitle.Margin = new Padding(2, 3, 2, 3);
             pbxSettingsTitle.Name = "pbxSettingsTitle";
-            pbxSettingsTitle.Size = new System.Drawing.Size(357, 47);
+            pbxSettingsTitle.Size = new System.Drawing.Size(286, 38);
             pbxSettingsTitle.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxSettingsTitle.TabIndex = 14;
             pbxSettingsTitle.TabStop = false;
@@ -502,10 +510,10 @@
             pbxBtnFolder.Cursor = Cursors.Hand;
             pbxBtnFolder.Enabled = false;
             pbxBtnFolder.Image = Properties.Resources.BtnFolderInactive512x512;
-            pbxBtnFolder.Location = new System.Drawing.Point(19, 77);
-            pbxBtnFolder.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnFolder.Location = new System.Drawing.Point(15, 62);
+            pbxBtnFolder.Margin = new Padding(2, 3, 2, 3);
             pbxBtnFolder.Name = "pbxBtnFolder";
-            pbxBtnFolder.Size = new System.Drawing.Size(90, 90);
+            pbxBtnFolder.Size = new System.Drawing.Size(72, 72);
             pbxBtnFolder.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnFolder.TabIndex = 13;
             pbxBtnFolder.TabStop = false;
@@ -515,13 +523,13 @@
             txtDirectory.BorderStyle = BorderStyle.None;
             txtDirectory.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             txtDirectory.ForeColor = System.Drawing.Color.White;
-            txtDirectory.Location = new System.Drawing.Point(118, 77);
-            txtDirectory.Margin = new Padding(3, 4, 3, 4);
+            txtDirectory.Location = new System.Drawing.Point(94, 62);
+            txtDirectory.Margin = new Padding(2, 3, 2, 3);
             txtDirectory.Multiline = true;
             txtDirectory.Name = "txtDirectory";
             txtDirectory.ReadOnly = true;
             txtDirectory.ShortcutsEnabled = false;
-            txtDirectory.Size = new System.Drawing.Size(383, 90);
+            txtDirectory.Size = new System.Drawing.Size(306, 72);
             txtDirectory.TabIndex = 15;
             txtDirectory.TabStop = false;
             // 
@@ -542,10 +550,10 @@
             pnlSettingsControlsGroup.Controls.Add(txtUnifyableDirectory);
             pnlSettingsControlsGroup.Controls.Add(lblUnifyableDirectory);
             pnlSettingsControlsGroup.Controls.Add(cbxUseSelectedDirectory);
-            pnlSettingsControlsGroup.Location = new System.Drawing.Point(0, 180);
-            pnlSettingsControlsGroup.Margin = new Padding(3, 4, 3, 4);
+            pnlSettingsControlsGroup.Location = new System.Drawing.Point(0, 144);
+            pnlSettingsControlsGroup.Margin = new Padding(2, 3, 2, 3);
             pnlSettingsControlsGroup.Name = "pnlSettingsControlsGroup";
-            pnlSettingsControlsGroup.Size = new System.Drawing.Size(514, 653);
+            pnlSettingsControlsGroup.Size = new System.Drawing.Size(411, 522);
             pnlSettingsControlsGroup.TabIndex = 20;
             // 
             // cbxEnableBrightnessContrast
@@ -553,10 +561,10 @@
             cbxEnableBrightnessContrast.BackgroundImage = Properties.Resources.thothBckColor;
             cbxEnableBrightnessContrast.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             cbxEnableBrightnessContrast.ForeColor = SystemColors.Window;
-            cbxEnableBrightnessContrast.Location = new System.Drawing.Point(11, 498);
-            cbxEnableBrightnessContrast.Margin = new Padding(3, 4, 3, 4);
+            cbxEnableBrightnessContrast.Location = new System.Drawing.Point(9, 398);
+            cbxEnableBrightnessContrast.Margin = new Padding(2, 3, 2, 3);
             cbxEnableBrightnessContrast.Name = "cbxEnableBrightnessContrast";
-            cbxEnableBrightnessContrast.Size = new System.Drawing.Size(481, 66);
+            cbxEnableBrightnessContrast.Size = new System.Drawing.Size(385, 53);
             cbxEnableBrightnessContrast.TabIndex = 35;
             cbxEnableBrightnessContrast.Text = "Enable image beautifier (edit file_to_grayscale.txt)";
             cbxEnableBrightnessContrast.UseVisualStyleBackColor = true;
@@ -564,10 +572,10 @@
             // pnlSplitter03
             // 
             pnlSplitter03.BackgroundImage = Properties.Resources.splitter;
-            pnlSplitter03.Location = new System.Drawing.Point(6, 563);
-            pnlSplitter03.Margin = new Padding(3, 4, 3, 4);
+            pnlSplitter03.Location = new System.Drawing.Point(5, 450);
+            pnlSplitter03.Margin = new Padding(2, 3, 2, 3);
             pnlSplitter03.Name = "pnlSplitter03";
-            pnlSplitter03.Size = new System.Drawing.Size(498, 19);
+            pnlSplitter03.Size = new System.Drawing.Size(398, 15);
             pnlSplitter03.TabIndex = 34;
             // 
             // cbxBlankSpace
@@ -575,10 +583,10 @@
             cbxBlankSpace.BackgroundImage = Properties.Resources.thothBckColor;
             cbxBlankSpace.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             cbxBlankSpace.ForeColor = SystemColors.Window;
-            cbxBlankSpace.Location = new System.Drawing.Point(15, 572);
-            cbxBlankSpace.Margin = new Padding(3, 4, 3, 4);
+            cbxBlankSpace.Location = new System.Drawing.Point(12, 458);
+            cbxBlankSpace.Margin = new Padding(2, 3, 2, 3);
             cbxBlankSpace.Name = "cbxBlankSpace";
-            cbxBlankSpace.Size = new System.Drawing.Size(481, 72);
+            cbxBlankSpace.Size = new System.Drawing.Size(385, 58);
             cbxBlankSpace.TabIndex = 33;
             cbxBlankSpace.Text = "Add blank space between unified pages if the pages have diferente widths.";
             cbxBlankSpace.UseVisualStyleBackColor = true;
@@ -586,10 +594,10 @@
             // pnlSplitter01
             // 
             pnlSplitter01.BackgroundImage = Properties.Resources.splitter;
-            pnlSplitter01.Location = new System.Drawing.Point(7, 277);
-            pnlSplitter01.Margin = new Padding(3, 4, 3, 4);
+            pnlSplitter01.Location = new System.Drawing.Point(6, 222);
+            pnlSplitter01.Margin = new Padding(2, 3, 2, 3);
             pnlSplitter01.Name = "pnlSplitter01";
-            pnlSplitter01.Size = new System.Drawing.Size(498, 19);
+            pnlSplitter01.Size = new System.Drawing.Size(398, 15);
             pnlSplitter01.TabIndex = 31;
             // 
             // cbbReadOrder
@@ -598,10 +606,10 @@
             cbbReadOrder.FlatStyle = FlatStyle.Flat;
             cbbReadOrder.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             cbbReadOrder.FormattingEnabled = true;
-            cbbReadOrder.Location = new System.Drawing.Point(42, 454);
-            cbbReadOrder.Margin = new Padding(3, 4, 3, 4);
+            cbbReadOrder.Location = new System.Drawing.Point(34, 363);
+            cbbReadOrder.Margin = new Padding(2, 3, 2, 3);
             cbbReadOrder.Name = "cbbReadOrder";
-            cbbReadOrder.Size = new System.Drawing.Size(433, 33);
+            cbbReadOrder.Size = new System.Drawing.Size(347, 28);
             cbbReadOrder.TabIndex = 29;
             // 
             // lblReadingOrder
@@ -609,9 +617,10 @@
             lblReadingOrder.BackColor = System.Drawing.Color.Transparent;
             lblReadingOrder.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             lblReadingOrder.ForeColor = SystemColors.Window;
-            lblReadingOrder.Location = new System.Drawing.Point(35, 419);
+            lblReadingOrder.Location = new System.Drawing.Point(28, 335);
+            lblReadingOrder.Margin = new Padding(2, 0, 2, 0);
             lblReadingOrder.Name = "lblReadingOrder";
-            lblReadingOrder.Size = new System.Drawing.Size(470, 42);
+            lblReadingOrder.Size = new System.Drawing.Size(376, 34);
             lblReadingOrder.TabIndex = 28;
             lblReadingOrder.Text = "The order of reading for all the series found are:";
             // 
@@ -619,11 +628,11 @@
             // 
             nudMinimalHeight.BorderStyle = BorderStyle.FixedSingle;
             nudMinimalHeight.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            nudMinimalHeight.Location = new System.Drawing.Point(42, 366);
-            nudMinimalHeight.Margin = new Padding(3, 4, 3, 4);
+            nudMinimalHeight.Location = new System.Drawing.Point(34, 293);
+            nudMinimalHeight.Margin = new Padding(2, 3, 2, 3);
             nudMinimalHeight.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             nudMinimalHeight.Name = "nudMinimalHeight";
-            nudMinimalHeight.Size = new System.Drawing.Size(433, 32);
+            nudMinimalHeight.Size = new System.Drawing.Size(346, 27);
             nudMinimalHeight.TabIndex = 27;
             nudMinimalHeight.TextAlign = HorizontalAlignment.Center;
             // 
@@ -632,10 +641,10 @@
             cbxUpscaleImages.BackgroundImage = Properties.Resources.thothBckColor;
             cbxUpscaleImages.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             cbxUpscaleImages.ForeColor = SystemColors.Window;
-            cbxUpscaleImages.Location = new System.Drawing.Point(15, 298);
-            cbxUpscaleImages.Margin = new Padding(3, 4, 3, 4);
+            cbxUpscaleImages.Location = new System.Drawing.Point(12, 238);
+            cbxUpscaleImages.Margin = new Padding(2, 3, 2, 3);
             cbxUpscaleImages.Name = "cbxUpscaleImages";
-            cbxUpscaleImages.Size = new System.Drawing.Size(481, 72);
+            cbxUpscaleImages.Size = new System.Drawing.Size(385, 58);
             cbxUpscaleImages.TabIndex = 26;
             cbxUpscaleImages.Text = "Upscale all the images for the minimal height of (in pixels):";
             cbxUpscaleImages.UseVisualStyleBackColor = true;
@@ -644,10 +653,10 @@
             // 
             txtSplitableDirectory.BorderStyle = BorderStyle.FixedSingle;
             txtSplitableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            txtSplitableDirectory.Location = new System.Drawing.Point(42, 229);
-            txtSplitableDirectory.Margin = new Padding(3, 4, 3, 4);
+            txtSplitableDirectory.Location = new System.Drawing.Point(34, 183);
+            txtSplitableDirectory.Margin = new Padding(2, 3, 2, 3);
             txtSplitableDirectory.Name = "txtSplitableDirectory";
-            txtSplitableDirectory.Size = new System.Drawing.Size(433, 32);
+            txtSplitableDirectory.Size = new System.Drawing.Size(347, 27);
             txtSplitableDirectory.TabIndex = 25;
             txtSplitableDirectory.TextAlign = HorizontalAlignment.Center;
             // 
@@ -656,9 +665,10 @@
             lblSplitableDirectory.BackColor = System.Drawing.Color.Transparent;
             lblSplitableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             lblSplitableDirectory.ForeColor = SystemColors.Window;
-            lblSplitableDirectory.Location = new System.Drawing.Point(19, 176);
+            lblSplitableDirectory.Location = new System.Drawing.Point(15, 141);
+            lblSplitableDirectory.Margin = new Padding(2, 0, 2, 0);
             lblSplitableDirectory.Name = "lblSplitableDirectory";
-            lblSplitableDirectory.Size = new System.Drawing.Size(481, 61);
+            lblSplitableDirectory.Size = new System.Drawing.Size(385, 49);
             lblSplitableDirectory.TabIndex = 24;
             lblSplitableDirectory.Text = "All pages that needs to be splitted are located in the follow directory:";
             // 
@@ -666,10 +676,10 @@
             // 
             txtUnifyableDirectory.BorderStyle = BorderStyle.FixedSingle;
             txtUnifyableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            txtUnifyableDirectory.Location = new System.Drawing.Point(42, 123);
-            txtUnifyableDirectory.Margin = new Padding(3, 4, 3, 4);
+            txtUnifyableDirectory.Location = new System.Drawing.Point(34, 98);
+            txtUnifyableDirectory.Margin = new Padding(2, 3, 2, 3);
             txtUnifyableDirectory.Name = "txtUnifyableDirectory";
-            txtUnifyableDirectory.Size = new System.Drawing.Size(433, 32);
+            txtUnifyableDirectory.Size = new System.Drawing.Size(347, 27);
             txtUnifyableDirectory.TabIndex = 23;
             txtUnifyableDirectory.TextAlign = HorizontalAlignment.Center;
             // 
@@ -678,9 +688,10 @@
             lblUnifyableDirectory.BackColor = System.Drawing.Color.Transparent;
             lblUnifyableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             lblUnifyableDirectory.ForeColor = SystemColors.Window;
-            lblUnifyableDirectory.Location = new System.Drawing.Point(15, 70);
+            lblUnifyableDirectory.Location = new System.Drawing.Point(12, 56);
+            lblUnifyableDirectory.Margin = new Padding(2, 0, 2, 0);
             lblUnifyableDirectory.Name = "lblUnifyableDirectory";
-            lblUnifyableDirectory.Size = new System.Drawing.Size(486, 61);
+            lblUnifyableDirectory.Size = new System.Drawing.Size(389, 49);
             lblUnifyableDirectory.TabIndex = 22;
             lblUnifyableDirectory.Text = "All pages that needs to be unified are located in the follow directory:";
             // 
@@ -689,10 +700,10 @@
             cbxUseSelectedDirectory.BackgroundImage = Properties.Resources.thothBckColor;
             cbxUseSelectedDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             cbxUseSelectedDirectory.ForeColor = SystemColors.Window;
-            cbxUseSelectedDirectory.Location = new System.Drawing.Point(19, 9);
-            cbxUseSelectedDirectory.Margin = new Padding(3, 4, 3, 4);
+            cbxUseSelectedDirectory.Location = new System.Drawing.Point(15, 7);
+            cbxUseSelectedDirectory.Margin = new Padding(2, 3, 2, 3);
             cbxUseSelectedDirectory.Name = "cbxUseSelectedDirectory";
-            cbxUseSelectedDirectory.Size = new System.Drawing.Size(481, 50);
+            cbxUseSelectedDirectory.Size = new System.Drawing.Size(385, 40);
             cbxUseSelectedDirectory.TabIndex = 21;
             cbxUseSelectedDirectory.Text = "The selected directory is part of the final file structure!";
             cbxUseSelectedDirectory.UseVisualStyleBackColor = true;
@@ -701,10 +712,10 @@
             // 
             pbxBtnHelp.Cursor = Cursors.Hand;
             pbxBtnHelp.Image = Properties.Resources.BtnHelpInactive512x512;
-            pbxBtnHelp.Location = new System.Drawing.Point(55, 585);
-            pbxBtnHelp.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnHelp.Location = new System.Drawing.Point(44, 468);
+            pbxBtnHelp.Margin = new Padding(2, 3, 2, 3);
             pbxBtnHelp.Name = "pbxBtnHelp";
-            pbxBtnHelp.Size = new System.Drawing.Size(90, 90);
+            pbxBtnHelp.Size = new System.Drawing.Size(72, 72);
             pbxBtnHelp.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnHelp.TabIndex = 13;
             pbxBtnHelp.TabStop = false;
@@ -714,10 +725,10 @@
             pbxBtnWarnings.Cursor = Cursors.Hand;
             pbxBtnWarnings.Enabled = false;
             pbxBtnWarnings.Image = Properties.Resources.BtnWarningsInactive512x512;
-            pbxBtnWarnings.Location = new System.Drawing.Point(55, 680);
-            pbxBtnWarnings.Margin = new Padding(3, 4, 3, 4);
+            pbxBtnWarnings.Location = new System.Drawing.Point(44, 544);
+            pbxBtnWarnings.Margin = new Padding(2, 3, 2, 3);
             pbxBtnWarnings.Name = "pbxBtnWarnings";
-            pbxBtnWarnings.Size = new System.Drawing.Size(90, 90);
+            pbxBtnWarnings.Size = new System.Drawing.Size(72, 72);
             pbxBtnWarnings.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxBtnWarnings.TabIndex = 14;
             pbxBtnWarnings.TabStop = false;
@@ -734,9 +745,9 @@
             pnlTools.Controls.Add(pbxBtnGenerateCbz);
             pnlTools.Dock = DockStyle.Left;
             pnlTools.Location = new System.Drawing.Point(0, 0);
-            pnlTools.Margin = new Padding(3, 4, 3, 4);
+            pnlTools.Margin = new Padding(2, 3, 2, 3);
             pnlTools.Name = "pnlTools";
-            pnlTools.Size = new System.Drawing.Size(200, 833);
+            pnlTools.Size = new System.Drawing.Size(160, 673);
             pnlTools.TabIndex = 15;
             // 
             // pnlMain
@@ -746,10 +757,10 @@
             pnlMain.Controls.Add(pnlExecutionHeader);
             pnlMain.Controls.Add(mainStatusStrip);
             pnlMain.Dock = DockStyle.Fill;
-            pnlMain.Location = new System.Drawing.Point(200, 0);
-            pnlMain.Margin = new Padding(3, 4, 3, 4);
+            pnlMain.Location = new System.Drawing.Point(160, 0);
+            pnlMain.Margin = new Padding(2, 3, 2, 3);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new System.Drawing.Size(1188, 833);
+            pnlMain.Size = new System.Drawing.Size(952, 673);
             pnlMain.TabIndex = 16;
             // 
             // rtbExecutionLogs
@@ -757,12 +768,12 @@
             rtbExecutionLogs.BorderStyle = BorderStyle.None;
             rtbExecutionLogs.Dock = DockStyle.Fill;
             rtbExecutionLogs.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            rtbExecutionLogs.Location = new System.Drawing.Point(0, 91);
-            rtbExecutionLogs.Margin = new Padding(11, 13, 11, 13);
+            rtbExecutionLogs.Location = new System.Drawing.Point(0, 73);
+            rtbExecutionLogs.Margin = new Padding(9, 10, 9, 10);
             rtbExecutionLogs.Name = "rtbExecutionLogs";
             rtbExecutionLogs.ReadOnly = true;
             rtbExecutionLogs.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
-            rtbExecutionLogs.Size = new System.Drawing.Size(1188, 716);
+            rtbExecutionLogs.Size = new System.Drawing.Size(952, 574);
             rtbExecutionLogs.TabIndex = 20;
             rtbExecutionLogs.Text = "";
             rtbExecutionLogs.LinkClicked += rtbExecutionLogs_LinkClicked;
@@ -774,27 +785,27 @@
             pnlExecutionHeader.Controls.Add(pbxExecutionLogsTitle);
             pnlExecutionHeader.Dock = DockStyle.Top;
             pnlExecutionHeader.Location = new System.Drawing.Point(0, 0);
-            pnlExecutionHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlExecutionHeader.Margin = new Padding(2, 3, 2, 3);
             pnlExecutionHeader.Name = "pnlExecutionHeader";
-            pnlExecutionHeader.Size = new System.Drawing.Size(1188, 91);
+            pnlExecutionHeader.Size = new System.Drawing.Size(952, 73);
             pnlExecutionHeader.TabIndex = 16;
             pnlExecutionHeader.Resize += pnlSeries_Resize;
             // 
             // progressBarExecution
             // 
-            progressBarExecution.Location = new System.Drawing.Point(848, 24);
-            progressBarExecution.Margin = new Padding(3, 4, 3, 4);
+            progressBarExecution.Location = new System.Drawing.Point(678, 19);
+            progressBarExecution.Margin = new Padding(2, 3, 2, 3);
             progressBarExecution.Name = "progressBarExecution";
-            progressBarExecution.Size = new System.Drawing.Size(330, 31);
+            progressBarExecution.Size = new System.Drawing.Size(264, 25);
             progressBarExecution.TabIndex = 19;
             // 
             // pbxExecutionLogsTitle
             // 
             pbxExecutionLogsTitle.Image = Properties.Resources.execution_logs_titles;
-            pbxExecutionLogsTitle.Location = new System.Drawing.Point(19, 16);
-            pbxExecutionLogsTitle.Margin = new Padding(3, 4, 3, 4);
+            pbxExecutionLogsTitle.Location = new System.Drawing.Point(15, 13);
+            pbxExecutionLogsTitle.Margin = new Padding(2, 3, 2, 3);
             pbxExecutionLogsTitle.Name = "pbxExecutionLogsTitle";
-            pbxExecutionLogsTitle.Size = new System.Drawing.Size(357, 47);
+            pbxExecutionLogsTitle.Size = new System.Drawing.Size(286, 38);
             pbxExecutionLogsTitle.SizeMode = PictureBoxSizeMode.StretchImage;
             pbxExecutionLogsTitle.TabIndex = 15;
             pbxExecutionLogsTitle.TabStop = false;
@@ -804,10 +815,10 @@
             mainStatusStrip.BackgroundImage = Properties.Resources.thothBckColor;
             mainStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             mainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelMainArea });
-            mainStatusStrip.Location = new System.Drawing.Point(0, 807);
+            mainStatusStrip.Location = new System.Drawing.Point(0, 647);
             mainStatusStrip.Name = "mainStatusStrip";
-            mainStatusStrip.Padding = new Padding(1, 0, 16, 0);
-            mainStatusStrip.Size = new System.Drawing.Size(1188, 26);
+            mainStatusStrip.Padding = new Padding(1, 0, 13, 0);
+            mainStatusStrip.Size = new System.Drawing.Size(952, 26);
             mainStatusStrip.TabIndex = 0;
             mainStatusStrip.Text = "statusStrip1";
             // 
@@ -826,18 +837,18 @@
             // 
             // frmThotCbz
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.White;
             BackgroundImage = Properties.Resources.thothBckColor;
-            ClientSize = new System.Drawing.Size(1902, 1033);
+            ClientSize = new System.Drawing.Size(1523, 833);
             Controls.Add(pnlMain);
             Controls.Add(pnlTools);
             Controls.Add(pnlSettings);
             Controls.Add(pnlBottom);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
-            MinimumSize = new System.Drawing.Size(1920, 1080);
+            Margin = new Padding(2, 3, 2, 3);
+            MinimumSize = new System.Drawing.Size(1539, 872);
             Name = "frmThotCbz";
             Text = "THOTH CBZ GENERATOR";
             FormClosing += frmThotCbz_FormClosing;
@@ -909,7 +920,6 @@
         private Label lblReadingOrder;
         private ComboBox cbbReadOrder;
         private Panel pnlSplitter01;
-        private Panel pnlSplitter02;
         private Label lblVersion;
         internal PictureBox pbxBtnAdjustFiles;
         internal PictureBox pbxBtnUnifyPages;

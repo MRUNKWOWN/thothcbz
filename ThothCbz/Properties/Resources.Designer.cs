@@ -748,7 +748,7 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _COLOR_\tab \tab \u9632  _STATUS_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}.
+        ///   Looks up a localized string similar to _COLOR_\tab \tab \u9632  _STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}\f0.
         /// </summary>
         internal static string LblExecutionLogChaptersText {
             get {
@@ -757,7 +757,7 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _COLOR__STATUS_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}.
+        ///   Looks up a localized string similar to _COLOR__STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}\f0.
         /// </summary>
         internal static string LblExecutionLogSeriesText {
             get {
@@ -820,7 +820,7 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _COLOR_\tab \bullet  _STATUS_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}.
+        ///   Looks up a localized string similar to _COLOR_\tab \bullet  _STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK &quot;&quot;_URI_&quot;&quot;}{\fldrslt _NAME_}}}\f0.
         /// </summary>
         internal static string LblExecutionLogVolumesText {
             get {

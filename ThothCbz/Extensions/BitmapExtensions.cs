@@ -83,6 +83,7 @@ namespace ThothCbz.Extensions
             Marshal.Copy(pbits.Scan0, rgbValues, 0, bytes);
 
             int rgb;
+
             // Fill the color array with the new sharpened color values.
             for (int x = s; x < width - s; x++)
             {

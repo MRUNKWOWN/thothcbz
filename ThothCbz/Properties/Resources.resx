@@ -398,10 +398,10 @@
     <value>Warnings</value>
   </data>
   <data name="LblExecutionLogChaptersText" xml:space="preserve">
-    <value>_COLOR_\tab \tab \u9632  _STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+    <value>_COLOR_\tab \tab \u9632  _STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}\f0</value>
   </data>
   <data name="LblExecutionLogSeriesText" xml:space="preserve">
-    <value>_COLOR__STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+    <value>_COLOR__STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}\f0</value>
   </data>
   <data name="LblExecutionLogStatusAnalyzedText" xml:space="preserve">
     <value>[  ANALYZED ]</value>
@@ -422,7 +422,7 @@
     <value>[ ATTENTION ]</value>
   </data>
   <data name="LblExecutionLogVolumesText" xml:space="preserve">
-    <value>_COLOR_\tab \bullet  _STATUS_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}</value>
+    <value>_COLOR_\tab \bullet  _STATUS_ _FONT_ {\b {\field{\*\fldinst HYPERLINK ""_URI_""}{\fldrslt _NAME_}}}\f0</value>
   </data>
   <data name="LblReadingOrderText" xml:space="preserve">
     <value>The order of reading for all the series found are:</value>

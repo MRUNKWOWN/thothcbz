@@ -16,14 +16,14 @@ namespace ThothCbz.Actions
                 System.Drawing.Size? defaultSize = null
             )
         {
-            System.Threading.Tasks.Parallel.ForEach(filesToAdjust.OrderBy(o => o.FilePath), file =>
+            foreach ( var file in filesToAdjust.OrderBy(o => o.FilePath))
             {
                 ModifyAndSave(
                         file,
                         filesToGrayscale,
                         defaultSize
                     );
-            });
+            }
         }
 
         private static void ModifyAndSave(

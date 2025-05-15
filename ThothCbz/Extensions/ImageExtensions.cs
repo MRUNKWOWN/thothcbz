@@ -1,9 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
-
-using ThothCbz.Constants;
+﻿using System.Drawing.Imaging;
 
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;

@@ -12,12 +12,14 @@ using ThothCbz.Enumerators;
 using ThothCbz.EventHandlers;
 using ThothCbz.Extensions;
 using ThothCbz.Properties;
+using static ThothCbz.Extensions.StringExtensions;
 
 namespace ThothCbz
 {
     public partial class frmThotCbz : Form
     {
         private string _rtfExecutionLogsTextColorsConfigurationLine = string.Empty;
+        private StringBuilder _rtfExecutionLogsTextFontsConfigurationline = new StringBuilder();
 
         public frmThotCbz()
         {
@@ -91,6 +93,22 @@ namespace ThothCbz
                         $@"\red{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.B};" +
                         $@"\red{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.B};" +
                         $@"}}";
+
+            Dictionary<int, string> _rtfExecutionLogsTextFontsConfigurations = new Dictionary<int, string>();
+            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Arabic.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Arabic.GetStringRtfFontIndex()}\fnil\fcharset178 Segoe UI;}}");
+            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.BrazilianPortuguese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.BrazilianPortuguese.GetStringRtfFontIndex()}\fnil\fcharset0 Segoe UI;}}");
+            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Chinese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Chinese.GetStringRtfFontIndex()}\fswiss\fcharset134 Microsoft YaHei;}}");
+            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.English.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.English.GetStringRtfFontIndex()}\fnil Segoe UI;}}");
+            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Japanese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Japanese.GetStringRtfFontIndex()}\fnil\fcharset128 Yu Gothic;}}");
+
+            _rtfExecutionLogsTextFontsConfigurationline.Append("{\\fonttbl");
+
+            foreach (var key in _rtfExecutionLogsTextFontsConfigurations.Keys.Order())
+            {
+                _rtfExecutionLogsTextFontsConfigurationline.Append(_rtfExecutionLogsTextFontsConfigurations[key]);
+            }
+
+            _rtfExecutionLogsTextFontsConfigurationline.Append("}");
 
             cbbReadOrder.Items.AddRange(new[] {
                         Resources.LblPagesReadOrderLeftRightText,
@@ -536,6 +554,7 @@ namespace ThothCbz
                                         items: items
                                     );
                 lines.Add(Resources.LblExecutionLogSeriesText.ReplaceRtfName(serie.ToUpper())
+                            .ReplaceRtfFont(serie.GetStringRtfFontIndex())
                             .ReplaceRtfUri(seriesPath)
                             .ReplaceRtfStatus(seriesStatus.GetExecutionStatusText())
                             .ReplaceRtfColor(seriesStatus.GetExecutionStatusColorText()));
@@ -551,6 +570,7 @@ namespace ThothCbz
                                             volumeName: f2.Key
                                         );
                             lines.Add(Resources.LblExecutionLogVolumesText.ReplaceRtfName(f2.Key!.ToUpper())
+                                        .ReplaceRtfFont(f2.Key!.GetStringRtfFontIndex())
                                         .ReplaceRtfUri($@"{seriesPath}|{f2.Key}")
                                         .ReplaceRtfStatus(volumeStatus.GetExecutionStatusText())
                                         .ReplaceRtfColor(volumeStatus.GetExecutionStatusColorText()));
@@ -568,6 +588,7 @@ namespace ThothCbz
                                         );
 
                                     lines.Add(Resources.LblExecutionLogChaptersText.ReplaceRtfName(f3.Key!.ToUpper())
+                                                .ReplaceRtfFont(f3.Key!.GetStringRtfFontIndex())
                                                 .ReplaceRtfUri($@"{seriesPath}|{f2.Key}|{f3.Key}")
                                                 .ReplaceRtfStatus(chapterStatus.GetExecutionStatusText())
                                                 .ReplaceRtfColor(chapterStatus.GetExecutionStatusColorText()));
@@ -638,7 +659,8 @@ namespace ThothCbz
 
             var stb = new StringBuilder();
 
-            stb.Append(@"{\rtf1 ");
+            stb.Append(@"{\rtf1\fbidis\ansi\ansicpg1252\deff0\nouicompat\deflang1033 ");
+            stb.Append(_rtfExecutionLogsTextFontsConfigurationline.ToString());
 
             var addNewLine = false;
 
@@ -733,7 +755,6 @@ namespace ThothCbz
             lblSplitAnalytics.DataBindings.Add(nameof(lblSplitAnalytics.Enabled), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.ExistSplittableFiles), false, DataSourceUpdateMode.Never);
 
             txtDirectory.DataBindings.Add(nameof(txtDirectory.Text), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.DirectoryPathToAnalyze), false, DataSourceUpdateMode.Never);
-            txtDirectory.DataBindings.Add(nameof(txtDirectory.Font), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.DirectoryPathFont), false, DataSourceUpdateMode.Never);
 
             pnlSplitter03.DataBindings.Add(nameof(pnlSplitter03.Visible), ThothNotifyablePropertiesEntity.Default, nameof(ThothNotifyablePropertiesEntity.Default.AnalysisExecuted), false, DataSourceUpdateMode.Never);
 

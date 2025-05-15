@@ -15,7 +15,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MinimalImageHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2560</Value>
+      <Value Profile="(Default)">7016</Value>
     </Setting>
     <Setting Name="ReadOrder" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>

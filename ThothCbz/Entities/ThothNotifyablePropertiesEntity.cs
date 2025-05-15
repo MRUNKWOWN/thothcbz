@@ -375,21 +375,7 @@ namespace ThothCbz.Entities
                 {
                     _directoryPathToAnalyze = value;
                     NotifyPropertyChanged();
-                    NotifyPropertyChanged(nameof(DirectoryPathFont));
                 }
-            }
-        }
-
-        public Font DirectoryPathFont
-        {
-            get
-            {
-                return new Font(
-                        familyName: _directoryPathToAnalyze.GetTextFont(),
-                        emSize: 12,
-                        style: FontStyle.Bold,
-                        unit: GraphicsUnit.Point
-                    );
             }
         }
 
