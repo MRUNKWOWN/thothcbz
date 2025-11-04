@@ -166,5 +166,17 @@ namespace ThothCbz.Properties {
                 this["UnifySplittedChaptersFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ImageOutputFileType {
+            get {
+                return ((int)(this["ImageOutputFileType"]));
+            }
+            set {
+                this["ImageOutputFileType"] = value;
+            }
+        }
     }
 }

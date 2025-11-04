@@ -82,7 +82,7 @@ namespace ThothCbz.Actions
                 newImg.Sharpen();
             }
 
-            newImg.SaveAsJpg(
+            newImg.SaveAs(
                             fileEntity,
                             uniqueIdentifier
                         );

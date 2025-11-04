@@ -1,22 +1,20 @@
 ﻿using AForge.Imaging.Filters;
 
-using System.Drawing.Imaging;
-using System.Linq;
-
 using ThothCbz.Constants;
 using ThothCbz.Entities;
+using ThothCbz.Enumerators;
 using ThothCbz.Properties;
 
 namespace ThothCbz.Extensions
 {
     internal static class FileEntityExtensions
     {
-        internal static string GetFilePathToJpgValue(
+        internal static string GetFilePathToImageOutputFileTypeValue(
                 this FileEntity entity,
                 string? uniqueIdentifier = null
             )
         {
-            if(string.IsNullOrWhiteSpace(uniqueIdentifier) && entity.Extension == GlobalConstants.DEFAULT_JPG_EXTENSION) 
+            if(string.IsNullOrWhiteSpace(uniqueIdentifier) && entity.Extension == Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()) 
             {
                 return entity.FilePath;
             }
@@ -26,7 +24,7 @@ namespace ThothCbz.Extensions
                                     : "-";
 
             return  entity.FilePath
-                            .Replace($@"{entity.Name}{entity.Extension}", $@"{entity.Name}{splitNameChar}{uniqueIdentifier ?? string.Empty}{GlobalConstants.DEFAULT_JPG_EXTENSION}");
+                            .Replace($@"{entity.Name}{entity.Extension}", $@"{entity.Name}{splitNameChar}{uniqueIdentifier ?? string.Empty}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}");
         }
 
         internal static void ReplaceOldFile(
@@ -34,12 +32,12 @@ namespace ThothCbz.Extensions
                 string uniqueIdentifier
             )
         {
-            if (string.IsNullOrWhiteSpace(uniqueIdentifier) && fileEntity.Extension == GlobalConstants.DEFAULT_JPG_EXTENSION)
+            if (string.IsNullOrWhiteSpace(uniqueIdentifier) && fileEntity.Extension == Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension())
             {
                 return;
             }
 
-            var newFilePath = fileEntity.GetFilePathToJpgValue(uniqueIdentifier);
+            var newFilePath = fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier);
 
             if(!File.Exists(newFilePath))
             {
@@ -48,8 +46,8 @@ namespace ThothCbz.Extensions
 
             var wasDeleted = false;
 
-            var currentPath = (fileEntity.Extension != GlobalConstants.DEFAULT_JPG_EXTENSION && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
-                                ? fileEntity.GetFilePathToJpgValue()
+            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
+                                ? fileEntity.GetFilePathToImageOutputFileTypeValue()
                                 : fileEntity.FilePath;
 
             while (!wasDeleted)
@@ -61,9 +59,9 @@ namespace ThothCbz.Extensions
                         File.Delete(currentPath);
                     }
 
-                    if (File.Exists(fileEntity.GetFilePathToJpgValue()))
+                    if (File.Exists(fileEntity.GetFilePathToImageOutputFileTypeValue()))
                     {
-                        File.Delete(fileEntity.GetFilePathToJpgValue());
+                        File.Delete(fileEntity.GetFilePathToImageOutputFileTypeValue());
                     }
 
                     wasDeleted = true;
@@ -75,8 +73,8 @@ namespace ThothCbz.Extensions
             }
 
             File.Move(
-                    fileEntity.GetFilePathToJpgValue(uniqueIdentifier),
-                    fileEntity.GetFilePathToJpgValue()
+                    fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier),
+                    fileEntity.GetFilePathToImageOutputFileTypeValue()
                 );
         }
 
@@ -86,8 +84,8 @@ namespace ThothCbz.Extensions
         {
             var wasDeleted = false;
 
-            var currentPath = (fileEntity.Extension != GlobalConstants.DEFAULT_JPG_EXTENSION && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
-                                ? fileEntity.GetFilePathToJpgValue()
+            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
+                                ? fileEntity.GetFilePathToImageOutputFileTypeValue()
                                 : fileEntity.FilePath;
 
             while (!wasDeleted)
@@ -119,7 +117,7 @@ namespace ThothCbz.Extensions
 
             if (entity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION)
             {
-                filePath = entity.GetFilePathToJpgValue();
+                filePath = entity.GetFilePathToImageOutputFileTypeValue();
                 SaveWebpAsJpeg(
                             entity,
                             newFilePath: filePath
@@ -157,7 +155,7 @@ namespace ThothCbz.Extensions
                 }
             }
 
-            imgRgb.SaveAsJpg(
+            imgRgb.SaveAs(
                     entity,
                     null
                 );
@@ -175,7 +173,19 @@ namespace ThothCbz.Extensions
             )
         {
             using var img = SixLabors.ImageSharp.Image.Load(entity.FilePath);
-            img.SaveAsJpeg(newFilePath);
+
+            switch ((ImageOutputFileType)Settings.Default.ImageOutputFileType)
+            {
+                case ImageOutputFileType.JPG:
+                    img.SaveAsJpeg(newFilePath);
+                    break;
+                case ImageOutputFileType.PNG:
+                    img.SaveAsPng(newFilePath);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            
             img.Dispose();
 
             GC.Collect();

@@ -37,8 +37,8 @@ namespace ThothCbz.Actions
                 var idxImagem0 = Settings.Default.ReadOrder == (int)ReadOrderTypes.LeftToRight ? 0 : 1;
                 var idxImagem1 = Settings.Default.ReadOrder == (int)ReadOrderTypes.LeftToRight ? 1 : 0;
 
-                using var img1 = Image.FromFile(fileEntityList[i + idxImagem0].GetFilePathToJpgValue())!;
-                using var img2 = Image.FromFile(fileEntityList[i + idxImagem1].GetFilePathToJpgValue())!;
+                using var img1 = Image.FromFile(fileEntityList[i + idxImagem0].GetFilePathToImageOutputFileTypeValue())!;
+                using var img2 = Image.FromFile(fileEntityList[i + idxImagem1].GetFilePathToImageOutputFileTypeValue())!;
 
                 if (img1 is null || img2 is null)
                 {
@@ -73,7 +73,7 @@ namespace ThothCbz.Actions
                 graphics.DrawImage(imgResized1, new Rectangle(0, 0, imgResized1.Width, height));
                 graphics.DrawImage(imgResized2, new Rectangle(space + imgResized1.Width, 0, imgResized2.Width, height));
 
-                newUnifiedImage.SaveAsJpg(
+                newUnifiedImage.SaveAs(
                             fileEntityList[i],
                             uniqueIdentifier
                         );

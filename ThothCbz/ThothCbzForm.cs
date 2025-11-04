@@ -222,6 +222,11 @@ namespace ThothCbz
 
             try
             {
+                var parallelOptions = new ParallelOptions()
+                {
+                    MaxDegreeOfParallelism = 3
+                };
+
                 foreach (var seriesKey in ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.OrderBy(o => o))
                 {
                     if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
@@ -244,33 +249,18 @@ namespace ThothCbz
                                                     .Select(s => s.Select(m => m).ToList())
                                                     .ToList();
 
-                    var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), GlobalConstants.DEFAULT_BLANK_FILE_NAME).FirstOrDefault();
-                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME).FirstOrDefault();
+                    var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
+                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
 
-                    if (ThothNotifyablePropertiesEntity.Default.AdjustFilesActive)
+                    Parallel.ForEach(volumes, parallelOptions, volume =>
                     {
-                        foreach (var volume in volumes)
-                        {
-                            VolumeGenerations(
-                                                volume,
-                                                filesToGrayscale,
-                                                customBlankFilePath,
-                                                defaultFileToSize
-                                            );
-                        }
-                    }
-                    else
-                    {
-                        Parallel.ForEach(volumes, volume =>
-                                                    {
-                                                        VolumeGenerations(
-                                                            volume,
-                                                            filesToGrayscale,
-                                                            customBlankFilePath,
-                                                            defaultFileToSize
-                                                        );
-                                                    });
-                    }
+                        VolumeGenerations(
+                            volume,
+                            filesToGrayscale,
+                            customBlankFilePath,
+                            defaultFileToSize
+                        );
+                    });
 
                     if (!string.IsNullOrWhiteSpace(defaultFileToSize) && File.Exists(defaultFileToSize))
                     {
@@ -331,7 +321,7 @@ namespace ThothCbz
                 string volumePath = volume.FirstOrDefault()!.SeriePath!.Replace('|', '\\') +
                                         (!string.IsNullOrWhiteSpace(volume.FirstOrDefault()!.Volume) ? $"\\{volume.FirstOrDefault()!.Volume}" : string.Empty);
 
-                var volumeDefaultFileToSize = Directory.GetFiles(volumePath, GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME).FirstOrDefault();
+                var volumeDefaultFileToSize = Directory.GetFiles(volumePath, $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
 
                 foreach (var chapter in volume.OrderBy(o => o.Chapter)
                                                 .GroupBy(g => g.Chapter)
@@ -344,7 +334,7 @@ namespace ThothCbz
 
                         var chapterDefaultFileToSize = Directory.GetFiles(
                                                             $"{volumePath}\\{chapter.FirstOrDefault()!.Chapter}"
-                                                            , GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME
+                                                            , $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}"
                                                         ).FirstOrDefault();
 
                         if (!string.IsNullOrWhiteSpace(chapterDefaultFileToSize) || 

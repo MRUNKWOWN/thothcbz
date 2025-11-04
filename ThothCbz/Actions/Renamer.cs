@@ -90,7 +90,7 @@ namespace ThothCbz.Actions
 
                 if(Settings.Default.EnableBlankPageBetweenChapters && countKeys < dictItensPerKey.Keys.Count) 
                 {
-                    var newBlankFilePath = $@"{dictItensPerKey[key].GetDirectoryFolder(true)}\\{key}-{(dictItensPerKey[key].Count + 1).ToString().PadLeft(defaultCharactersAmountForFilesName, GlobalConstants.DEFAULT_CHARACTER_FOR_PADDING_FOR_FILES)}.jpg";
+                    var newBlankFilePath = $@"{dictItensPerKey[key].GetDirectoryFolder(true)}\\{key}-{(dictItensPerKey[key].Count + 1).ToString().PadLeft(defaultCharactersAmountForFilesName, GlobalConstants.DEFAULT_CHARACTER_FOR_PADDING_FOR_FILES)}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}";
 
                     if (((BlackPageType)Settings.Default.BlackPageType) == BlackPageType.Custom && !string.IsNullOrWhiteSpace(customBlankFilePath))
                     {
@@ -99,7 +99,7 @@ namespace ThothCbz.Actions
                     else
                     {
                         var firstFile = Directory
-                        .GetFiles(dictItensPerKey[key].GetDirectoryFolder(true), "*.jpg")
+                        .GetFiles(dictItensPerKey[key].GetDirectoryFolder(true), $"*{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}")
                         .OrderBy(o => o)
                         .FirstOrDefault();
 
@@ -119,7 +119,7 @@ namespace ThothCbz.Actions
                                                                                 : System.Drawing.Color.Black
                                                         );
 
-                            newImg.SaveAsJpg(
+                            newImg.SaveAs(
                                     filePath: newBlankFilePath
                                 );
                         }
@@ -184,22 +184,22 @@ namespace ThothCbz.Actions
 
                 if (file.item.IsSplit && file.item.FileWasSplit)
                 {
-                    if (File.Exists(file.item.GetFilePathToJpgValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01)))
+                    if (File.Exists(file.item.GetFilePathToImageOutputFileTypeValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01)))
                     {
                         ValidateAndMoveFile(
                                 destinyFolder: destinyFolder,
-                                file.item.GetFilePathToJpgValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01),
+                                file.item.GetFilePathToImageOutputFileTypeValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01),
                                 GetNewFileName(pageNumber, chapterName, defaultCharactersAmountForFilesName)
                             );
 
                         pageNumber++;
                     }
 
-                    if (File.Exists(file.item.GetFilePathToJpgValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02)))
+                    if (File.Exists(file.item.GetFilePathToImageOutputFileTypeValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02)))
                     {
                         ValidateAndMoveFile(
                                 destinyFolder: destinyFolder,
-                                file.item.GetFilePathToJpgValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02),
+                                file.item.GetFilePathToImageOutputFileTypeValue(GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02),
                                 GetNewFileName(pageNumber, chapterName, defaultCharactersAmountForFilesName)
                             );
                     }
@@ -207,7 +207,7 @@ namespace ThothCbz.Actions
                     continue;
                 }
 
-                if (file.item.IsUnify && file.item.FileWasUnified && !File.Exists(file.item.GetFilePathToJpgValue()))
+                if (file.item.IsUnify && file.item.FileWasUnified && !File.Exists(file.item.GetFilePathToImageOutputFileTypeValue()))
                 {
                     pageNumber--;
                     continue;
@@ -215,7 +215,7 @@ namespace ThothCbz.Actions
 
                 ValidateAndMoveFile(
                             destinyFolder: destinyFolder,
-                            file.item.GetFilePathToJpgValue(),
+                            file.item.GetFilePathToImageOutputFileTypeValue(),
                             GetNewFileName(pageNumber, chapterName, defaultCharactersAmountForFilesName)
                         );
             }
@@ -227,7 +227,7 @@ namespace ThothCbz.Actions
                 string newFileName
             )
         {
-            var newFilePath = $@"{destinyFolder}\{newFileName}.jpg";
+            var newFilePath = $@"{destinyFolder}\{newFileName}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}";
 
             if(newFilePath.ToLower() == oldFilePath.ToLower())
             {

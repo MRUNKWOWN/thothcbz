@@ -34,7 +34,7 @@ namespace ThothCbz.Actions
 
             foreach (var fileEntity in fileEntityList)
             {
-                using var img = Image.FromFile(fileEntity.GetFilePathToJpgValue());
+                using var img = Image.FromFile(fileEntity.GetFilePathToImageOutputFileTypeValue());
 
                 var newWidth = Convert.ToInt32(img.Width / 2);
                 var newHeight = img.Height;
@@ -51,13 +51,13 @@ namespace ThothCbz.Actions
                 using var graphics2 = Graphics.FromImage(splitedImg02).SetDefaultQuality();
                 graphics2.DrawImage(img, 0, 0, new Rectangle((img.Width - newWidth), 0, newWidth, newHeight), GraphicsUnit.Pixel);
 
-                splitedImg01.SaveAsJpg(
+                splitedImg01.SaveAs(
                         fileEntity: fileEntity,
                         uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
                                             ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02
                                             : GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01
                     );
-                splitedImg02.SaveAsJpg(
+                splitedImg02.SaveAs(
                         fileEntity: fileEntity,
                         uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
                                             ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01

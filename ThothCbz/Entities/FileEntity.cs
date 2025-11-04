@@ -1,12 +1,19 @@
-﻿using System.Security.Policy;
-
-using ThothCbz.Enumerators;
+﻿using ThothCbz.Constants;
+using ThothCbz.Extensions;
+using ThothCbz.Properties;
 
 namespace ThothCbz.Entities
 {
     public class FileEntity
     {
-        private List<string> _acceptableExtensions = new List<string>() { ".jpg", ".jpeg", ".img", ".gif", ".png", ".webp" };
+        private List<string> _acceptableExtensions = new List<string>() { 
+            GlobalConstants.DEFAULT_JPG_EXTENSION, 
+            GlobalConstants.DEFAULT_JPEG_EXTENSION, 
+            GlobalConstants.DEFAULT_IMG_EXTENSION,
+            GlobalConstants.DEFAULT_GIF_EXTENSION,
+            GlobalConstants.DEFAULT_PNG_EXTENSION,
+            GlobalConstants.DEFAULT_WEBP_EXTENSION
+        };
 
         public FileEntity(
                 string filePath,
@@ -25,7 +32,7 @@ namespace ThothCbz.Entities
             Extension = Path.GetExtension(filePath).ToLower();
             FilePath = filePath;
             IsAcceptableFileType = _acceptableExtensions.Contains(Extension);
-            NeedConversion = _acceptableExtensions.Contains(Extension) && Extension != ".jpg";
+            NeedConversion = _acceptableExtensions.Contains(Extension) && Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension();
             FileWasAdjusted = false;
 
             var iCountFolderLevel = 0;

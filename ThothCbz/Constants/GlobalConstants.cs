@@ -17,11 +17,14 @@
         public const string DEFAULT_WEBP_EXTENSION = ".webp";
         public const string DEFAULT_PNG_EXTENSION = ".png";
         public const string DEFAULT_JPG_EXTENSION = ".jpg";
+        public const string DEFAULT_JPEG_EXTENSION = ".jpeg";
+        public const string DEFAULT_IMG_EXTENSION = ".img";
+        public const string DEFAULT_GIF_EXTENSION = ".gif";
         public const string DEFAULT_SPLITED_FILE_ORDER_01 = "1";
         public const string DEFAULT_SPLITED_FILE_ORDER_02 = "2";
         public const string DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME = "file_to_grayscale.txt";
-        public const string DEFAULT_BLANK_FILE_NAME = "_blank.jpg";
-        public const string DEFAULT_TEMPLATE_FILE_NAME = "_template.jpg";
+        public const string DEFAULT_BLANK_FILE_NAME = "_blank";
+        public const string DEFAULT_TEMPLATE_FILE_NAME = "_template";
         public const string DEFAULT_LOG_FILE_NAME = "_log.txt";
 
         public const char DEFAULT_CHARACTER_FOR_PADDING_FOR_FOLDER = '0';

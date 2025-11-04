@@ -44,7 +44,7 @@ namespace ThothCbz
                 }
 
                 filesFounded
-                    .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_BLANK_FILE_NAME) || w.Contains(GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME))
+                    .Where(w => w.Contains(GlobalConstants.DEFAULT_FILES_TO_GRAYSCALE_FILE_NAME) || w.Contains($"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}") || w.Contains($"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}"))
                     .ToList()
                     .ForEach(f =>
                     {
