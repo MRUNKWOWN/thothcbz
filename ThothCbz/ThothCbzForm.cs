@@ -224,10 +224,10 @@ namespace ThothCbz
             {
                 var parallelOptions = new ParallelOptions()
                 {
-                    MaxDegreeOfParallelism = 3
+                    MaxDegreeOfParallelism = (int)(Settings.Default.MaxDegreeOfParallelism / 2)
                 };
 
-                foreach (var seriesKey in ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.OrderBy(o => o))
+                Parallel.ForEach(ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.OrderBy(o => o), parallelOptions, seriesKey =>
                 {
                     if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
                     {
@@ -280,7 +280,7 @@ namespace ThothCbz
                             ThothNotifyablePropertiesEntity.Default.ForceNotification(nameof(ThothNotifyablePropertiesEntity.Default.SeriesSetted));
                         }
                     });
-                };
+                });
             }
             catch (Exception ex) 
             {
