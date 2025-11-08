@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -283,6 +284,127 @@ namespace ThothCbz
                 });
             }
             catch (Exception ex) 
+            {
+                ex.InformAndSaveLog();
+
+                Invoke(delegate
+                {
+                    ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
+                    ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
+
+                    FillExecutionLogs();
+                });
+            }
+        }
+
+        private void backgroundWorkerExecution_DoWork2(
+                object sender,
+                DoWorkEventArgs e
+            )
+        {
+            Invoke(delegate
+            {
+                FillExecutionLogs();
+
+                progressBarExecution.BeginInvoke(delegate
+                {
+                    progressBarExecution.Value = 0;
+                    progressBarExecution.Maximum = (
+                                                        (ThothNotifyablePropertiesEntity.Default.FilesCount +
+                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.SeriesCount : 0) +
+                                                        (ThothNotifyablePropertiesEntity.Default.SplitPagesActive ? ThothNotifyablePropertiesEntity.Default.SplittableFilesCount : 0) +
+                                                        (ThothNotifyablePropertiesEntity.Default.UnifyPagesActive ? ThothNotifyablePropertiesEntity.Default.UnifyableFilesCount : 0) +
+                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.VolumesCount : 0) +
+                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.FilesCount : 0))
+                                                    );
+                });
+            });
+
+            if (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration)
+            {
+                ThothNotifyablePropertiesEntity.Default.SeriesSetted = new ConcurrentBag<int>();
+                ThothNotifyablePropertiesEntity.Default.VolumesSetted = new ConcurrentBag<int>();
+
+                ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.ToList().ForEach(key =>
+                {
+                    if (ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key].Count == ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key].Where(w => w.FileWasCompressed).Count())
+                    {
+                        ThothNotifyablePropertiesEntity.Default.SeriesSetted.Add(1);
+                    }
+
+                    ThothNotifyablePropertiesEntity.Default.VolumesSetted.Add(
+                            ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key]
+                                    .GroupBy(g => g.Volume)
+                                    .Where(w => !string.IsNullOrWhiteSpace(w.Key) && w.Count() == w.Where(w2 => w2.FileWasCompressed).Count())
+                                    .Select(s => 1)
+                                    .Sum(s => s)
+                        );
+                });
+            }
+
+            try
+            {
+                var generationResults = new ConcurrentDictionary<string, int>();
+
+                var parallelOptions = new ParallelOptions()
+                {
+                    MaxDegreeOfParallelism = Settings.Default.MaxDegreeOfParallelism
+                };
+
+                Parallel.ForEach(ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AllFilesGroupedByVolume(), parallelOptions, volume =>
+                {
+                    if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
+                    {
+                        return;
+                    }
+
+                    var seriesKey = volume.FirstOrDefault()!.Serie;
+                    var filesToGrayscale = new List<string>();
+
+                    var filesToGrayscalePath = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].FilesToGrayScaleFilePath();
+
+                    if (!string.IsNullOrWhiteSpace(filesToGrayscalePath) && File.Exists(filesToGrayscalePath))
+                    {
+                        filesToGrayscale = File.ReadAllLines(filesToGrayscalePath).ToList();
+                    }
+
+                    var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
+                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
+
+                    VolumeGenerations(
+                            volume,
+                            filesToGrayscale,
+                            customBlankFilePath,
+                            defaultFileToSize
+                        );
+
+                    generationResults.AddOrUpdate(seriesKey, 1, (key, oldValue) => oldValue + 1);
+
+                    if (generationResults[seriesKey] == ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].Count)
+                    {
+
+                        if (!string.IsNullOrWhiteSpace(defaultFileToSize) && File.Exists(defaultFileToSize))
+                        {
+                            File.Delete(defaultFileToSize);
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(customBlankFilePath) && ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && File.Exists(customBlankFilePath))
+                        {
+                            File.Delete(customBlankFilePath);
+                        }
+
+                        Invoke(delegate
+                        {
+                            if (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration)
+                            {
+                                ThothNotifyablePropertiesEntity.Default.SeriesSetted.Add(1);
+                                ThothNotifyablePropertiesEntity.Default.ForceNotification(nameof(ThothNotifyablePropertiesEntity.Default.SeriesSetted));
+                            }
+                        });
+                    }
+                });
+            }
+            catch (Exception ex)
             {
                 ex.InformAndSaveLog();
 

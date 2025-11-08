@@ -832,7 +832,7 @@
             // 
             // backgroundWorkerExecution
             // 
-            backgroundWorkerExecution.DoWork += backgroundWorkerExecution_DoWork;
+            backgroundWorkerExecution.DoWork += backgroundWorkerExecution_DoWork2;
             backgroundWorkerExecution.RunWorkerCompleted += backgroundWorkerExecution_RunWorkerCompleted;
             // 
             // frmThotCbz
