@@ -66,7 +66,8 @@ namespace ThothCbz
             lblSplitAnalytics.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             lblUnknwonAnalytics.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             toolStripStatusLabelMainArea.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
-            rtbExecutionLogs.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
+            //rtbExecutionLogs.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
+            treeViewVolumes.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             txtUnifyableDirectory.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
             txtSplitableDirectory.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
             nudMinimalHeight.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
@@ -77,7 +78,8 @@ namespace ThothCbz
             cbxBlankSpace.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             cbxEnableBrightnessContrast.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             toolStripStatusLabelMainArea.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
-            rtbExecutionLogs.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
+            //rtbExecutionLogs.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
+            treeViewVolumes.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblUnifyableDirectory.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblSplitableDirectory.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             txtUnifyableDirectory.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
@@ -139,21 +141,6 @@ namespace ThothCbz
         }
         #endregion FORM EVENTS
 
-        #region RICH TEXT BOX EVENTS
-        private void rtbExecutionLogs_LinkClicked(
-                object sender,
-                LinkClickedEventArgs e
-            )
-        {
-            if (string.IsNullOrWhiteSpace(e.LinkText))
-            {
-                return;
-            }
-
-            Process.Start("explorer.exe", e.LinkText.Replace('|', '\\'));
-        }
-        #endregion RICH TEXT BOX EVENTS
-
         #region PANEL EVENTS
         private void pnlBottom_Resize(
                 object sender,
@@ -171,6 +158,8 @@ namespace ThothCbz
                 EventArgs e
             )
         {
+            treeViewVolumes.Width = pnlMain.Width;
+            treeViewVolumes.Height = pnlMain.Height - pnlExecutionHeader.Height;
             progressBarExecution.Location = new System.Drawing.Point(pnlExecutionHeader.Width - (progressBarExecution.Width + 10), 24);
         }
         #endregion PANEL EVENTS
@@ -183,128 +172,7 @@ namespace ThothCbz
         {
             Invoke(delegate
             {
-                FillExecutionLogs();
-
-                progressBarExecution.BeginInvoke(delegate
-                {
-                    progressBarExecution.Value = 0;
-                    progressBarExecution.Maximum = (
-                                                        (ThothNotifyablePropertiesEntity.Default.FilesCount +
-                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.SeriesCount : 0) +
-                                                        (ThothNotifyablePropertiesEntity.Default.SplitPagesActive ? ThothNotifyablePropertiesEntity.Default.SplittableFilesCount : 0) +
-                                                        (ThothNotifyablePropertiesEntity.Default.UnifyPagesActive ? ThothNotifyablePropertiesEntity.Default.UnifyableFilesCount : 0) +
-                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.VolumesCount : 0) +
-                                                        (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration ? ThothNotifyablePropertiesEntity.Default.FilesCount : 0))
-                                                    );
-                });
-            });
-
-            if (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration)
-            {
-                ThothNotifyablePropertiesEntity.Default.SeriesSetted = new ConcurrentBag<int>();
-                ThothNotifyablePropertiesEntity.Default.VolumesSetted = new ConcurrentBag<int>();
-
-                ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.ToList().ForEach(key =>
-                {
-                    if (ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key].Count == ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key].Where(w => w.FileWasCompressed).Count())
-                    {
-                        ThothNotifyablePropertiesEntity.Default.SeriesSetted.Add(1);
-                    }
-
-                    ThothNotifyablePropertiesEntity.Default.VolumesSetted.Add(
-                            ThothNotifyablePropertiesEntity.Default.SeriesDictionary[key]
-                                    .GroupBy(g => g.Volume)
-                                    .Where(w => !string.IsNullOrWhiteSpace(w.Key) && w.Count() == w.Where(w2 => w2.FileWasCompressed).Count())
-                                    .Select(s => 1)
-                                    .Sum(s => s)
-                        );
-                });
-            }
-
-            try
-            {
-                var parallelOptions = new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = (int)(Settings.Default.MaxDegreeOfParallelism / 2)
-                };
-
-                Parallel.ForEach(ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.OrderBy(o => o), parallelOptions, seriesKey =>
-                {
-                    if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
-                    {
-                        return;
-                    }
-
-                    var filesToGrayscale = new List<string>();
-
-                    var filesToGrayscalePath = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].FilesToGrayScaleFilePath();
-
-                    if (!string.IsNullOrWhiteSpace(filesToGrayscalePath) && File.Exists(filesToGrayscalePath))
-                    {
-                        filesToGrayscale = File.ReadAllLines(filesToGrayscalePath).ToList();
-                    }
-
-                    var volumes = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey]
-                                                    .OrderBy(o => o.Volume)
-                                                    .GroupBy(g => g.Volume)
-                                                    .Select(s => s.Select(m => m).ToList())
-                                                    .ToList();
-
-                    var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
-                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
-
-                    Parallel.ForEach(volumes, parallelOptions, volume =>
-                    {
-                        VolumeGenerations(
-                            volume,
-                            filesToGrayscale,
-                            customBlankFilePath,
-                            defaultFileToSize
-                        );
-                    });
-
-                    if (!string.IsNullOrWhiteSpace(defaultFileToSize) && File.Exists(defaultFileToSize))
-                    {
-                        File.Delete(defaultFileToSize);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(customBlankFilePath) && ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && File.Exists(customBlankFilePath))
-                    {
-                        File.Delete(customBlankFilePath);
-                    }
-
-                    Invoke(delegate
-                    {
-                        if (ThothNotifyablePropertiesEntity.Default.GenerateCbzActive && !Settings.Default.DisableGbzGeneration)
-                        {
-                            ThothNotifyablePropertiesEntity.Default.SeriesSetted.Add(1);
-                            ThothNotifyablePropertiesEntity.Default.ForceNotification(nameof(ThothNotifyablePropertiesEntity.Default.SeriesSetted));
-                        }
-                    });
-                });
-            }
-            catch (Exception ex) 
-            {
-                ex.InformAndSaveLog();
-
-                Invoke(delegate
-                {
-                    ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
-                    ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
-
-                    FillExecutionLogs();
-                });
-            }
-        }
-
-        private void backgroundWorkerExecution_DoWork2(
-                object sender,
-                DoWorkEventArgs e
-            )
-        {
-            Invoke(delegate
-            {
-                FillExecutionLogs();
+                UpdateTreeViewStatus();
 
                 progressBarExecution.BeginInvoke(delegate
                 {
@@ -413,7 +281,7 @@ namespace ThothCbz
                     ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
                     ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
 
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                 });
             }
         }
@@ -565,7 +433,7 @@ namespace ThothCbz
         {
             Invoke(delegate
             {
-                FillExecutionLogs();
+                UpdateTreeViewStatus();
                 ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning = false;
                 ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued = false;
 
@@ -634,25 +502,74 @@ namespace ThothCbz
             };
         }
 
-        private void FillExecutionLogs()
+        private void FillTreeView()
         {
-            rtbExecutionLogs.BeginInvoke(delegate
+            var treeViewImgList = new ImageList();
+            treeViewImgList.Images.Add(Resources.TreeViewStatusDone);
+            treeViewImgList.Images.Add(Resources.TreeViewStatusError);
+            treeViewImgList.Images.Add(Resources.TreeViewStatusQueue);
+            treeViewImgList.Images.Add(Resources.TreeViewStatusRunning);
+            treeViewImgList.Images.Add(Resources.TreeViewStatusWaiting);
+            treeViewImgList.Images.Add(Resources.TreeViewStatusWarning);
+
+            treeViewVolumes.ImageList = treeViewImgList;
+
+            treeViewVolumes.BeginInvoke(delegate
             {
                 if (!ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Any())
                 {
-                    rtbExecutionLogs.Clear();
+                    treeViewVolumes.Nodes.Clear();
+                    return;
+                }
+
+                if (treeViewVolumes.Nodes.Count > 0)
+                    return;
+
+                foreach (var serie in ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Keys.OrderBy(o => o))
+                {
+                    var serieNode = new TreeNode($"{serie.ToUpper()} [ {ThothNotifyablePropertiesEntity.Default.SeriesDictionary[serie].Count} ]", 4, 4)
+                    {
+                        Tag = serie
+                    };
+
+                    var items = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[serie];
+                    var seriesPath = items.First().SeriePath;
+
+                    items.Where(w => !string.IsNullOrWhiteSpace(w?.Volume))
+                            .GroupBy(g2 => g2.Volume)
+                            .OrderBy(o2 => o2.Key)
+                            .ToList()
+                            .ForEach(f2 =>
+                            {
+                                var volumeNode = new TreeNode($"{f2.Key!.ToUpper()} [ {f2.Count()} ]", 4, 4)
+                                {
+                                    Tag = $@"{seriesPath}|{f2.Key}"
+                                };
+
+                                f2.Where(w2 => !string.IsNullOrWhiteSpace(w2?.Chapter))
+                                    .GroupBy(g3 => g3.Chapter)
+                                    .OrderBy(o3 => o3.Key)
+                                    .ToList()
+                                    .ForEach(f3 =>
+                                    {
+                                        var chapterNode = new TreeNode($"{f3.Key!.ToUpper()} [ {f3.Count()} ]", 4, 4)
+                                        {
+                                            Tag = $@"{seriesPath}|{f2.Key}|{f3.Key}"
+                                        };
+
+                                        volumeNode.Nodes.Add(chapterNode);
+                                    });
+
+                                serieNode.Nodes.Add(volumeNode);
+                            });
+
+                    treeViewVolumes.Nodes.Add(serieNode);
                 }
             });
+        }
 
-            if (!ThothNotifyablePropertiesEntity.Default.SeriesDictionary.Any())
-            {
-                return;
-            }
-
-            var linesResult = new List<string>
-            {
-                _rtfExecutionLogsTextColorsConfigurationLine
-            };
+        private void UpdateTreeViewStatus()
+        {
 
             var bagLines = new ConcurrentBag<(string, List<string>)>();
 
@@ -662,64 +579,128 @@ namespace ThothCbz
                 var items = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[serie];
 
                 var seriesPath = items.First().SeriePath;
-                var seriesStatus = GetExecutionStatusByLevel(
-                                        items: items
-                                    );
-                lines.Add(Resources.LblExecutionLogSeriesText.ReplaceRtfName(serie.ToUpper())
-                            .ReplaceRtfFont(serie.GetStringRtfFontIndex())
-                            .ReplaceRtfUri(seriesPath)
-                            .ReplaceRtfStatus(seriesStatus.GetExecutionStatusText())
-                            .ReplaceRtfColor(seriesStatus.GetExecutionStatusColorText()));
+                var seriesStatus = GetExecutionStatusByLevel(items: items);
+                var waitingEntitiesAmountSerie = GetWaitingEntitiesAmountByLevel(items: items);
 
-                items.Where(w => !string.IsNullOrWhiteSpace(w?.Volume))
-                        .GroupBy(g2 => g2.Volume)
-                        .OrderBy(o2 => o2.Key)
-                        .ToList()
-                        .ForEach(f2 =>
+                treeViewVolumes.BeginInvoke( delegate{ 
+                    foreach (TreeNode node in treeViewVolumes.Nodes)
+                    {
+                        if (node.Tag!.ToString() == serie)
                         {
-                            var volumeStatus = GetExecutionStatusByLevel(
-                                            items: items,
-                                            volumeName: f2.Key
-                                        );
-                            lines.Add(Resources.LblExecutionLogVolumesText.ReplaceRtfName(f2.Key!.ToUpper())
-                                        .ReplaceRtfFont(f2.Key!.GetStringRtfFontIndex())
-                                        .ReplaceRtfUri($@"{seriesPath}|{f2.Key}")
-                                        .ReplaceRtfStatus(volumeStatus.GetExecutionStatusText())
-                                        .ReplaceRtfColor(volumeStatus.GetExecutionStatusColorText()));
+                            UpdateTreeNodeStatus(
+                                node: node, 
+                                status: seriesStatus,
+                                waitingEntitiesAmount: waitingEntitiesAmountSerie);
 
-                            f2.Where(w2 => !string.IsNullOrWhiteSpace(w2?.Chapter))
-                                .GroupBy(g3 => g3.Chapter)
-                                .OrderBy(o3 => o3.Key)
+                            items.Where(w => !string.IsNullOrWhiteSpace(w?.Volume))
+                                .GroupBy(g2 => g2.Volume)
+                                .OrderBy(o2 => o2.Key)
                                 .ToList()
-                                .ForEach(f3 =>
+                                .ForEach(f2 =>
                                 {
-                                    var chapterStatus = GetExecutionStatusByLevel(
-                                            items: items,
-                                            volumeName: f2.Key,
-                                            chapterName: f3.Key
-                                        );
+                                    var volumeItems = items.Where(w => w.Volume == f2.Key).ToList();
 
-                                    lines.Add(Resources.LblExecutionLogChaptersText.ReplaceRtfName(f3.Key!.ToUpper())
-                                                .ReplaceRtfFont(f3.Key!.GetStringRtfFontIndex())
-                                                .ReplaceRtfUri($@"{seriesPath}|{f2.Key}|{f3.Key}")
-                                                .ReplaceRtfStatus(chapterStatus.GetExecutionStatusText())
-                                                .ReplaceRtfColor(chapterStatus.GetExecutionStatusColorText()));
-                                });
-                        });
+                                    var volumeStatus = GetExecutionStatusByLevel(
+                                                    items: volumeItems,
+                                                    volumeName: f2.Key
+                                                );
 
-                lines.Add(string.Empty);
-                bagLines.Add((serie, lines));
-            });
-
-            linesResult.AddRange(bagLines.OrderBy(o => o.Item1).SelectMany(s => s.Item2).ToList());
-            linesResult.Add(string.Empty);
-
-            rtbExecutionLogs.BeginInvoke(delegate
-            {
-                rtbExecutionLogs.Rtf = GenerateRtfWithMultipleLines(
-                                        linesResult
+                                    var waitingEntitiesAmountVolume = GetWaitingEntitiesAmountByLevel(
+                                        items: volumeItems,
+                                        volumeName: f2.Key
                                     );
+
+                                    foreach (TreeNode volumeNode in node.Nodes)
+                                    {
+                                        if (volumeNode.Tag!.ToString() == $@"{f2.First().SeriePath}|{f2.Key}")
+                                        {
+                                            UpdateTreeNodeStatus(
+                                                node: volumeNode,
+                                                status: volumeStatus,
+                                                waitingEntitiesAmount: waitingEntitiesAmountVolume);
+
+                                            f2.Where(w2 => !string.IsNullOrWhiteSpace(w2?.Chapter))
+                                                .GroupBy(g3 => g3.Chapter)
+                                                .OrderBy(o3 => o3.Key)
+                                                .ToList()
+                                                .ForEach(f3 =>
+                                                {
+                                                    var chapterItems = volumeItems.Where(w => w.Chapter == f3.Key).ToList();
+
+                                                    var chapterStatus = GetExecutionStatusByLevel(
+                                                            items: chapterItems,
+                                                            volumeName: f2.Key,
+                                                            chapterName: f3.Key
+                                                        );
+
+                                                    var waitingEntitiesAmountChapter = GetWaitingEntitiesAmountByLevel(
+                                                            items: chapterItems,
+                                                            volumeName: f2.Key,
+                                                            chapterName: f3.Key
+                                                        );
+
+                                                    foreach (TreeNode chapterNode in volumeNode.Nodes)
+                                                    {
+                                                        if (chapterNode.Tag!.ToString() == $@"{f2.First().SeriePath}|{f2.Key}|{f3.Key}")
+                                                        {
+                                                            UpdateTreeNodeStatus(
+                                                                node: chapterNode, 
+                                                                status: chapterStatus,
+                                                                waitingEntitiesAmount: waitingEntitiesAmountChapter);
+                                                        }
+                                                    }
+                                                });
+                                        }
+                                    };
+                                });
+                        }
+                    }
+                });
             });
+        }
+
+        private void UpdateTreeNodeStatus(
+                TreeNode node,
+                ExecutionStatusType status,
+                int waitingEntitiesAmount = 0
+            )
+        {
+            switch (status)
+            {
+                case ExecutionStatusType.Done:
+                    node.ImageIndex = 0;
+                    node.SelectedImageIndex = 0;
+                    node.Collapse();
+                    break;
+                case ExecutionStatusType.Error:
+                    node.ImageIndex = 1;
+                    node.SelectedImageIndex = 1;
+                    node.Expand();
+                    break;
+                case ExecutionStatusType.Queued:
+                    node.ImageIndex = 2;
+                    node.SelectedImageIndex = 2;
+                    node.Collapse();
+                    break;
+                case ExecutionStatusType.Running:
+                    node.ImageIndex = 3;
+                    node.SelectedImageIndex = 3;
+                    node.Expand();
+                    break;
+                case ExecutionStatusType.NotRunning:
+                    node.ImageIndex = 4;
+                    node.SelectedImageIndex = 4;
+                    node.Collapse();
+                    break;
+                case ExecutionStatusType.Warning:
+                    node.ImageIndex = 5;
+                    node.SelectedImageIndex = 5;
+                    node.Expand();
+                    break;
+            }
+
+            var amountText = waitingEntitiesAmount > 0 ? $" [ {waitingEntitiesAmount} ]" : string.Empty;
+            node.Text = $"{node.Text.Split('[')[0].TrimEnd()}{amountText}";
         }
 
         private ExecutionStatusType GetExecutionStatusByLevel(
@@ -757,41 +738,29 @@ namespace ThothCbz
                                         ? ExecutionStatusType.NotRunning
                                         : ExecutionStatusType.Queued;
         }
-        #endregion BUTTON ACTION METHODS
 
-        #region RICHTEXTBOX ACTION METHODS
-        private string GenerateRtfWithMultipleLines(
-                List<string>? lines
+        private int GetWaitingEntitiesAmountByLevel(
+                List<FileEntity> items,
+                string? volumeName = null,
+                string? chapterName = null
             )
         {
-            if (lines?.Where(w => !string.IsNullOrWhiteSpace(w))?.Any() != true)
-            {
-                return string.Empty;
-            }
+            if (!items.Any())
+                return 0;
 
-            var stb = new StringBuilder();
+            var result = items
+                            .Where(w => (string.IsNullOrWhiteSpace(volumeName) || w.Volume == volumeName)
+                                    && (string.IsNullOrWhiteSpace(chapterName) || w.Chapter == chapterName))
+                            .ToList();
 
-            stb.Append(@"{\rtf1\fbidis\ansi\ansicpg1252\deff0\nouicompat\deflang1033 ");
-            stb.Append(_rtfExecutionLogsTextFontsConfigurationline.ToString());
+            var count = result.Where(w => (!ThothNotifyablePropertiesEntity.Default.AdjustFilesActive || w.FileWasAdjusted) &&
+                                        (!ThothNotifyablePropertiesEntity.Default.SplitPagesActive || w.FileWasSplit) &&
+                                        (!ThothNotifyablePropertiesEntity.Default.UnifyPagesActive || w.FileWasUnified)).
+                                    Count();
 
-            var addNewLine = false;
-
-            foreach (var line in lines)
-            {
-                if (addNewLine)
-                {
-                    stb.Append(@"\line ");
-                }
-
-                stb.Append(line);
-                addNewLine = true;
-            }
-
-            stb.Append(@"}");
-
-            return stb.ToString();
+            return items.Count - count;
         }
-        #endregion
+        #endregion BUTTON ACTION METHODS
 
         #region GLOBAL ACTION METHODS
         private void SettingsControlsDatabinding()
@@ -911,7 +880,8 @@ namespace ThothCbz
             switch (e.PropertyName)
             {
                 case nameof(ThothNotifyablePropertiesEntity.Default.SeriesDictionary):
-                    FillExecutionLogs();
+                    FillTreeView();
+                    UpdateTreeViewStatus();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning):
                     if (ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning
@@ -927,37 +897,37 @@ namespace ThothCbz
                     if (!ThothNotifyablePropertiesEntity.Default.GenerationProcessRunning
                         && !backgroundWorkerExecution.IsBusy)
                     {
-                        FillExecutionLogs();
+                        UpdateTreeViewStatus();
                     }
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.AdjustableFilesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblConversionAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.SplittableFilesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblSplitAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.UnifyableFilesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblUnifyAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.FilesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblFilesAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.VolumesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblVolumesAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
                 case nameof(ThothNotifyablePropertiesEntity.Default.SeriesSetted):
                     LabelEventHandler.UpdateStatisticsValues(lblSeriesAnalytics);
-                    FillExecutionLogs();
+                    UpdateTreeViewStatus();
                     UpdateProgressExecution();
                     break;
             }

@@ -108,7 +108,6 @@ namespace ThothCbz
                     }
                 });
             }
-
             catch (Exception ex)
             {
                 ex.InformAndSaveLog();

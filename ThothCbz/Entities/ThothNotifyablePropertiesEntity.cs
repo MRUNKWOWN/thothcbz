@@ -389,7 +389,7 @@ namespace ThothCbz.Entities
                 if (value != _seriesDictionary)
                 {
                     _seriesDictionary = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged(nameof(SeriesDictionary));
 
                     var filesAnalyzed = value.SelectMany(s => s.Value);
 

@@ -80,13 +80,13 @@
             pbxBtnWarnings = new PictureBox();
             pnlTools = new Panel();
             pnlMain = new Panel();
-            rtbExecutionLogs = new RichTextBox();
             pnlExecutionHeader = new Panel();
             progressBarExecution = new ProgressBar();
             pbxExecutionLogsTitle = new PictureBox();
             mainStatusStrip = new StatusStrip();
             toolStripStatusLabelMainArea = new ToolStripStatusLabel();
             backgroundWorkerExecution = new System.ComponentModel.BackgroundWorker();
+            treeViewVolumes = new TreeView();
             ((System.ComponentModel.ISupportInitialize)pbxLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbxBtnAdjustFiles).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbxBtnUnifyPages).BeginInit();
@@ -207,7 +207,7 @@
             // lblVersion
             // 
             lblVersion.BackColor = System.Drawing.Color.Transparent;
-            lblVersion.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblVersion.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold | FontStyle.Italic);
             lblVersion.ForeColor = SystemColors.Window;
             lblVersion.Location = new System.Drawing.Point(1344, 141);
             lblVersion.Margin = new Padding(2, 0, 2, 0);
@@ -220,7 +220,7 @@
             // lblUnknwonAnalytics
             // 
             lblUnknwonAnalytics.Enabled = false;
-            lblUnknwonAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUnknwonAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblUnknwonAnalytics.ForeColor = System.Drawing.Color.White;
             lblUnknwonAnalytics.Location = new System.Drawing.Point(752, 52);
             lblUnknwonAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -273,7 +273,7 @@
             // lblSplitAnalytics
             // 
             lblSplitAnalytics.Enabled = false;
-            lblSplitAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblSplitAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblSplitAnalytics.ForeColor = System.Drawing.Color.White;
             lblSplitAnalytics.Location = new System.Drawing.Point(524, 109);
             lblSplitAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -300,7 +300,7 @@
             // lblUnifyAnalytics
             // 
             lblUnifyAnalytics.Enabled = false;
-            lblUnifyAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUnifyAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblUnifyAnalytics.ForeColor = System.Drawing.Color.White;
             lblUnifyAnalytics.Location = new System.Drawing.Point(296, 109);
             lblUnifyAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -327,7 +327,7 @@
             // lblConversionAnalytics
             // 
             lblConversionAnalytics.Enabled = false;
-            lblConversionAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblConversionAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblConversionAnalytics.ForeColor = System.Drawing.Color.White;
             lblConversionAnalytics.Location = new System.Drawing.Point(68, 109);
             lblConversionAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -354,7 +354,7 @@
             // lblSeriesAnalytics
             // 
             lblSeriesAnalytics.Enabled = false;
-            lblSeriesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblSeriesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblSeriesAnalytics.ForeColor = System.Drawing.Color.White;
             lblSeriesAnalytics.Location = new System.Drawing.Point(524, 52);
             lblSeriesAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -381,7 +381,7 @@
             // lblVolumesAnalytics
             // 
             lblVolumesAnalytics.Enabled = false;
-            lblVolumesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblVolumesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblVolumesAnalytics.ForeColor = System.Drawing.Color.White;
             lblVolumesAnalytics.Location = new System.Drawing.Point(296, 52);
             lblVolumesAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -408,7 +408,7 @@
             // lblFilesAnalytics
             // 
             lblFilesAnalytics.Enabled = false;
-            lblFilesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblFilesAnalytics.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblFilesAnalytics.ForeColor = System.Drawing.Color.White;
             lblFilesAnalytics.Location = new System.Drawing.Point(68, 52);
             lblFilesAnalytics.Margin = new Padding(2, 0, 2, 0);
@@ -521,7 +521,7 @@
             // txtDirectory
             // 
             txtDirectory.BorderStyle = BorderStyle.None;
-            txtDirectory.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            txtDirectory.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             txtDirectory.ForeColor = System.Drawing.Color.White;
             txtDirectory.Location = new System.Drawing.Point(94, 62);
             txtDirectory.Margin = new Padding(2, 3, 2, 3);
@@ -559,7 +559,7 @@
             // cbxEnableBrightnessContrast
             // 
             cbxEnableBrightnessContrast.BackgroundImage = Properties.Resources.thothBckColor;
-            cbxEnableBrightnessContrast.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            cbxEnableBrightnessContrast.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             cbxEnableBrightnessContrast.ForeColor = SystemColors.Window;
             cbxEnableBrightnessContrast.Location = new System.Drawing.Point(9, 398);
             cbxEnableBrightnessContrast.Margin = new Padding(2, 3, 2, 3);
@@ -581,7 +581,7 @@
             // cbxBlankSpace
             // 
             cbxBlankSpace.BackgroundImage = Properties.Resources.thothBckColor;
-            cbxBlankSpace.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            cbxBlankSpace.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             cbxBlankSpace.ForeColor = SystemColors.Window;
             cbxBlankSpace.Location = new System.Drawing.Point(12, 458);
             cbxBlankSpace.Margin = new Padding(2, 3, 2, 3);
@@ -604,7 +604,7 @@
             // 
             cbbReadOrder.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbReadOrder.FlatStyle = FlatStyle.Flat;
-            cbbReadOrder.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            cbbReadOrder.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic);
             cbbReadOrder.FormattingEnabled = true;
             cbbReadOrder.Location = new System.Drawing.Point(34, 363);
             cbbReadOrder.Margin = new Padding(2, 3, 2, 3);
@@ -615,7 +615,7 @@
             // lblReadingOrder
             // 
             lblReadingOrder.BackColor = System.Drawing.Color.Transparent;
-            lblReadingOrder.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            lblReadingOrder.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             lblReadingOrder.ForeColor = SystemColors.Window;
             lblReadingOrder.Location = new System.Drawing.Point(28, 335);
             lblReadingOrder.Margin = new Padding(2, 0, 2, 0);
@@ -627,7 +627,7 @@
             // nudMinimalHeight
             // 
             nudMinimalHeight.BorderStyle = BorderStyle.FixedSingle;
-            nudMinimalHeight.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            nudMinimalHeight.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic);
             nudMinimalHeight.Location = new System.Drawing.Point(34, 293);
             nudMinimalHeight.Margin = new Padding(2, 3, 2, 3);
             nudMinimalHeight.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
@@ -639,7 +639,7 @@
             // cbxUpscaleImages
             // 
             cbxUpscaleImages.BackgroundImage = Properties.Resources.thothBckColor;
-            cbxUpscaleImages.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            cbxUpscaleImages.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             cbxUpscaleImages.ForeColor = SystemColors.Window;
             cbxUpscaleImages.Location = new System.Drawing.Point(12, 238);
             cbxUpscaleImages.Margin = new Padding(2, 3, 2, 3);
@@ -652,7 +652,7 @@
             // txtSplitableDirectory
             // 
             txtSplitableDirectory.BorderStyle = BorderStyle.FixedSingle;
-            txtSplitableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            txtSplitableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic);
             txtSplitableDirectory.Location = new System.Drawing.Point(34, 183);
             txtSplitableDirectory.Margin = new Padding(2, 3, 2, 3);
             txtSplitableDirectory.Name = "txtSplitableDirectory";
@@ -663,7 +663,7 @@
             // lblSplitableDirectory
             // 
             lblSplitableDirectory.BackColor = System.Drawing.Color.Transparent;
-            lblSplitableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblSplitableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             lblSplitableDirectory.ForeColor = SystemColors.Window;
             lblSplitableDirectory.Location = new System.Drawing.Point(15, 141);
             lblSplitableDirectory.Margin = new Padding(2, 0, 2, 0);
@@ -675,7 +675,7 @@
             // txtUnifyableDirectory
             // 
             txtUnifyableDirectory.BorderStyle = BorderStyle.FixedSingle;
-            txtUnifyableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            txtUnifyableDirectory.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Italic);
             txtUnifyableDirectory.Location = new System.Drawing.Point(34, 98);
             txtUnifyableDirectory.Margin = new Padding(2, 3, 2, 3);
             txtUnifyableDirectory.Name = "txtUnifyableDirectory";
@@ -686,7 +686,7 @@
             // lblUnifyableDirectory
             // 
             lblUnifyableDirectory.BackColor = System.Drawing.Color.Transparent;
-            lblUnifyableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUnifyableDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             lblUnifyableDirectory.ForeColor = SystemColors.Window;
             lblUnifyableDirectory.Location = new System.Drawing.Point(12, 56);
             lblUnifyableDirectory.Margin = new Padding(2, 0, 2, 0);
@@ -698,7 +698,7 @@
             // cbxUseSelectedDirectory
             // 
             cbxUseSelectedDirectory.BackgroundImage = Properties.Resources.thothBckColor;
-            cbxUseSelectedDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            cbxUseSelectedDirectory.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             cbxUseSelectedDirectory.ForeColor = SystemColors.Window;
             cbxUseSelectedDirectory.Location = new System.Drawing.Point(15, 7);
             cbxUseSelectedDirectory.Margin = new Padding(2, 3, 2, 3);
@@ -753,7 +753,7 @@
             // pnlMain
             // 
             pnlMain.BackgroundImage = Properties.Resources.thothBckColor;
-            pnlMain.Controls.Add(rtbExecutionLogs);
+            pnlMain.Controls.Add(treeViewVolumes);
             pnlMain.Controls.Add(pnlExecutionHeader);
             pnlMain.Controls.Add(mainStatusStrip);
             pnlMain.Dock = DockStyle.Fill;
@@ -762,21 +762,6 @@
             pnlMain.Name = "pnlMain";
             pnlMain.Size = new System.Drawing.Size(952, 673);
             pnlMain.TabIndex = 16;
-            // 
-            // rtbExecutionLogs
-            // 
-            rtbExecutionLogs.BorderStyle = BorderStyle.None;
-            rtbExecutionLogs.Dock = DockStyle.Fill;
-            rtbExecutionLogs.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            rtbExecutionLogs.Location = new System.Drawing.Point(0, 73);
-            rtbExecutionLogs.Margin = new Padding(9, 10, 9, 10);
-            rtbExecutionLogs.Name = "rtbExecutionLogs";
-            rtbExecutionLogs.ReadOnly = true;
-            rtbExecutionLogs.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
-            rtbExecutionLogs.Size = new System.Drawing.Size(952, 574);
-            rtbExecutionLogs.TabIndex = 20;
-            rtbExecutionLogs.Text = "";
-            rtbExecutionLogs.LinkClicked += rtbExecutionLogs_LinkClicked;
             // 
             // pnlExecutionHeader
             // 
@@ -832,8 +817,15 @@
             // 
             // backgroundWorkerExecution
             // 
-            backgroundWorkerExecution.DoWork += backgroundWorkerExecution_DoWork2;
+            backgroundWorkerExecution.DoWork += backgroundWorkerExecution_DoWork;
             backgroundWorkerExecution.RunWorkerCompleted += backgroundWorkerExecution_RunWorkerCompleted;
+            // 
+            // treeViewVolumes
+            // 
+            treeViewVolumes.Location = new System.Drawing.Point(0, 62);
+            treeViewVolumes.Name = "treeViewVolumes";
+            treeViewVolumes.Size = new System.Drawing.Size(952, 585);
+            treeViewVolumes.TabIndex = 21;
             // 
             // frmThotCbz
             // 
@@ -908,7 +900,6 @@
         private PictureBox pbxExecutionLogsTitle;
         private Panel pnlExecutionHeader;
         private ProgressBar progressBarExecution;
-        private RichTextBox rtbExecutionLogs;
         private System.ComponentModel.BackgroundWorker backgroundWorkerExecution;
         private CheckBox cbxUseSelectedDirectory;
         private Label lblUnifyableDirectory;
@@ -948,5 +939,6 @@
         private CheckBox cbxBlankSpace;
         private Panel pnlSplitter03;
         private CheckBox cbxEnableBrightnessContrast;
+        private TreeView treeViewVolumes;
     }
 }

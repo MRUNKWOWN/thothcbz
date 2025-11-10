@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ThothCbz.Entities;
-using ThothCbz.Enumerators;
+﻿using ThothCbz.Entities;
 
 namespace ThothCbz.Extensions
 {
@@ -15,18 +9,45 @@ namespace ThothCbz.Extensions
                 string? SeriesName = null
             )
         {
+            var result = new List<List<FileEntity>>();
+
             if (value == null || value.Count == 0)
+                return result;
+
+            var series = value
+                    .SelectMany(s => s.Value)
+                    .Select(s => s.Serie)
+                    .Where(w => !string.IsNullOrWhiteSpace(w) && (string.IsNullOrWhiteSpace(SeriesName) || w.Equals(SeriesName, StringComparison.OrdinalIgnoreCase)))
+                    .Distinct()
+                    .OrderBy(o => o)
+                    .ToList();
+
+            if (!series.Any())
+                return result;
+
+            foreach(var serie in series)
             {
-                return new List<List<FileEntity>>();
+                var volumes = value
+                        .SelectMany(s => s.Value)
+                        .Where(w => w.Serie == serie)
+                        .Select(s => s.Volume)
+                        .Distinct()
+                        .OrderBy(o => o)
+                        .ToList();
+
+                foreach (var volume in volumes)
+                {
+                    result.Add(
+                            value
+                                .SelectMany(s => s.Value)
+                                .Where(w => w.Serie == serie && w.Volume == volume)
+                                .OrderBy(o => o.FilePath)
+                                .ToList()
+                        );
+                }
             }
 
-            return value
-                    .SelectMany(s => s.Value)
-                    .OrderBy(o => o.SeriePath)
-                    .ThenBy(t => t.Volume)
-                    .GroupBy(g => g.Volume)
-                    .Select(s => s.Select(m => m).ToList())
-                    .ToList();
+            return result;
         }
     }
 }

@@ -1229,6 +1229,16 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon thoth_cbz {
+            get {
+                object obj = ResourceManager.GetObject("thoth_cbz", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap thothBckColor {
@@ -1244,6 +1254,66 @@ namespace ThothCbz.Properties {
         internal static System.Drawing.Bitmap ThothCbz1 {
             get {
                 object obj = ResourceManager.GetObject("ThothCbz1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusDone {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusDone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusError {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusError", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusQueue {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusQueue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusRunning {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusRunning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusWaiting {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusWaiting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeViewStatusWarning {
+            get {
+                object obj = ResourceManager.GetObject("TreeViewStatusWarning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
