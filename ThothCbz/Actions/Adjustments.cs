@@ -10,23 +10,7 @@ namespace ThothCbz.Actions
 {
     internal static class Adjustments
     {
-        internal static void ExecuteAdjustments(
-                List<FileEntity> filesToAdjust,
-                List<string> filesToGrayscale,
-                System.Drawing.Size? defaultSize = null
-            )
-        {
-            foreach ( var file in filesToAdjust.OrderBy(o => o.FilePath))
-            {
-                ModifyAndSave(
-                        file,
-                        filesToGrayscale,
-                        defaultSize
-                    );
-            }
-        }
-
-        private static void ModifyAndSave(
+        internal static void ModifyAndSave(
                 FileEntity fileEntity,
                 List<string> filesToGrayscale,
                 System.Drawing.Size? defaultSize = null

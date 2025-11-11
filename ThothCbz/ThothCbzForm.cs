@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ThothCbz.Actions;
@@ -214,12 +215,7 @@ namespace ThothCbz
             {
                 var generationResults = new ConcurrentDictionary<string, int>();
 
-                var parallelOptions = new ParallelOptions()
-                {
-                    MaxDegreeOfParallelism = Settings.Default.MaxDegreeOfParallelism
-                };
-
-                Parallel.ForEach(ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AllFilesGroupedByVolume(), parallelOptions, volume =>
+                foreach(var volume in ThothNotifyablePropertiesEntity.Default.SeriesDictionary.AllFilesGroupedByVolume())
                 {
                     if (ThothNotifyablePropertiesEntity.Default.CancelGenerationProcessQueued)
                     {
@@ -270,7 +266,7 @@ namespace ThothCbz
                             }
                         });
                     }
-                });
+                };
             }
             catch (Exception ex)
             {
@@ -305,6 +301,11 @@ namespace ThothCbz
 
                 return;
             }
+
+            var parallelOptions = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = Settings.Default.MaxDegreeOfParallelism
+            };
 
             if (volume.Count > 1)
             {
@@ -347,11 +348,14 @@ namespace ThothCbz
                             GC.WaitForPendingFinalizers();
                         }
 
-                        Adjustments.ExecuteAdjustments(
-                                filesToAdjust: chapter.Where(w => !w.FileWasAdjusted).ToList(),
+                        Parallel.ForEach(chapter.Where(w => !w.FileWasAdjusted).ToList().OrderBy(o => o.FilePath), parallelOptions, file =>
+                        {
+                            Adjustments.ModifyAndSave(
+                                fileEntity: file,
                                 filesToGrayscale: filesToGrayscale,
                                 defaultSize: defaultSize
                             );
+                        });
 
                         if (!string.IsNullOrWhiteSpace(chapterDefaultFileToSize) && File.Exists(chapterDefaultFileToSize))
                         {
@@ -361,9 +365,12 @@ namespace ThothCbz
 
                     if (ThothNotifyablePropertiesEntity.Default.SplitPagesActive)
                     {
-                        Split.ExecuteSpliting(
-                                filesToAdjust: chapter.Where(w => w.IsSplit && !w.FileWasSplit).ToList()
+                        Parallel.ForEach(chapter.Where(w => w.IsSplit && !w.FileWasSplit).ToList().OrderBy(o => o.FilePath), parallelOptions, file =>
+                        {
+                            Split.ModifyAndSave(
+                                fileEntity: file
                             );
+                        });
                     }
 
                     if (ThothNotifyablePropertiesEntity.Default.UnifyPagesActive)

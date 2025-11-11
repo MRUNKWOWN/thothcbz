@@ -11,77 +11,57 @@ namespace ThothCbz.Actions
 {
     internal class Split
     {
-        internal static void ExecuteSpliting(
-                List<FileEntity> filesToAdjust
+        internal static void ModifyAndSave(
+                FileEntity fileEntity
             )
         {
-            foreach (var chapter in filesToAdjust
-                .GroupBy(g => g.Chapter)
-                .Select(s => new { s.Key, Items = s.Select(m => m).ToList() })
-                .OrderBy(s => s.Key))
-            {
-                ModifyAndSave(
-                        chapter.Items
-                    );
-            }
-        }
+            using var img = Image.FromFile(fileEntity.GetFilePathToImageOutputFileTypeValue());
 
-        private static void ModifyAndSave(
-                List<FileEntity> fileEntityList
-            )
-        {
-            var uniqueIdentifier = Guid.NewGuid().ToString("N");
+            var newWidth = Convert.ToInt32(img.Width / 2);
+            var newHeight = img.Height;
 
-            foreach (var fileEntity in fileEntityList)
-            {
-                using var img = Image.FromFile(fileEntity.GetFilePathToImageOutputFileTypeValue());
+            using var splitedImg01 = new Bitmap(newWidth, newHeight);
+            splitedImg01.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
-                var newWidth = Convert.ToInt32(img.Width / 2);
-                var newHeight = img.Height;
+            using var splitedImg02 = new Bitmap(newWidth, newHeight);
+            splitedImg02.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
-                using var splitedImg01 = new Bitmap(newWidth, newHeight);
-                splitedImg01.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+            using var graphics1 = Graphics.FromImage(splitedImg01).SetDefaultQuality();
+            graphics1.DrawImage(img, new Rectangle(0, 0, img.Width, newHeight));
 
-                using var splitedImg02 = new Bitmap(newWidth, newHeight);
-                splitedImg02.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+            using var graphics2 = Graphics.FromImage(splitedImg02).SetDefaultQuality();
+            graphics2.DrawImage(img, 0, 0, new Rectangle((img.Width - newWidth), 0, newWidth, newHeight), GraphicsUnit.Pixel);
 
-                using var graphics1 = Graphics.FromImage(splitedImg01).SetDefaultQuality();
-                graphics1.DrawImage(img, new Rectangle(0, 0, img.Width, newHeight));
+            splitedImg01.SaveAs(
+                    fileEntity: fileEntity,
+                    uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
+                                        ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02
+                                        : GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01
+                );
+            splitedImg02.SaveAs(
+                    fileEntity: fileEntity,
+                    uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
+                                        ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01
+                                        : GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02
+                );
 
-                using var graphics2 = Graphics.FromImage(splitedImg02).SetDefaultQuality();
-                graphics2.DrawImage(img, 0, 0, new Rectangle((img.Width - newWidth), 0, newWidth, newHeight), GraphicsUnit.Pixel);
+            graphics1.Dispose();
+            graphics2.Dispose();
 
-                splitedImg01.SaveAs(
-                        fileEntity: fileEntity,
-                        uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
-                                            ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02
-                                            : GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01
-                    );
-                splitedImg02.SaveAs(
-                        fileEntity: fileEntity,
-                        uniqueIdentifier: Settings.Default.ReadOrder == (int)ReadOrderTypes.RightToLeft
-                                            ? GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_01
-                                            : GlobalConstants.DEFAULT_SPLITED_FILE_ORDER_02
-                    );
-                
-                graphics1.Dispose();
-                graphics2.Dispose();
+            splitedImg01.Dispose();
+            splitedImg02.Dispose();
 
-                splitedImg01.Dispose();
-                splitedImg02.Dispose();
+            img.Dispose();
 
-                img.Dispose();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
+            fileEntity.DeleteFile();
 
-                fileEntity.DeleteFile();
+            ThothNotifyablePropertiesEntity.Default.SplittableFilesSetted.Add(1);
+            ThothNotifyablePropertiesEntity.Default.ForceNotification(nameof(ThothNotifyablePropertiesEntity.Default.SplittableFilesSetted));
 
-                ThothNotifyablePropertiesEntity.Default.SplittableFilesSetted.Add(1);
-                ThothNotifyablePropertiesEntity.Default.ForceNotification(nameof(ThothNotifyablePropertiesEntity.Default.SplittableFilesSetted));
-
-                fileEntity.FileWasSplit = true;
-            }
+            fileEntity.FileWasSplit = true;
         }
     }
 }
