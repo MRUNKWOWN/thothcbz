@@ -12,7 +12,8 @@ namespace ThothCbz.Entities
             GlobalConstants.DEFAULT_IMG_EXTENSION,
             GlobalConstants.DEFAULT_GIF_EXTENSION,
             GlobalConstants.DEFAULT_PNG_EXTENSION,
-            GlobalConstants.DEFAULT_WEBP_EXTENSION
+            GlobalConstants.DEFAULT_WEBP_EXTENSION,
+            GlobalConstants.DEFAULT_AVIF_EXTENSION
         };
 
         public FileEntity(

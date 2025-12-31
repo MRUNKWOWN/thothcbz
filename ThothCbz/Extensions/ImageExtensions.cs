@@ -1,5 +1,5 @@
 ﻿using System.Drawing.Imaging;
-
+using ThothCbz.Enumerators;
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;
 

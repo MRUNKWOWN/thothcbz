@@ -205,6 +205,20 @@ namespace ThothCbz.EventHandlers
                     break;
                 case ActionTypes.Play:
                     Settings.Default.Save();
+
+                    if(ThothNotifyablePropertiesEntity.Default.GenerateCbzActive)
+                    {
+                        var generateCbzActiveValidation = MessageBox.Show(
+                                Resources.MessageBoxGenerationCbzSelected,
+                                Resources.MessageBoxGenerationCbzWarningTitle,
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Warning
+                            );
+
+                        if (generateCbzActiveValidation != DialogResult.Yes)
+                            break;
+                    }
+
                     ThothNotifyablePropertiesEntity.Default.KeepUserChoicesBetweenFileAnalyses = true;
                     GetAndAnalyzeFiles();
                     ThothNotifyablePropertiesEntity.Default.KeepUserChoicesBetweenFileAnalyses = false;

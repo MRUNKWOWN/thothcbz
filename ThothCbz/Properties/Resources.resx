@@ -526,4 +526,10 @@
   <data name="thoth_cbz" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\thoth_cbz.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MessageBoxGenerationCbzSelected" xml:space="preserve">
+    <value>Do you really want to create the CBZ files?</value>
+  </data>
+  <data name="MessageBoxGenerationCbzWarningTitle" xml:space="preserve">
+    <value>WARNING: CBZ Generation is active!</value>
+  </data>
 </root>

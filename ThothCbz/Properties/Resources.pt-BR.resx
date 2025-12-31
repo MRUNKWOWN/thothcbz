@@ -502,6 +502,9 @@
   <data name="TreeViewStatusWarning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="thoth_cbz" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\thoth_cbz.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="analysing-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\analysing-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -520,10 +523,13 @@
   <data name="settings-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\settings-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="thoth_cbz" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\thoth_cbz.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="volumes-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\volumes-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MessageBoxGenerationCbzSelected" xml:space="preserve">
+    <value>Você realmente quer criar os arquivos CBZ?</value>
+  </data>
+  <data name="MessageBoxGenerationCbzWarningTitle" xml:space="preserve">
+    <value>AVISO: A Geração do CBZ está ativa!</value>
   </data>
 </root>

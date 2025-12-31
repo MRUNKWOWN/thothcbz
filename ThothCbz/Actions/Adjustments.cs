@@ -16,11 +16,14 @@ namespace ThothCbz.Actions
                 System.Drawing.Size? defaultSize = null
             )
         {
+            if (!File.Exists(fileEntity.FilePath))
+                return;
+
             var uniqueIdentifier = Guid.NewGuid().ToString("N");
 
             var color = fileEntity.Extension switch
             {
-                GlobalConstants.DEFAULT_PNG_EXTENSION => System.Drawing.Color.White,
+                GlobalConstants.DEFAULT_PNG_EXTENSION => Color.White,
                 _ => System.Drawing.Color.Black,
             };
 
@@ -34,17 +37,18 @@ namespace ThothCbz.Actions
             {
                 if (fileEntity.IsGrayScaled)
                 {
-                    var levelsLinear = new LevelsLinear();
-
-                    levelsLinear.InRed = new IntRange(30, 230);
-                    levelsLinear.InGreen = new IntRange(50, 240);
-                    levelsLinear.InBlue = new IntRange(10, 210);
+                    var levelsLinear = new LevelsLinear
+                    {
+                        InRed = new IntRange(30, 230),
+                        InGreen = new IntRange(50, 240),
+                        InBlue = new IntRange(10, 210)
+                    };
 
                     levelsLinear.ApplyInPlace((Bitmap)img);
                 }
                 else
                 {
-                    ContrastCorrection contrastCorrection = new ContrastCorrection();
+                    var contrastCorrection = new ContrastCorrection();
                     contrastCorrection.ApplyInPlace((Bitmap)img);
 
                     var saturationCorrection = new SaturationCorrection(0.15f);
@@ -56,22 +60,32 @@ namespace ThothCbz.Actions
                         ? (float)Settings.Default.MinimalImageHeight / (float)img.Height
                         : 1;
 
-            using var newImg = img.Resize(
+            if (factor != 1)
+            {
+                using var newImg = img.Resize(
                                     resizeFactor: factor,
                                     backgroundColor: color
                                 );
 
-            if (factor != 1)
-            {
-                newImg.Sharpen();
-            }
+                newImg.SaveAs(
+                                fileEntity,
+                                uniqueIdentifier
+                            );
 
-            newImg.SaveAs(
+                newImg.Dispose();
+
+                fileEntity.SharpenAndSaveAs(
+                        fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier)
+                    );
+            }
+            else
+            {
+                ((Bitmap)img).SaveAs(
                             fileEntity,
                             uniqueIdentifier
                         );
+            }
 
-            newImg.Dispose();
             img.Dispose();
 
             GC.Collect();

@@ -1,11 +1,8 @@
-using Microsoft.VisualBasic;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 using ThothCbz.Actions;
 using ThothCbz.Constants;
