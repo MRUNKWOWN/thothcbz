@@ -2,7 +2,6 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 
 using ThothCbz.Actions;
 using ThothCbz.Constants;
@@ -11,18 +10,15 @@ using ThothCbz.Enumerators;
 using ThothCbz.EventHandlers;
 using ThothCbz.Extensions;
 using ThothCbz.Properties;
-using static ThothCbz.Extensions.StringExtensions;
 
 namespace ThothCbz
 {
     public partial class frmThotCbz : Form
     {
-        private string _rtfExecutionLogsTextColorsConfigurationLine = string.Empty;
-        private StringBuilder _rtfExecutionLogsTextFontsConfigurationline = new StringBuilder();
-
         public frmThotCbz()
         {
             InitializeComponent();
+            InitializeImageMagick();
 
             tips.SetToolTip(pbxBtnAdjustFiles, Resources.PbxBtnAdjustFilesTooltipText);
             tips.SetToolTip(pbxBtnUnifyPages, Resources.PbxBtnUnifyPagesTooltipText);
@@ -64,7 +60,6 @@ namespace ThothCbz
             lblSplitAnalytics.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             lblUnknwonAnalytics.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             toolStripStatusLabelMainArea.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
-            //rtbExecutionLogs.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
             treeViewVolumes.BackColor = GlobalConstants.DEFAULT_BACKGROUND_COLOR;
             txtUnifyableDirectory.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
             txtSplitableDirectory.BackColor = GlobalConstants.DEFAULT_LOG_BACKGROUND_COLOR;
@@ -76,7 +71,6 @@ namespace ThothCbz
             cbxBlankSpace.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             cbxEnableBrightnessContrast.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             toolStripStatusLabelMainArea.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
-            //rtbExecutionLogs.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             treeViewVolumes.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblUnifyableDirectory.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblSplitableDirectory.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
@@ -86,30 +80,6 @@ namespace ThothCbz
             cbbReadOrder.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblReadingOrder.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
             lblVersion.ForeColor = GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR;
-
-            _rtfExecutionLogsTextColorsConfigurationLine = $@"{{\colortbl;\red{(int)GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_ENABLED_TEXT_COLOR.B};" +
-                        $@"\red{(int)GlobalConstants.DEFAULT_LOG_QUEUE_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_QUEUE_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_QUEUE_TEXT_COLOR.B};" +
-                        $@"\red{(int)GlobalConstants.DEFAULT_LOG_RUNNING_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_RUNNING_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_RUNNING_TEXT_COLOR.B};" +
-                        $@"\red{(int)GlobalConstants.DEFAULT_LOG_DONE_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_DONE_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_DONE_TEXT_COLOR.B};" +
-                        $@"\red{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_ERRO_TEXT_COLOR.B};" +
-                        $@"\red{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.R}\green{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.G}\blue{(int)GlobalConstants.DEFAULT_LOG_WARNING_TEXT_COLOR.B};" +
-                        $@"}}";
-
-            Dictionary<int, string> _rtfExecutionLogsTextFontsConfigurations = new Dictionary<int, string>();
-            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Arabic.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Arabic.GetStringRtfFontIndex()}\fnil\fcharset178 Segoe UI;}}");
-            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.BrazilianPortuguese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.BrazilianPortuguese.GetStringRtfFontIndex()}\fnil\fcharset0 Segoe UI;}}");
-            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Chinese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Chinese.GetStringRtfFontIndex()}\fswiss\fcharset134 Microsoft YaHei;}}");
-            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.English.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.English.GetStringRtfFontIndex()}\fnil Segoe UI;}}");
-            _rtfExecutionLogsTextFontsConfigurations.Add(SupportedLanguageType.Japanese.GetStringRtfFontIndex(), $@"{{\f{SupportedLanguageType.Japanese.GetStringRtfFontIndex()}\fnil\fcharset128 Yu Gothic;}}");
-
-            _rtfExecutionLogsTextFontsConfigurationline.Append("{\\fonttbl");
-
-            foreach (var key in _rtfExecutionLogsTextFontsConfigurations.Keys.Order())
-            {
-                _rtfExecutionLogsTextFontsConfigurationline.Append(_rtfExecutionLogsTextFontsConfigurations[key]);
-            }
-
-            _rtfExecutionLogsTextFontsConfigurationline.Append("}");
 
             cbbReadOrder.Items.AddRange(new[] {
                         Resources.LblPagesReadOrderLeftRightText,
@@ -128,8 +98,50 @@ namespace ThothCbz
 
             SetEventHandlers();
             SettingsControlsDatabinding();
-
+            pnlBottom_Resize(new object(), new EventArgs());
+            pnlSeries_Resize(new object(), new EventArgs());
             pbxBtnExecute.Focus();
+        }
+
+        private void InitializeImageMagick()
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = $"magick",
+                Arguments = $"-version",
+                UseShellExecute = false, // Needed to redirect output
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            using Process process = Process.Start(startInfo)!;
+
+            string error = process.StandardError.ReadToEnd();
+
+            process.WaitForExit();
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                var startInfoInstall = new ProcessStartInfo
+                {
+                    FileName = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!}\\ImageMagick-7.1.2-10-Q16-x64-dll.exe",
+                    Arguments = string.Empty,
+                    UseShellExecute = false, // Needed to redirect output
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
+                using Process processInstall = Process.Start(startInfoInstall)!;
+
+                string errorInstall = process.StandardError.ReadToEnd();
+
+                processInstall.WaitForExit();
+
+                if (!string.IsNullOrEmpty(errorInstall))
+                    MessageBox.Show(Resources.LblInstallMagickWarning, Resources.LblWarningTitle, MessageBoxButtons.OK);
+            }
         }
 
         #region FORM EVENTS
@@ -145,10 +157,10 @@ namespace ThothCbz
                 EventArgs e
             )
         {
-            pbxBtnExecute.Location = new System.Drawing.Point(pnlBottom.Width - (pbxBtnExecute.Width + 20), 20);
-            pbxBtnRefresh.Location = new System.Drawing.Point(pbxBtnExecute.Location.X - (pbxBtnRefresh.Width + 20), 55);
-            pbxBtnCancel.Location = new System.Drawing.Point(pbxBtnRefresh.Location.X - (pbxBtnCancel.Width + 20), 55);
-            lblVersion.Location = new System.Drawing.Point(pnlBottom.Width - (lblVersion.Width + 25), 176);
+            pbxBtnExecute.Location = new Point(pnlBottom.Width - (pbxBtnExecute.Width + 20), (pnlBottom.Height - pbxBtnExecute.Height) / 2);
+            pbxBtnRefresh.Location = new Point(pbxBtnExecute.Location.X - (pbxBtnRefresh.Width + 20), (pnlBottom.Height - pbxBtnRefresh.Height) / 2);
+            pbxBtnCancel.Location = new Point(pbxBtnRefresh.Location.X - (pbxBtnCancel.Width + 20), (pnlBottom.Height - pbxBtnCancel.Height) / 2);
+            lblVersion.Location = new Point(pnlBottom.Width - (lblVersion.Width + 25), pnlBottom.Height - lblVersion.Height);
         }
 
         private void pnlSeries_Resize(
@@ -158,7 +170,8 @@ namespace ThothCbz
         {
             treeViewVolumes.Width = pnlMain.Width;
             treeViewVolumes.Height = pnlMain.Height - pnlExecutionHeader.Height;
-            progressBarExecution.Location = new System.Drawing.Point(pnlExecutionHeader.Width - (progressBarExecution.Width + 10), 24);
+            progressBarExecution.Width = (int)(((pnlExecutionHeader.Width - (pbxExecutionLogsTitle.Width + pbxExecutionLogsTitle.Location.X))/3)*2);
+            progressBarExecution.Location = new Point(pnlExecutionHeader.Width - (progressBarExecution.Width + 10), 19);
         }
         #endregion PANEL EVENTS
 
@@ -318,7 +331,7 @@ namespace ThothCbz
                 {
                     if (ThothNotifyablePropertiesEntity.Default.AdjustFilesActive)
                     {
-                        System.Drawing.Size? defaultSize = null;
+                        Size? defaultSize = null;
 
                         var chapterDefaultFileToSize = Directory.GetFiles(
                                                             $"{volumePath}\\{chapter.FirstOrDefault()!.Chapter}"
@@ -329,7 +342,7 @@ namespace ThothCbz
                             !string.IsNullOrWhiteSpace(volumeDefaultFileToSize) || 
                             !string.IsNullOrWhiteSpace(defaultFileToSize))
                         {
-                            using var img = System.Drawing.Image.FromFile(
+                            using var img = Image.FromFile(
                                     !string.IsNullOrWhiteSpace(chapterDefaultFileToSize)
                                         ? chapterDefaultFileToSize
                                         : !string.IsNullOrWhiteSpace(volumeDefaultFileToSize)

@@ -3,6 +3,12 @@
     internal enum ImageOutputFileType
     {
         JPG = 0,
-        PNG
+        PNG,
+        JPEG,
+        IMG,
+        GIF,
+        AVIF,
+        WEBP,
+        INVALID = 99
     }
 }

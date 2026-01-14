@@ -532,4 +532,10 @@
   <data name="MessageBoxGenerationCbzWarningTitle" xml:space="preserve">
     <value>WARNING: CBZ Generation is active!</value>
   </data>
+  <data name="LblWarningTitle" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="LblInstallMagickWarning" xml:space="preserve">
+    <value>Please, install mannually the lastest version of Image Magick (https://imagemagick.org/script/download.php)</value>
+  </data>
 </root>

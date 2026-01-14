@@ -211,6 +211,15 @@
   <data name="BtnFolderPressed512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\btnfolderpressed512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="settings_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="analysing_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\analysing-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="analytics_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\analytics-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BtnFileDisable512x512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\btnfiledisable512x512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -382,6 +391,9 @@
   <data name="CorruptedAppConfigurationFileText" xml:space="preserve">
     <value>O arquivo AppConfiguration.json está corrompido.</value>
   </data>
+  <data name="execution_logs_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\execution-logs-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="FormWarningsText" xml:space="preserve">
     <value>Avisos</value>
   </data>
@@ -448,8 +460,17 @@
   <data name="RtbWarningsHeaderOneText" xml:space="preserve">
     <value>Por favor verifique no alerta abaixo a ação necessária para prosseguir com a execução dos ajustes e/ou a geração dos arquivos CBZ.</value>
   </data>
+  <data name="series_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\series-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settings_left_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings-left-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="splitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\splitter.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="volumes_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\volumes-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="warnings_titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\warnings-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -505,31 +526,16 @@
   <data name="thoth_cbz" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\thoth_cbz.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="analysing-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\analysing-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="analytics-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\analytics-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="execution-logs-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\execution-logs-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="series-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\series-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="settings-left-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\settings-left-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="settings-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\settings-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="volumes-titles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\volumes-titles-pt-br.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="MessageBoxGenerationCbzSelected" xml:space="preserve">
     <value>Você realmente quer criar os arquivos CBZ?</value>
   </data>
   <data name="MessageBoxGenerationCbzWarningTitle" xml:space="preserve">
     <value>AVISO: A Geração do CBZ está ativa!</value>
+  </data>
+  <data name="LblWarningTitle" xml:space="preserve">
+    <value>Atenção!</value>
+  </data>
+  <data name="LblInstallMagickWarning" xml:space="preserve">
+    <value>Por favor, instale manualmente a versão mais recente do Image Magick (https://imagemagick.org/script/download.php)</value>
   </data>
 </root>

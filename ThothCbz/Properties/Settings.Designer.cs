@@ -190,5 +190,17 @@ namespace ThothCbz.Properties {
                 this["MaxDegreeOfParallelism"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CancelImageAdjustsIfSizeAndExtensionAreOK {
+            get {
+                return ((bool)(this["CancelImageAdjustsIfSizeAndExtensionAreOK"]));
+            }
+            set {
+                this["CancelImageAdjustsIfSizeAndExtensionAreOK"] = value;
+            }
+        }
     }
 }

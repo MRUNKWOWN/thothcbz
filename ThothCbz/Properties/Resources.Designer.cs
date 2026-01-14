@@ -829,6 +829,15 @@ namespace ThothCbz.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please, install mannually the lastest version of Image Magick (https://imagemagick.org/script/download.php).
+        /// </summary>
+        internal static string LblInstallMagickWarning {
+            get {
+                return ResourceManager.GetString("LblInstallMagickWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LEFT-TO-RIGHT.
         /// </summary>
         internal static string LblPagesReadOrderLeftRightText {
@@ -879,6 +888,15 @@ namespace ThothCbz.Properties {
         internal static string LblVersionText {
             get {
                 return ResourceManager.GetString("LblVersionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning!.
+        /// </summary>
+        internal static string LblWarningTitle {
+            get {
+                return ResourceManager.GetString("LblWarningTitle", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using ThothCbz.Constants;
+using ThothCbz.Enumerators;
 using ThothCbz.Extensions;
 using ThothCbz.Properties;
 
@@ -100,10 +101,23 @@ namespace ThothCbz.Entities
             Chapter = (iCountFolderLevel - 3) >= 0 
                         ? levelsName[iCountFolderLevel - 3]
                         : string.Empty;
+
+            ExtensionOutputFileType = (Extension.ToLower()) switch 
+            {
+                GlobalConstants.DEFAULT_JPEG_EXTENSION => ImageOutputFileType.JPEG,
+                GlobalConstants.DEFAULT_JPG_EXTENSION => ImageOutputFileType.JPG,
+                GlobalConstants.DEFAULT_PNG_EXTENSION => ImageOutputFileType.PNG,
+                GlobalConstants.DEFAULT_IMG_EXTENSION => ImageOutputFileType.IMG,
+                GlobalConstants.DEFAULT_GIF_EXTENSION => ImageOutputFileType.GIF,
+                GlobalConstants.DEFAULT_AVIF_EXTENSION => ImageOutputFileType.AVIF,
+                GlobalConstants.DEFAULT_WEBP_EXTENSION => ImageOutputFileType.WEBP,
+                _ => ImageOutputFileType.INVALID
+            };
         }
 
         public string Name { get; private set; }
         public string Extension { get; private set; }
+        internal ImageOutputFileType ExtensionOutputFileType { get; private set; }
         public string FilePath { get; private set; }
         public string SeriePath { get; private set; }
         public string Serie { get; private set; }

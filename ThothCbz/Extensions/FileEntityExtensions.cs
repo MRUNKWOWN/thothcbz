@@ -2,19 +2,17 @@
 using ImageMagick;
 using SixLabors.ImageSharp;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using ThothCbz.Constants;
 using ThothCbz.Entities;
 using ThothCbz.Enumerators;
 using ThothCbz.Properties;
-using Windows.UI.ViewManagement;
 
 namespace ThothCbz.Extensions
 {
     internal static class FileEntityExtensions
     {
-        internal static string _exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        internal static string _exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!;
 
         internal static string GetFilePathToImageOutputFileTypeValue(
                 this FileEntity entity,
@@ -167,10 +165,24 @@ namespace ThothCbz.Extensions
                 Directory.Delete(newDirectory, true);
             }
 
-            SharpenAndSaveAs(
+            var needSharpen = true;
+
+            if (Settings.Default.CancelImageAdjustsIfSizeAndExtensionAreOK && entity.ExtensionOutputFileType == (ImageOutputFileType)Settings.Default.ImageOutputFileType)
+            {
+                using var imgSize = System.Drawing.Image.FromFile(filePath);
+
+                needSharpen = (Settings.Default.EnableUpscale && imgSize.Height < Settings.Default.MinimalImageHeight);
+
+                imgSize.Dispose();
+            }
+
+            if (needSharpen)
+            {
+                SharpenAndSaveAs(
                     entity,
                     filePath: filePath
                 );
+            }
 
             using var img = System.Drawing.Image.FromFile(filePath);
 
@@ -319,7 +331,7 @@ namespace ThothCbz.Extensions
                 string newFilePath
             )
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            var startInfo = new ProcessStartInfo
             {
                 FileName = $"{_exeDirectory}\\jpeg2png_1.02_x64.exe",
                 Arguments = $"\"{entity.FilePath}\" -o \"{newFilePath}\" -f -q",
@@ -329,7 +341,7 @@ namespace ThothCbz.Extensions
                 CreateNoWindow = true
             };
 
-            using Process process = Process.Start(startInfo);
+            using Process process = Process.Start(startInfo)!;
 
             string error = process.StandardError.ReadToEnd();
 
@@ -346,7 +358,7 @@ namespace ThothCbz.Extensions
                 string filePath
             )
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            var startInfo = new ProcessStartInfo
             {
                 FileName = $"magick",
                 Arguments = $"\"{filePath}\" -sharpen 0x3 \"{filePath}\"",
@@ -356,7 +368,7 @@ namespace ThothCbz.Extensions
                 CreateNoWindow = true
             };
 
-            using Process process = Process.Start(startInfo);
+            using Process process = Process.Start(startInfo)!;
 
             string error = process.StandardError.ReadToEnd();
 
