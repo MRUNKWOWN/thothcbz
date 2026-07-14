@@ -10,7 +10,12 @@ namespace ThothCbz.EventHandlers
                 EventArgs e
             )
         {
-            Settings.Default.ReadOrder = ((ComboBox)sender!).SelectedItem.ToString() == Resources.LblPagesReadOrderLeftRightText
+            if (sender is not ComboBox comboBox || comboBox.SelectedItem is null)
+            {
+                return;
+            }
+
+            Settings.Default.ReadOrder = comboBox.SelectedItem.ToString() == Resources.LblPagesReadOrderLeftRightText
                                                     ? (int)ReadOrderTypes.LeftToRight
                                                     : (int)ReadOrderTypes.RightToLeft;
 

@@ -1,7 +1,4 @@
-﻿using AForge;
-using AForge.Imaging.Filters;
-
-using ThothCbz.Constants;
+﻿using ThothCbz.Constants;
 using ThothCbz.Entities;
 using ThothCbz.Extensions;
 using ThothCbz.Properties;
@@ -12,7 +9,7 @@ namespace ThothCbz.Actions
     {
         internal static void ModifyAndSave(
                 FileEntity fileEntity,
-                List<string> filesToGrayscale,
+                ISet<string> filesToGrayscale,
                 System.Drawing.Size? defaultSize = null
             )
         {
@@ -23,11 +20,11 @@ namespace ThothCbz.Actions
 
             var color = fileEntity.Extension switch
             {
-                GlobalConstants.DEFAULT_PNG_EXTENSION => Color.White,
+                GlobalConstants.DEFAULT_PNG_EXTENSION => System.Drawing.Color.White,
                 _ => System.Drawing.Color.Black,
             };
 
-            using var img = fileEntity.GetImage(
+            using var img = (System.Drawing.Bitmap)fileEntity.GetImage(
                     backgroundColor: color,
                     filesToGrayscale: filesToGrayscale,
                     defaultSize: defaultSize
@@ -35,61 +32,70 @@ namespace ThothCbz.Actions
 
             if (Settings.Default.EnableBrightnessAndContrastAdjustments)
             {
-                if (fileEntity.IsGrayScaled)
-                {
-                    var levelsLinear = new LevelsLinear
-                    {
-                        InRed = new IntRange(30, 230),
-                        InGreen = new IntRange(50, 240),
-                        InBlue = new IntRange(10, 210)
-                    };
+                using var adjustedImage = fileEntity.IsGrayScaled
+                    ? img.ApplyLevelsLinear(30, 230, 50, 240, 10, 210)
+                    : img.ApplyContrastAndSaturation(1.15f, 0.15f);
 
-                    levelsLinear.ApplyInPlace((Bitmap)img);
+                float factor = (Settings.Default.EnableUpscale && adjustedImage.Height < Settings.Default.MinimalImageHeight)
+                            ? (float)Settings.Default.MinimalImageHeight / (float)adjustedImage.Height
+                            : 1;
+
+                if (factor != 1)
+                {
+                    using var newImg = adjustedImage.Resize(
+                                        resizeFactor: factor,
+                                        backgroundColor: color
+                                    );
+
+                    newImg.SaveAs(
+                                    fileEntity,
+                                    uniqueIdentifier
+                                );
+
+                    fileEntity.SharpenAndSaveAs(
+                            fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier)
+                        );
                 }
                 else
                 {
-                    var contrastCorrection = new ContrastCorrection();
-                    contrastCorrection.ApplyInPlace((Bitmap)img);
-
-                    var saturationCorrection = new SaturationCorrection(0.15f);
-                    saturationCorrection.ApplyInPlace((Bitmap)img);
-                }
-            }
-
-            float factor = (Settings.Default.EnableUpscale && img.Height < Settings.Default.MinimalImageHeight)
-                        ? (float)Settings.Default.MinimalImageHeight / (float)img.Height
-                        : 1;
-
-            if (factor != 1)
-            {
-                using var newImg = img.Resize(
-                                    resizeFactor: factor,
-                                    backgroundColor: color
-                                );
-
-                newImg.SaveAs(
+                    adjustedImage.SaveAs(
                                 fileEntity,
                                 uniqueIdentifier
                             );
+                }
 
-                newImg.Dispose();
-
-                fileEntity.SharpenAndSaveAs(
-                        fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier)
-                    );
+                adjustedImage.Dispose();
             }
             else
             {
-                ((Bitmap)img).SaveAs(
-                            fileEntity,
-                            uniqueIdentifier
+                float factor = (Settings.Default.EnableUpscale && img.Height < Settings.Default.MinimalImageHeight)
+                            ? (float)Settings.Default.MinimalImageHeight / (float)img.Height
+                            : 1;
+
+                if (factor != 1)
+                {
+                    using var newImg = img.Resize(
+                                        resizeFactor: factor,
+                                        backgroundColor: color
+                                    );
+
+                    newImg.SaveAs(
+                                    fileEntity,
+                                    uniqueIdentifier
+                                );
+
+                    fileEntity.SharpenAndSaveAs(
+                            fileEntity.GetFilePathToImageOutputFileTypeValue(uniqueIdentifier)
                         );
+                }
+                else
+                {
+                    img.SaveAs(
+                                fileEntity,
+                                uniqueIdentifier
+                            );
+                }
             }
-
-            img.Dispose();
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
 
             fileEntity.ReplaceOldFile(
                     uniqueIdentifier

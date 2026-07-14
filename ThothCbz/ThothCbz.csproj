@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,6 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\thoth_cbz.ico</ApplicationIcon>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AForge" Version="2.2.5" />
-    <PackageReference Include="AForge.Imaging" Version="2.2.5" />
-    <PackageReference Include="AForge.Math" Version="2.2.5" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.9.1" />
+    
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.15.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 

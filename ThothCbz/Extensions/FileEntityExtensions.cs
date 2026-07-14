@@ -1,5 +1,4 @@
-﻿using AForge.Imaging.Filters;
-using ImageMagick;
+﻿using ImageMagick;
 using SixLabors.ImageSharp;
 using System.Diagnostics;
 using System.Reflection;
@@ -114,7 +113,7 @@ namespace ThothCbz.Extensions
         internal static System.Drawing.Image GetImage(
                 this FileEntity entity,
                 System.Drawing.Color backgroundColor,
-                List<string> filesToGrayscale,
+                ISet<string> filesToGrayscale,
                 System.Drawing.Size? defaultSize = null
             )
         {
@@ -155,7 +154,7 @@ namespace ThothCbz.Extensions
                         newFilePath: newfilePath
                     );
 
-                filePath = Path.GetDirectoryName(entity.FilePath) + "\\" + Path.GetFileName(filePath);
+                filePath = Path.Combine(Path.GetDirectoryName(entity.FilePath)!, Path.GetFileName(filePath));
 
                 File.Move(
                         newfilePath,
@@ -197,8 +196,7 @@ namespace ThothCbz.Extensions
 
             img.Dispose();
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            
 
             var wasDeleted = false;
 
@@ -218,7 +216,7 @@ namespace ThothCbz.Extensions
                 }
                 catch
                 {
-                    Thread.Sleep(500);
+
                 }
             }
 
@@ -227,11 +225,11 @@ namespace ThothCbz.Extensions
                     null
                 );
 
-            entity.IsGrayScaled = Settings.Default.EnableBrightnessAndContrastAdjustments && filesToGrayscale.Where(w => w == entity.FilePath).Any();
+            entity.IsGrayScaled = Settings.Default.EnableBrightnessAndContrastAdjustments && filesToGrayscale.Contains(entity.FilePath);
 
             return entity.IsGrayScaled
-                    ? Grayscale.CommonAlgorithms.BT709.Apply(imgRgb)
-                    : (Bitmap)imgRgb.Clone();
+                    ? imgRgb.ApplyGrayscale()
+                    : (System.Drawing.Bitmap)imgRgb.Clone();
         }
 
         internal static void SaveWebpAsDefaultImageOutputFileType(
@@ -255,8 +253,7 @@ namespace ThothCbz.Extensions
             
             img.Dispose();
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            
 
             DeleteFileWithRetry(entity.FilePath);
         }
@@ -283,8 +280,7 @@ namespace ThothCbz.Extensions
             img.Write(newFilePath);
             img.Dispose();
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            
 
             DeleteFileWithRetry(entity.FilePath);
         }
@@ -419,6 +415,7 @@ namespace ThothCbz.Extensions
                     {
                         File.Delete(filePath);
                     }
+
                     wasDeleted = true;
                 }
                 catch
@@ -427,5 +424,140 @@ namespace ThothCbz.Extensions
                 }
             }
         }
+
+        private static System.Drawing.Bitmap CreateBitmapCopy(System.Drawing.Bitmap source)
+        {
+            return new System.Drawing.Bitmap(source);
+        }
+
+        internal static System.Drawing.Bitmap ApplyGrayscale(this System.Drawing.Bitmap bitmap)
+        {
+            var result = CreateBitmapCopy(bitmap);
+            var rect = new System.Drawing.Rectangle(0, 0, result.Width, result.Height);
+            var data = result.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            try
+            {
+                unsafe
+                {
+                    byte* ptr = (byte*)data.Scan0;
+                    for (var y = 0; y < result.Height; y++)
+                    {
+                        byte* row = ptr + (y * data.Stride);
+                        for (var x = 0; x < result.Width; x++)
+                        {
+                            var blue = row[0];
+                            var green = row[1];
+                            var red = row[2];
+                            var intensity = (byte)(0.299f * red + 0.587f * green + 0.114f * blue);
+
+                            row[0] = intensity;
+                            row[1] = intensity;
+                            row[2] = intensity;
+                            row += 4;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                result.UnlockBits(data);
+            }
+
+            return result;
+        }
+
+        internal static System.Drawing.Bitmap ApplyLevelsLinear(this System.Drawing.Bitmap bitmap, int inRedMin, int inRedMax, int inGreenMin, int inGreenMax, int inBlueMin, int inBlueMax)
+        {
+            var result = CreateBitmapCopy(bitmap);
+            var rect = new System.Drawing.Rectangle(0, 0, result.Width, result.Height);
+            var data = result.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            try
+            {
+                unsafe
+                {
+                    byte* ptr = (byte*)data.Scan0;
+                    for (var y = 0; y < result.Height; y++)
+                    {
+                        byte* row = ptr + (y * data.Stride);
+                        for (var x = 0; x < result.Width; x++)
+                        {
+                            row[0] = ScaleChannel(row[0], inBlueMin, inBlueMax);
+                            row[1] = ScaleChannel(row[1], inGreenMin, inGreenMax);
+                            row[2] = ScaleChannel(row[2], inRedMin, inRedMax);
+                            row += 4;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                result.UnlockBits(data);
+            }
+
+            return result;
+        }
+
+        internal static System.Drawing.Bitmap ApplyContrastAndSaturation(this System.Drawing.Bitmap bitmap, float contrastFactor, float saturationFactor)
+        {
+            var result = CreateBitmapCopy(bitmap);
+            var rect = new System.Drawing.Rectangle(0, 0, result.Width, result.Height);
+            var data = result.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            try
+            {
+                unsafe
+                {
+                    byte* ptr = (byte*)data.Scan0;
+                    for (var y = 0; y < result.Height; y++)
+                    {
+                        byte* row = ptr + (y * data.Stride);
+                        for (var x = 0; x < result.Width; x++)
+                        {
+                            var blue = row[0];
+                            var green = row[1];
+                            var red = row[2];
+                            var grayscale = (byte)(0.299f * red + 0.587f * green + 0.114f * blue);
+
+                            row[0] = (byte)Math.Clamp(grayscale + (blue - grayscale) * (1f + saturationFactor), 0, 255);
+                            row[1] = (byte)Math.Clamp(grayscale + (green - grayscale) * (1f + saturationFactor), 0, 255);
+                            row[2] = (byte)Math.Clamp(grayscale + (red - grayscale) * (1f + saturationFactor), 0, 255);
+
+                            if (contrastFactor != 1f)
+                            {
+                                row[0] = AdjustValue(row[0], contrastFactor);
+                                row[1] = AdjustValue(row[1], contrastFactor);
+                                row[2] = AdjustValue(row[2], contrastFactor);
+                            }
+
+                            row += 4;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                result.UnlockBits(data);
+            }
+
+            return result;
+        }
+
+        private static byte ScaleChannel(byte value, int inputMin, int inputMax)
+        {
+            var clampedValue = Math.Clamp(value, inputMin, inputMax);
+            return (byte)Math.Round((clampedValue - inputMin) * 255d / (inputMax - inputMin));
+        }
+
+        private static byte AdjustValue(byte value, float factor)
+        {
+            var adjustedValue = ((value - 128) * factor) + 128;
+            return (byte)Math.Clamp(adjustedValue, 0, 255);
+        }
     }
 }
+
+
+
+

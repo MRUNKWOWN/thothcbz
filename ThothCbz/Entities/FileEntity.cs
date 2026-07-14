@@ -7,9 +7,10 @@ namespace ThothCbz.Entities
 {
     public class FileEntity
     {
-        private List<string> _acceptableExtensions = new List<string>() { 
-            GlobalConstants.DEFAULT_JPG_EXTENSION, 
-            GlobalConstants.DEFAULT_JPEG_EXTENSION, 
+        private static readonly HashSet<string> AcceptableExtensions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            GlobalConstants.DEFAULT_JPG_EXTENSION,
+            GlobalConstants.DEFAULT_JPEG_EXTENSION,
             GlobalConstants.DEFAULT_IMG_EXTENSION,
             GlobalConstants.DEFAULT_GIF_EXTENSION,
             GlobalConstants.DEFAULT_PNG_EXTENSION,
@@ -23,104 +24,109 @@ namespace ThothCbz.Entities
                 bool useSelectedFolderAsLevel,
                 string? splitFolderDefaultName,
                 string? unifyFolderDefaultName
-            ) 
-        { 
-            if(string.IsNullOrWhiteSpace(filePath))
+            )
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
             }
 
             Name = Path.GetFileNameWithoutExtension(filePath);
-            Extension = Path.GetExtension(filePath).ToLower();
+            Extension = NormalizeExtension(filePath);
             FilePath = filePath;
-            IsAcceptableFileType = _acceptableExtensions.Contains(Extension);
-            NeedConversion = _acceptableExtensions.Contains(Extension) && Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension();
+            IsAcceptableFileType = AcceptableExtensions.Contains(Extension);
+            NeedConversion = IsAcceptableFileType && !string.Equals(Extension, Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension(), StringComparison.OrdinalIgnoreCase);
             FileWasAdjusted = false;
+            ExtensionOutputFileType = GetImageOutputFileType(Extension);
 
-            var iCountFolderLevel = 0;
-            var SeriesLevelFound = false;
+            var folderLevelCount = 0;
+            var seriesLevelFound = false;
             var currentPath = filePath;
-            List<string> levelsName = new List<string>();
+            List<string> levelNames = new List<string>();
             List<string> paths = new List<string>();
 
-            while (!SeriesLevelFound)
+            while (!seriesLevelFound)
             {
-                currentPath = Directory.GetParent(currentPath)!.FullName;
+                var parent = Directory.GetParent(currentPath);
+                if (parent is null)
+                {
+                    break;
+                }
+
+                currentPath = parent.FullName;
                 var directoryName = new DirectoryInfo(currentPath).Name;
                 var foundAdjustableFolder = false;
 
-                if(string.IsNullOrWhiteSpace(directoryName))
+                if (string.IsNullOrWhiteSpace(directoryName))
                 {
-                    SeriesLevelFound = true;
+                    seriesLevelFound = true;
                     continue;
                 }
 
-                if (directoryName.ToLower().Trim() == splitFolderDefaultName)
+                var normalizedDirectoryName = directoryName.Trim();
+                var normalizedSplitFolderDefaultName = splitFolderDefaultName?.Trim();
+                var normalizedUnifyFolderDefaultName = unifyFolderDefaultName?.Trim();
+
+                if (string.Equals(normalizedDirectoryName, normalizedSplitFolderDefaultName, StringComparison.OrdinalIgnoreCase))
                 {
                     foundAdjustableFolder = IsSplit = true;
                 }
-                
-                if (directoryName.ToLower().Trim() == unifyFolderDefaultName)
+
+                if (string.Equals(normalizedDirectoryName, normalizedUnifyFolderDefaultName, StringComparison.OrdinalIgnoreCase))
                 {
                     foundAdjustableFolder = IsUnify = true;
                 }
 
-                if(!foundAdjustableFolder) 
+                if (!foundAdjustableFolder)
                 {
-                    if(selectedFolderPath.Trim().ToLower() == currentPath.ToLower())
+                    var normalizedSelectedFolderPath = string.IsNullOrWhiteSpace(selectedFolderPath)
+                        ? string.Empty
+                        : Path.GetFullPath(selectedFolderPath);
+                    var normalizedCurrentPath = Path.GetFullPath(currentPath);
+
+                    if (string.Equals(normalizedSelectedFolderPath, normalizedCurrentPath, StringComparison.OrdinalIgnoreCase))
                     {
                         if (useSelectedFolderAsLevel)
                         {
-                            levelsName.Add(directoryName);
+                            levelNames.Add(directoryName);
                             paths.Add(currentPath);
-                            iCountFolderLevel++;
+                            folderLevelCount++;
                         }
 
-                        SeriesLevelFound = true;
+                        seriesLevelFound = true;
                         continue;
                     }
 
-                    levelsName.Add(directoryName);
+                    levelNames.Add(directoryName);
                     paths.Add(currentPath);
-                    iCountFolderLevel++;
-                    SeriesLevelFound = iCountFolderLevel == 3;
+                    folderLevelCount++;
+                    seriesLevelFound = folderLevelCount == 3;
                 }
             }
 
-            if (iCountFolderLevel == 0)
+            if (folderLevelCount == 0)
             {
-                SeriePath = Serie = string.Empty;
+                SeriePath = string.Empty;
+                Serie = string.Empty;
                 return;
             }
 
-            SeriePath = paths[iCountFolderLevel - 1].Replace('\\', '|');
-            Serie = levelsName[iCountFolderLevel - 1];
-            Volume = (iCountFolderLevel - 2) >= 0 
-                        ? levelsName[iCountFolderLevel - 2]
+            SeriePath = paths[folderLevelCount - 1].Replace('\\', '|');
+            Serie = levelNames[folderLevelCount - 1];
+            Volume = (folderLevelCount - 2) >= 0
+                        ? levelNames[folderLevelCount - 2]
                         : string.Empty;
-            Chapter = (iCountFolderLevel - 3) >= 0 
-                        ? levelsName[iCountFolderLevel - 3]
+            Chapter = (folderLevelCount - 3) >= 0
+                        ? levelNames[folderLevelCount - 3]
                         : string.Empty;
-
-            ExtensionOutputFileType = (Extension.ToLower()) switch 
-            {
-                GlobalConstants.DEFAULT_JPEG_EXTENSION => ImageOutputFileType.JPEG,
-                GlobalConstants.DEFAULT_JPG_EXTENSION => ImageOutputFileType.JPG,
-                GlobalConstants.DEFAULT_PNG_EXTENSION => ImageOutputFileType.PNG,
-                GlobalConstants.DEFAULT_IMG_EXTENSION => ImageOutputFileType.IMG,
-                GlobalConstants.DEFAULT_GIF_EXTENSION => ImageOutputFileType.GIF,
-                GlobalConstants.DEFAULT_AVIF_EXTENSION => ImageOutputFileType.AVIF,
-                GlobalConstants.DEFAULT_WEBP_EXTENSION => ImageOutputFileType.WEBP,
-                _ => ImageOutputFileType.INVALID
-            };
         }
 
-        public string Name { get; private set; }
-        public string Extension { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Extension { get; private set; } = string.Empty;
         internal ImageOutputFileType ExtensionOutputFileType { get; private set; }
-        public string FilePath { get; private set; }
-        public string SeriePath { get; private set; }
-        public string Serie { get; private set; }
+        public string FilePath { get; private set; } = string.Empty;
+        public string SeriePath { get; private set; } = string.Empty;
+        public string Serie { get; private set; } = string.Empty;
         public string? Volume { get; private set; }
         public string? Chapter { get; private set; }
         public bool IsAcceptableFileType { get; private set; }
@@ -133,5 +139,28 @@ namespace ThothCbz.Entities
         public bool FileWasUnified { get; set; }
         public bool FileWasRenamed { get; set; }
         public bool FileWasCompressed { get; set; }
+
+        private static string NormalizeExtension(string filePath)
+        {
+            var extension = Path.GetExtension(filePath);
+            return string.IsNullOrWhiteSpace(extension)
+                ? string.Empty
+                : extension.ToLowerInvariant();
+        }
+
+        private static ImageOutputFileType GetImageOutputFileType(string extension)
+        {
+            return extension.ToLowerInvariant() switch
+            {
+                GlobalConstants.DEFAULT_JPEG_EXTENSION => ImageOutputFileType.JPEG,
+                GlobalConstants.DEFAULT_JPG_EXTENSION => ImageOutputFileType.JPG,
+                GlobalConstants.DEFAULT_PNG_EXTENSION => ImageOutputFileType.PNG,
+                GlobalConstants.DEFAULT_IMG_EXTENSION => ImageOutputFileType.IMG,
+                GlobalConstants.DEFAULT_GIF_EXTENSION => ImageOutputFileType.GIF,
+                GlobalConstants.DEFAULT_AVIF_EXTENSION => ImageOutputFileType.AVIF,
+                GlobalConstants.DEFAULT_WEBP_EXTENSION => ImageOutputFileType.WEBP,
+                _ => ImageOutputFileType.INVALID
+            };
+        }
     }
 }

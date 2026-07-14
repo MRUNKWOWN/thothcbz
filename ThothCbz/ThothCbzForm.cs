@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
@@ -233,17 +233,24 @@ namespace ThothCbz
                     }
 
                     var seriesKey = volume.FirstOrDefault()!.Serie;
-                    var filesToGrayscale = new List<string>();
+                    var filesToGrayscale = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
                     var filesToGrayscalePath = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].FilesToGrayScaleFilePath();
 
                     if (!string.IsNullOrWhiteSpace(filesToGrayscalePath) && File.Exists(filesToGrayscalePath))
                     {
-                        filesToGrayscale = File.ReadAllLines(filesToGrayscalePath).ToList();
+                        foreach (var grayscaleFile in File.ReadLines(filesToGrayscalePath))
+                        {
+                            if (!string.IsNullOrWhiteSpace(grayscaleFile))
+                            {
+                                filesToGrayscale.Add(grayscaleFile.Trim());
+                            }
+                        }
                     }
 
-                    var customBlankFilePath = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
-                    var defaultFileToSize = Directory.GetFiles(ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\'), $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
+                    var seriesDirectoryPath = ThothNotifyablePropertiesEntity.Default.SeriesDictionary[seriesKey].First().SeriePath.Replace('|', '\\');
+                    var customBlankFilePath = Directory.GetFiles(seriesDirectoryPath, $"{GlobalConstants.DEFAULT_BLANK_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
+                    var defaultFileToSize = Directory.GetFiles(seriesDirectoryPath, $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
 
                     VolumeGenerations(
                             volume,
@@ -294,7 +301,7 @@ namespace ThothCbz
 
         private void VolumeGenerations(
                 List<FileEntity> volume,
-                List<string> filesToGrayscale,
+                ISet<string> filesToGrayscale,
                 string? customBlankFilePath,
                 string? defaultFileToSize
             )
@@ -319,8 +326,8 @@ namespace ThothCbz
 
             if (volume.Count > 1)
             {
-                string volumePath = volume.FirstOrDefault()!.SeriePath!.Replace('|', '\\') +
-                                        (!string.IsNullOrWhiteSpace(volume.FirstOrDefault()!.Volume) ? $"\\{volume.FirstOrDefault()!.Volume}" : string.Empty);
+                string volumePath = Path.Combine(volume.FirstOrDefault()!.SeriePath!.Replace('|', '\\'),
+                                        !string.IsNullOrWhiteSpace(volume.FirstOrDefault()!.Volume) ? volume.FirstOrDefault()!.Volume : string.Empty);
 
                 var volumeDefaultFileToSize = Directory.GetFiles(volumePath, $"{GlobalConstants.DEFAULT_TEMPLATE_FILE_NAME}{Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension()}").FirstOrDefault();
 
