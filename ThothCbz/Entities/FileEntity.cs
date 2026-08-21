@@ -14,8 +14,7 @@ namespace ThothCbz.Entities
             GlobalConstants.DEFAULT_IMG_EXTENSION,
             GlobalConstants.DEFAULT_GIF_EXTENSION,
             GlobalConstants.DEFAULT_PNG_EXTENSION,
-            GlobalConstants.DEFAULT_WEBP_EXTENSION,
-            GlobalConstants.DEFAULT_AVIF_EXTENSION
+            GlobalConstants.DEFAULT_WEBP_EXTENSION
         };
 
         public FileEntity(
@@ -157,7 +156,6 @@ namespace ThothCbz.Entities
                 GlobalConstants.DEFAULT_PNG_EXTENSION => ImageOutputFileType.PNG,
                 GlobalConstants.DEFAULT_IMG_EXTENSION => ImageOutputFileType.IMG,
                 GlobalConstants.DEFAULT_GIF_EXTENSION => ImageOutputFileType.GIF,
-                GlobalConstants.DEFAULT_AVIF_EXTENSION => ImageOutputFileType.AVIF,
                 GlobalConstants.DEFAULT_WEBP_EXTENSION => ImageOutputFileType.WEBP,
                 _ => ImageOutputFileType.INVALID
             };

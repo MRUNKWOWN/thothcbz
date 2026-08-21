@@ -1,5 +1,4 @@
-﻿using ImageMagick;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using System.Diagnostics;
 using System.Reflection;
 using ThothCbz.Constants;
@@ -50,7 +49,7 @@ namespace ThothCbz.Extensions
 
             var wasDeleted = false;
 
-            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION || fileEntity.Extension == GlobalConstants.DEFAULT_AVIF_EXTENSION
+            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
                                 ? fileEntity.GetFilePathToImageOutputFileTypeValue()
                                 : fileEntity.FilePath;
 
@@ -88,7 +87,7 @@ namespace ThothCbz.Extensions
         {
             var wasDeleted = false;
 
-            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION || fileEntity.Extension == GlobalConstants.DEFAULT_AVIF_EXTENSION
+            var currentPath = (fileEntity.Extension != Settings.Default.ImageOutputFileType.GetImageOutputFileTypeExtension() && fileEntity.FileWasAdjusted) || fileEntity.Extension == GlobalConstants.DEFAULT_WEBP_EXTENSION
                                 ? fileEntity.GetFilePathToImageOutputFileTypeValue()
                                 : fileEntity.FilePath;
 
@@ -129,16 +128,7 @@ namespace ThothCbz.Extensions
                         );
             }
 
-            if (entity.Extension == GlobalConstants.DEFAULT_AVIF_EXTENSION)
-            {
-                filePath = entity.GetFilePathToImageOutputFileTypeValue();
-                SaveAvifAsDefaultImageOutputFileType(
-                            entity,
-                            newFilePath: filePath
-                        );
-            }
-
-            if(entity.Extension == GlobalConstants.DEFAULT_JPEG_EXTENSION || entity.Extension == GlobalConstants.DEFAULT_JPG_EXTENSION)
+            if((entity.Extension == GlobalConstants.DEFAULT_JPEG_EXTENSION || entity.Extension == GlobalConstants.DEFAULT_JPG_EXTENSION) && IsJpegFile(entity.FilePath))
             {
                 var serieDirectory = Directory.GetParent(entity.SeriePath.Replace("|", "\\"))!.FullName;
                 var newDirectory = $@"{serieDirectory}\{uniqueDirectoryIdentifier}";
@@ -147,7 +137,10 @@ namespace ThothCbz.Extensions
                         newDirectory
                     );
 
-                var newfilePath = newEntity.GetFilePathToImageOutputFileTypeValue();
+                // jpeg2png always emits PNG data, so it needs a destination that is
+                // distinct from its own input file, otherwise it would overwrite the
+                // source while reading it and the next run would receive PNG bytes.
+                var newfilePath = $@"{newDirectory}\{newEntity.Name}{GlobalConstants.DEFAULT_PNG_EXTENSION}";
 
                 RemoveJpegArtifactsAndSaveAsDefaultImageOutputFileType(
                         newEntity,
@@ -155,6 +148,8 @@ namespace ThothCbz.Extensions
                     );
 
                 filePath = Path.Combine(Path.GetDirectoryName(entity.FilePath)!, Path.GetFileName(filePath));
+
+                DeleteFileWithRetry(filePath);
 
                 File.Move(
                         newfilePath,
@@ -258,33 +253,6 @@ namespace ThothCbz.Extensions
             DeleteFileWithRetry(entity.FilePath);
         }
 
-        internal static void SaveAvifAsDefaultImageOutputFileType(
-                this FileEntity entity,
-                string newFilePath
-            )
-        {
-            using var img = new MagickImage(entity.FilePath);
-
-            switch ((ImageOutputFileType)Settings.Default.ImageOutputFileType)
-            {
-                case ImageOutputFileType.JPG:
-                    img.Format = MagickFormat.Jpg;
-                    break;
-                case ImageOutputFileType.PNG:
-                    img.Format = MagickFormat.Png;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
-            img.Write(newFilePath);
-            img.Dispose();
-
-            
-
-            DeleteFileWithRetry(entity.FilePath);
-        }
-
         internal static string FilesToGrayScaleFilePath(
                 this IEnumerable<FileEntity> entities
             )
@@ -322,6 +290,28 @@ namespace ThothCbz.Extensions
                             : Directory.GetParent(Directory.GetParent(Directory.GetParent(filePath)!.FullName)!.FullName)!.FullName; ;
         }
 
+        /// <summary>
+        /// jpeg2png relies on libjpeg and fails hard when the payload is not a real JPEG.
+        /// Files can legitimately carry a .jpg name while already holding PNG data, so the
+        /// magic bytes are checked instead of trusting the extension.
+        /// </summary>
+        private static bool IsJpegFile(
+                string filePath
+            )
+        {
+            if (!File.Exists(filePath))
+                return false;
+
+            var header = new byte[3];
+
+            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            if (stream.Read(header, 0, header.Length) < header.Length)
+                return false;
+
+            return header[0] == 0xFF && header[1] == 0xD8 && header[2] == 0xFF;
+        }
+
         internal static void RemoveJpegArtifactsAndSaveAsDefaultImageOutputFileType(
                 this FileEntity entity,
                 string newFilePath
@@ -343,7 +333,7 @@ namespace ThothCbz.Extensions
 
             process.WaitForExit();
 
-            if (!string.IsNullOrEmpty(error))
+            if (process.ExitCode != 0 || !File.Exists(newFilePath))
                 throw new Exception($"Error converting JPEG to PNG: {error}");
 
             DeleteFileWithRetry(entity.FilePath);
@@ -354,24 +344,25 @@ namespace ThothCbz.Extensions
                 string filePath
             )
         {
-            var startInfo = new ProcessStartInfo
+            var temporaryFilePath = $"{filePath}.{Guid.NewGuid():N}.tmp";
+
+            using (var buffer = new MemoryStream(File.ReadAllBytes(filePath), writable: false))
+            using (var loaded = new System.Drawing.Bitmap(buffer))
+            using (var image = loaded.EnsureSharpenableFormat())
             {
-                FileName = $"magick",
-                Arguments = $"\"{filePath}\" -sharpen 0x3 \"{filePath}\"",
-                UseShellExecute = false, // Needed to redirect output
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
+                image.SharpenInPlace(GlobalConstants.DEFAULT_SHARPEN_SIGMA);
 
-            using Process process = Process.Start(startInfo)!;
+                image.SaveAsByExtension(
+                        filePath: temporaryFilePath
+                    );
+            }
 
-            string error = process.StandardError.ReadToEnd();
+            DeleteFileWithRetry(filePath);
 
-            process.WaitForExit();
-
-            if (!string.IsNullOrEmpty(error))
-                throw new Exception($"Error sharpening image: {error}");
+            File.Move(
+                    temporaryFilePath,
+                    filePath
+                );
         }
 
         internal static FileEntity Move(

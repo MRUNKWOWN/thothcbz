@@ -7,7 +7,6 @@
         JPEG,
         IMG,
         GIF,
-        AVIF,
         WEBP,
         INVALID = 99
     }

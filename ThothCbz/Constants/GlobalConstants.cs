@@ -13,9 +13,9 @@
         public static System.Drawing.Color DEFAULT_LOG_WARNING_TEXT_COLOR { get { return System.Drawing.Color.FromArgb(255, 154, 154); } }
 
         public const string DEFAULT_EMPTY_STATISTIC_VALUE = "-- / --";
+        public const double DEFAULT_SHARPEN_SIGMA = 3.0;
         public const string DEFAULT_JPEG_MIME_TYPE = "image/jpeg";
         public const string DEFAULT_WEBP_EXTENSION = ".webp";
-        public const string DEFAULT_AVIF_EXTENSION = ".avif";
         public const string DEFAULT_PNG_EXTENSION = ".png";
         public const string DEFAULT_JPG_EXTENSION = ".jpg";
         public const string DEFAULT_JPEG_EXTENSION = ".jpeg";

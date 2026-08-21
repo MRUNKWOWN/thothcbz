@@ -38,6 +38,26 @@ namespace ThothCbz.Extensions
             }
         }
 
+        internal static void SaveAsByExtension(
+                this Bitmap img,
+                string filePath
+            )
+        {
+            switch (Path.GetExtension(filePath).ToLowerInvariant())
+            {
+                case GlobalConstants.DEFAULT_PNG_EXTENSION:
+                    img.SaveAsPng(filePath: filePath);
+                    break;
+                case GlobalConstants.DEFAULT_JPG_EXTENSION:
+                case GlobalConstants.DEFAULT_JPEG_EXTENSION:
+                    img.SaveAsJpg(filePath: filePath);
+                    break;
+                default:
+                    img.SaveAs(filePath: filePath);
+                    break;
+            }
+        }
+
         private static void SaveAsJpg(
                 this Bitmap img,
                 string filePath

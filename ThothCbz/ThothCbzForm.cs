@@ -18,7 +18,6 @@ namespace ThothCbz
         public frmThotCbz()
         {
             InitializeComponent();
-            InitializeImageMagick();
 
             tips.SetToolTip(pbxBtnAdjustFiles, Resources.PbxBtnAdjustFilesTooltipText);
             tips.SetToolTip(pbxBtnUnifyPages, Resources.PbxBtnUnifyPagesTooltipText);
@@ -101,47 +100,6 @@ namespace ThothCbz
             pnlBottom_Resize(new object(), new EventArgs());
             pnlSeries_Resize(new object(), new EventArgs());
             pbxBtnExecute.Focus();
-        }
-
-        private void InitializeImageMagick()
-        {
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = $"magick",
-                Arguments = $"-version",
-                UseShellExecute = false, // Needed to redirect output
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
-
-            using Process process = Process.Start(startInfo)!;
-
-            string error = process.StandardError.ReadToEnd();
-
-            process.WaitForExit();
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                var startInfoInstall = new ProcessStartInfo
-                {
-                    FileName = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!}\\ImageMagick-7.1.2-10-Q16-x64-dll.exe",
-                    Arguments = string.Empty,
-                    UseShellExecute = false, // Needed to redirect output
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
-
-                using Process processInstall = Process.Start(startInfoInstall)!;
-
-                string errorInstall = process.StandardError.ReadToEnd();
-
-                processInstall.WaitForExit();
-
-                if (!string.IsNullOrEmpty(errorInstall))
-                    MessageBox.Show(Resources.LblInstallMagickWarning, Resources.LblWarningTitle, MessageBoxButtons.OK);
-            }
         }
 
         #region FORM EVENTS
