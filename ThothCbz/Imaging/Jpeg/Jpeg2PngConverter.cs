@@ -69,7 +69,7 @@ namespace ThothCbz.Imaging.Jpeg
                 planeHeights[i] = component.BlocksPerColumn * 8;
             }
 
-            var result = new SixLabors.ImageSharp.Image<Rgb24>(image.Width, image.Height);
+            using var result = new Image<Rgb24>(image.Width, image.Height);
 
             var isGrayscale = image.Components.Count == 1;
 
