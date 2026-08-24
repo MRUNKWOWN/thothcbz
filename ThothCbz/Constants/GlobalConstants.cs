@@ -34,5 +34,13 @@
         public const int DEFAULT_CHARACTERS_AMOUNT_FOR_FOLDERS = 3;
         public const int PIXEL_FORMAT_32BPP_CMYK = 0x200F;
         public const int MAXIMUM_DISTINCT_COLORS_FOR_GRAYSCALE = 32768;
+
+        /// <summary>
+        /// Defaults mirroring jpeg2png 1.02 so the managed solver reproduces the
+        /// same output as the original executable.
+        /// </summary>
+        public const float DEFAULT_JPEG2PNG_WEIGHT = 0.3f;
+        public const float DEFAULT_JPEG2PNG_PROBABILITY_WEIGHT = 0.001f;
+        public const int DEFAULT_JPEG2PNG_ITERATIONS = 50;
     }
 }

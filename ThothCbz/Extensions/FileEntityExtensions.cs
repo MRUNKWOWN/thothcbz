@@ -1,17 +1,14 @@
 ﻿using SixLabors.ImageSharp;
-using System.Diagnostics;
-using System.Reflection;
 using ThothCbz.Constants;
 using ThothCbz.Entities;
 using ThothCbz.Enumerators;
+using ThothCbz.Imaging.Jpeg;
 using ThothCbz.Properties;
 
 namespace ThothCbz.Extensions
 {
     internal static class FileEntityExtensions
     {
-        internal static string _exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!;
-
         internal static string GetFilePathToImageOutputFileTypeValue(
                 this FileEntity entity,
                 string? uniqueIdentifier = null
@@ -137,9 +134,9 @@ namespace ThothCbz.Extensions
                         newDirectory
                     );
 
-                // jpeg2png always emits PNG data, so it needs a destination that is
-                // distinct from its own input file, otherwise it would overwrite the
-                // source while reading it and the next run would receive PNG bytes.
+                // The artifact removal always emits PNG data, so it needs a destination
+                // that is distinct from its own input file, otherwise it would overwrite
+                // the source while reading it and the next run would receive PNG bytes.
                 var newfilePath = $@"{newDirectory}\{newEntity.Name}{GlobalConstants.DEFAULT_PNG_EXTENSION}";
 
                 RemoveJpegArtifactsAndSaveAsDefaultImageOutputFileType(
@@ -291,7 +288,7 @@ namespace ThothCbz.Extensions
         }
 
         /// <summary>
-        /// jpeg2png relies on libjpeg and fails hard when the payload is not a real JPEG.
+        /// The coefficient decoder needs a real JPEG payload to work with.
         /// Files can legitimately carry a .jpg name while already holding PNG data, so the
         /// magic bytes are checked instead of trusting the extension.
         /// </summary>
@@ -317,24 +314,20 @@ namespace ThothCbz.Extensions
                 string newFilePath
             )
         {
-            var startInfo = new ProcessStartInfo
+            try
             {
-                FileName = $"{_exeDirectory}\\jpeg2png_1.02_x64.exe",
-                Arguments = $"\"{entity.FilePath}\" -o \"{newFilePath}\" -f -q",
-                UseShellExecute = false, // Needed to redirect output
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
+                Jpeg2PngConverter.Convert(
+                        sourceFilePath: entity.FilePath,
+                        destinationFilePath: newFilePath
+                    );
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"Error converting JPEG to PNG: {exception.Message}", exception);
+            }
 
-            using Process process = Process.Start(startInfo)!;
-
-            string error = process.StandardError.ReadToEnd();
-
-            process.WaitForExit();
-
-            if (process.ExitCode != 0 || !File.Exists(newFilePath))
-                throw new Exception($"Error converting JPEG to PNG: {error}");
+            if (!File.Exists(newFilePath))
+                throw new Exception($"Error converting JPEG to PNG: {newFilePath} was not produced.");
 
             DeleteFileWithRetry(entity.FilePath);
         }
